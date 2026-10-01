@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Платформа для репетиторов: расписание, учет оплат и ДЗ | TeacherDesk</title>
+<meta name="description" content="Сервис для частных репетиторов: расписание с напоминаниями, учет оплат и долгов, домашние задания, онлайн-доска и ИИ-ассистент. Бесплатно до 3 учеников.">
+<meta name="theme-color" content="#0D0E14">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="TeacherDesk: платформа для репетиторов">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/geist-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/geist-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="style.css">
+<script>
+  document.documentElement.classList.add('js', 'cta-in');
+  setTimeout(function () { if (!window.__tdReady) document.documentElement.classList.remove('js', 'cta-in'); }, 2500);
+</script>
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="ic-home" viewBox="0 0 16 16"><path d="M2.2 6.6 8 2.2l5.8 4.4V13a1 1 0 0 1-1 1H3.2a1 1 0 0 1-1-1z"/><path d="M6.3 14V9.6h3.4V14"/></symbol>
+  <symbol id="ic-users" viewBox="0 0 16 16"><circle cx="6" cy="5.6" r="2.2"/><path d="M2 13.6c0-2.3 1.8-3.7 4-3.7s4 1.4 4 3.7"/><path d="M10.9 3.9a2.2 2.2 0 0 1 0 3.6M11.6 10.1c1.5.3 2.4 1.5 2.4 3.2"/></symbol>
+  <symbol id="ic-calendar" viewBox="0 0 16 16"><rect x="2.2" y="3.4" width="11.6" height="10.4" rx="1.6"/><path d="M2.2 6.6h11.6M5.4 2.2v2.4M10.6 2.2v2.4"/></symbol>
+  <symbol id="ic-chat" viewBox="0 0 16 16"><path d="M2.4 4.4a1.6 1.6 0 0 1 1.6-1.6h8a1.6 1.6 0 0 1 1.6 1.6v5.2a1.6 1.6 0 0 1-1.6 1.6H6.4L3 14.2v-3z"/></symbol>
+  <symbol id="ic-task" viewBox="0 0 16 16"><rect x="2.8" y="2.6" width="10.4" height="10.8" rx="1.6"/><path d="m5.4 7.8 1.5 1.5 3.7-3.7"/><path d="M5.4 11.4h5.2"/></symbol>
+  <symbol id="ic-ai" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2"/><path d="M4.2 4.6a4.8 4.8 0 0 0 0 6.8M11.8 4.6a4.8 4.8 0 0 1 0 6.8"/></symbol>
+  <symbol id="ic-wallet" viewBox="0 0 16 16"><path d="M2.4 5.6A1.6 1.6 0 0 1 4 4h8a1.6 1.6 0 0 1 1.6 1.6v4.8A1.6 1.6 0 0 1 12 12H4a1.6 1.6 0 0 1-1.6-1.6z"/><circle cx="11.2" cy="8" r="1"/></symbol>
+  <symbol id="ic-board" viewBox="0 0 16 16"><rect x="2.2" y="2.8" width="11.6" height="8.2" rx="1.5"/><path d="M8 11v2.8M5.6 13.8h4.8"/></symbol>
+  <symbol id="ic-bell" viewBox="0 0 16 16"><path d="M4.1 6.9a3.9 3.9 0 0 1 7.8 0c0 2.9 1 3.9 1 3.9H3.1s1-1 1-3.9"/><path d="M6.6 12.9a1.6 1.6 0 0 0 2.8 0"/></symbol>
+  <symbol id="ic-filter" viewBox="0 0 16 16"><path d="M2.4 3.4h11.2l-4.3 5.1v4.3l-2.6 1.3V8.5z"/></symbol>
+  <symbol id="ic-plus" viewBox="0 0 16 16"><path d="M8 3.2v9.6M3.2 8h9.6"/></symbol>
+  <symbol id="ic-close" viewBox="0 0 16 16"><path d="m4 4 8 8M12 4l-8 8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 16 16"><path d="m3.2 8.4 3.4 3.4L12.8 5"/></symbol>
+  <symbol id="ic-menu" viewBox="0 0 16 16"><path d="M2.6 5.4h10.8M2.6 10.6h10.8"/></symbol>
+  <symbol id="ic-arrow-right" viewBox="0 0 16 16"><path d="M2.8 8h10.2M9.2 4.2 13 8l-3.8 3.8"/></symbol>
+  <symbol id="ic-copy" viewBox="0 0 16 16"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M10.5 5.5v-3h-8v8h3"/></symbol>
+  <symbol id="ic-doc" viewBox="0 0 16 16"><path d="M4 2.4h5.2l3.2 3.2V13a.6.6 0 0 1-.6.6H4a.6.6 0 0 1-.6-.6V3a.6.6 0 0 1 .6-.6z"/><path d="M9 2.6v3.2h3.2M5.8 8.6h4.4M5.8 11h4.4"/></symbol>
+  <symbol id="ic-mail" viewBox="0 0 16 16"><rect x="2.2" y="3.6" width="11.6" height="8.8" rx="1.6"/><path d="m2.6 4.4 5.4 4.2 5.4-4.2"/></symbol>
+  <symbol id="ic-shield" viewBox="0 0 16 16"><path d="M8 2.2 3.2 4v3.6c0 3 2 5.2 4.8 6.2 2.8-1 4.8-3.2 4.8-6.2V4z"/></symbol>
+  <symbol id="ic-pen" viewBox="0 0 16 16"><path d="m3 13 .6-2.8 7-7a1.4 1.4 0 0 1 2 0l.2.2a1.4 1.4 0 0 1 0 2l-7 7z"/></symbol>
+</svg>
+
+<a class="skip" href="#main">К содержанию</a>
+
+<div class="lamp" aria-hidden="true"><i class="lamp__spot" id="lamp"></i></div>
+
+<header class="hdr" id="top">
+  <div class="hdr__in">
+    <a class="hdr__logo" href="/" aria-label="TeacherDesk, на главную"><img src="../assets/img/logo-inverse.svg" width="142" height="24" alt="TeacherDesk"></a>
+    <nav class="hdr__nav" aria-label="Основное меню">
+      <a href="#vozmozhnosti">Возможности</a>
+      <a href="#dlya-kogo">Для кого</a>
+      <a href="#instrumenty">Инструменты</a>
+      <a href="#tarify">Тарифы</a>
+      <a href="/blog/">Блог</a>
+    </nav>
+    <div class="hdr__act">
+      <a class="hdr__login" href="https://teacherdesk.ru/login">Войти</a>
+      <a class="btn btn--y btn--sm hdr__cta" href="https://teacherdesk.ru/register">Начать бесплатно</a>
+      <button class="hdr__burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Меню">
+        <svg class="ic ic--menu" aria-hidden="true"><use href="#ic-menu"/></svg>
+        <svg class="ic ic--close" aria-hidden="true"><use href="#ic-close"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu" id="menu">
+  <nav class="menu__nav">
+    <a href="#vozmozhnosti"><span>01</span>Возможности</a>
+    <a href="#dlya-kogo"><span>02</span>Для кого</a>
+    <a href="#instrumenty"><span>03</span>Инструменты</a>
+    <a href="#tarify"><span>04</span>Тарифы</a>
+    <a href="/blog/"><span>05</span>Блог</a>
+    <a href="https://teacherdesk.ru/login"><span>06</span>Войти</a>
+  </nav>
+  <a class="btn btn--y" href="https://teacherdesk.ru/register">Начать бесплатно</a>
+</div>
+
+<main id="main">
+
+<!-- 1. Первый экран -->
+<section class="hero" aria-labelledby="h-hero">
+  <div class="hero__bg" aria-hidden="true">
+    <i class="hero__grid"></i>
+    <i class="beam"></i>
+    <i class="hero__fix"></i>
+  </div>
+  <div class="wrap hero__in">
+    <h1 class="hero__h" id="h-hero">
+      <span class="pill"><i class="dot" aria-hidden="true"></i>Платформа для репетиторов</span>
+      <span class="hero__title">
+        <span class="ln"><span>Учет, который</span></span>
+        <span class="ln"><span>ведется <em>сам</em></span></span>
+      </span>
+    </h1>
+    <p class="hero__sub"><span class="d-only">Расписание, оплаты и&nbsp;домашние задания репетитора в&nbsp;одном окне. Плюс онлайн&#8209;доска и&nbsp;ИИ&#8209;ассистент.</span><span class="m-only">Расписание, оплаты, задания и&nbsp;ИИ&#8209;ассистент репетитора в&nbsp;одном окне.</span></p>
+    <div class="hero__cta">
+      <a class="btn btn--y" id="heroCta" href="https://teacherdesk.ru/register">Начать бесплатно<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+      <a class="btn btn--g" href="#vozmozhnosti">Посмотреть возможности</a>
+    </div>
+    <p class="hero__trust"><span>бесплатно до&nbsp;трех учеников</span><span>без карты</span><span>данные хранятся в&nbsp;России</span></p>
+
+    <figure class="stage" role="img" aria-label="Экран расписания TeacherDesk в темной теме: урок, который идет сейчас, оплаты за неделю и сетка уроков">
+      <i class="stage__line" aria-hidden="true"></i>
+      <div class="win" id="heroWin" aria-hidden="true" inert data-lamp=".5 .1 1.25 1">
+        <div class="win__in">
+          <div class="w-bar"><i></i><i></i><i></i><span><span class="d-only">teacherdesk.ru / кабинет / расписание</span><span class="m-only">teacherdesk.ru / расписание</span></span><b>ср, 30 сентября</b></div>
+          <div class="app">
+            <div class="app__side">
+              <img class="app__logo" src="../assets/img/logo-inverse.svg" width="112" height="19" alt="">
+              <span class="app__it"><svg class="ic"><use href="#ic-home"/></svg>Главная</span>
+              <span class="app__it is-on"><svg class="ic"><use href="#ic-calendar"/></svg>Расписание</span>
+              <span class="app__it"><svg class="ic"><use href="#ic-users"/></svg>Ученики</span>
+              <span class="app__it"><svg class="ic"><use href="#ic-task"/></svg>Задания<em>3</em></span>
+              <span class="app__it"><svg class="ic"><use href="#ic-chat"/></svg>Чаты</span>
+              <span class="app__it"><svg class="ic"><use href="#ic-wallet"/></svg>Финансы</span>
+              <span class="app__it"><svg class="ic"><use href="#ic-ai"/></svg>Ассистент</span>
+              <span class="app__me"><i class="av">АК</i><span>Анна Ковалева<small>тариф Pro</small></span></span>
+            </div>
+            <div class="app__main">
+              <div class="app__head">
+                <div>
+                  <p class="app__ttl">Расписание</p>
+                  <p class="app__sub">28 сентября - 2 октября · 14 уроков</p>
+                </div>
+                <div class="app__act">
+                  <span class="ab ab--g"><svg class="ic"><use href="#ic-filter"/></svg>Фильтры</span>
+                  <span class="ab ab--b"><svg class="ic"><use href="#ic-plus"/></svg>Создать урок</span>
+                </div>
+              </div>
+              <div class="app__tiles">
+                <div class="tile">
+                  <p class="tile__h">Сейчас идет</p>
+                  <div class="now"><i class="dot"></i><time>14:00</time><span>ОГЭ, математика · Соня В.</span></div>
+                  <div class="r"><time>15:30</time><span class="r__n">Алгебра, Марина К.</span><span class="st st--paid">оплачено</span></div>
+                  <div class="r"><time>17:15</time><span class="r__n">Физика, Артем Д.</span><span class="sw"><span class="st st--wait">ждет оплаты</span><span class="st st--paid">оплачено</span></span></div>
+                </div>
+                <div class="tile tile--week">
+                  <p class="tile__h">Неделя<span>отчет</span></p>
+                  <p class="tile__big">14<i>уроков</i></p>
+                  <div class="r"><span class="r__n">Проведено</span><span class="r__v">6</span></div>
+                  <div class="r"><span class="r__n">Отменено учеником</span><span class="r__v">1</span></div>
+                </div>
+                <div class="tile">
+                  <p class="tile__h">К оплате<span>финансы</span></p>
+                  <p class="tile__big">12 800<i>руб.</i></p>
+                  <div class="bar"><i id="heroBar"></i></div>
+                  <div class="r r--plain"><span class="r__n"><b id="heroSum">8 200</b> руб. получено из 12 800</span></div>
+                </div>
+              </div>
+              <div class="wk wk--hero">
+                <div class="wk__h"><span></span><span>пн<b>28</b></span><span>вт<b>29</b></span><span class="is-td">ср<b>30</b></span><span>чт<b>1</b></span><span>пт<b>2</b></span></div>
+                <div class="wk__b">
+                  <div class="wk__t">09:00</div>
+                  <div class="wk__c"><div class="ls ls--paid"><b>Алгебра</b><span>Марина К.</span></div></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"><div class="ls ls--wait"><b>Геометрия</b><span>группа 9-Б</span></div></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__t">10:30</div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"><div class="ls ls--paid"><b>Английский</b><span>Илья П.</span></div></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"><div class="ls"><b>Английский</b><span>Илья П.</span></div></div>
+                  <div class="wk__t">14:00</div>
+                  <div class="wk__c"><div class="ls ls--paid"><b>Физика</b><span>Артем Д.</span></div></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c wk__c--now"><div class="ls ls--cur"><b><span class="w-l">ОГЭ, математика</span><span class="w-s">ОГЭ</span></b><span><span class="w-l">Соня В. · идет сейчас</span><span class="w-s">Соня В.</span></span></div></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__t">15:30</div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"><div class="ls ls--paid"><b>Алгебра</b><span>Марина К.</span></div></div>
+                  <div class="wk__c"><div class="ls"><b>Химия</b><span>Катя С.</span></div></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__t">17:15</div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"><div class="ls ls--paid"><b>Русский</b><span>Дима О.</span></div></div>
+                  <div class="wk__c wk__c--swap"><div class="ls ls--wait"><b>Физика</b><span>Артем Д.</span></div><div class="ls ls--paid"><b>Физика</b><span>Артем Д.</span></div></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__t">19:00</div>
+                  <div class="wk__c"><div class="ls ls--paid"><b>Английский</b><span>группа B1</span></div></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"></div>
+                  <div class="wk__c"><div class="ls ls--wait"><b>ЕГЭ</b><span>Лиза М.</span></div></div>
+                  <div class="wk__c"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <i class="win__lit"></i>
+        </div>
+      </div>
+      <div class="toast" aria-hidden="true"><i class="toast__ic"><svg class="ic"><use href="#ic-check"/></svg></i><span><b>Оплата получена</b><small>Артем Д. · 2 600 руб.</small></span></div>
+    </figure>
+  </div>
+</section>
+
+<!-- 2. Факты -->
+<section class="sec facts" aria-label="TeacherDesk в цифрах">
+  <div class="wrap">
+    <ul class="facts__row">
+      <li class="fact rv" style="--i:0"><p class="fact__v"><b data-count="3">3</b><span>ученика</span></p><p class="fact__t">бесплатно и без срока</p></li>
+      <li class="fact rv" style="--i:1"><p class="fact__v"><b data-count="2">2</b><span>минуты</span></p><p class="fact__t">от регистрации до первого урока</p></li>
+      <li class="fact rv" style="--i:2"><p class="fact__v"><b data-count="990">990</b><span>руб. в месяц</span></p><p class="fact__t">за 50 учеников, доску и ИИ</p></li>
+      <li class="fact fact--sign rv" style="--i:3"><p class="fact__v"><b><svg class="ic" aria-hidden="true"><use href="#ic-shield"/></svg>152-ФЗ</b></p><p class="fact__t">данные хранятся в России</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 3. Для кого -->
+<section class="sec band" id="dlya-kogo" aria-labelledby="h-who">
+  <div class="wrap">
+    <h2 class="band__h" id="h-who">Для любого предмета и формата занятий</h2>
+    <div class="mq" aria-hidden="true">
+      <div class="mq__t">
+        <span>математика</span><span>английский</span><span>физика</span><span>русский язык</span><span>химия</span><span>информатика</span><span>обществознание</span><span>биология</span><span>история</span><span>ОГЭ</span><span>ЕГЭ</span><span>подготовка к школе</span>
+        <span>математика</span><span>английский</span><span>физика</span><span>русский язык</span><span>химия</span><span>информатика</span><span>обществознание</span><span>биология</span><span>история</span><span>ОГЭ</span><span>ЕГЭ</span><span>подготовка к школе</span>
+      </div>
+    </div>
+    <ul class="band__links">
+      <li><a class="chip" href="/dlya/anglijskij/">Репетиторам английского<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a></li>
+      <li><a class="chip" href="/dlya/matematika/">Репетиторам математики<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a></li>
+      <li><a class="chip" href="/dlya/ege-oge/">Подготовка к ЕГЭ и ОГЭ<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a></li>
+      <li><a class="chip" href="/dlya/nachinayushchih/">Начинающим репетиторам<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 4. Девять инструментов -->
+<section class="sec feats" id="vozmozhnosti" aria-labelledby="h-feats">
+  <div class="wrap feats__top">
+    <header class="head">
+      <div>
+        <p class="eb rv">возможности</p>
+        <h2 class="h2 sp" id="h-feats">Девять инструментов. Одно окно.</h2>
+      </div>
+      <p class="lead rv" style="--i:2">Каждый урок связан с&nbsp;учеником, оплатой и&nbsp;заданием. Выберите инструмент и&nbsp;посмотрите его в&nbsp;деле.</p>
+    </header>
+  </div>
+  <div class="feats__track" data-feats>
+    <div class="feats__pin">
+      <div class="wrap feats__grid">
+        <div class="feats__nav">
+          <ol class="feats__list" aria-label="Функции TeacherDesk">
+            <li><button class="feat is-on" type="button" aria-controls="f-1"><span>01</span>Расписание</button></li>
+            <li><button class="feat" type="button" aria-controls="f-2"><span>02</span>Учет оплат</button></li>
+            <li><button class="feat" type="button" aria-controls="f-3"><span>03</span>Учет учеников</button></li>
+            <li><button class="feat" type="button" aria-controls="f-4"><span>04</span>Кабинет ученика</button></li>
+            <li><button class="feat" type="button" aria-controls="f-5"><span>05</span>Домашние задания</button></li>
+            <li><button class="feat" type="button" aria-controls="f-6"><span>06</span>Онлайн-доска</button></li>
+            <li><button class="feat" type="button" aria-controls="f-7"><span>07</span>ИИ-ассистент</button></li>
+            <li><button class="feat" type="button" aria-controls="f-8"><span>08</span>Отчеты родителям</button></li>
+            <li><button class="feat" type="button" aria-controls="f-9"><span>09</span>Журнал занятий</button></li>
+          </ol>
+          <a class="lnk feats__all" href="/features/">Все возможности сервиса<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+        </div>
+
+        <div class="feats__view rv rv--clip" data-lamp=".5 .34 1.15 1">
+          <i class="feats__glow" aria-hidden="true"></i>
+          <div class="feats__stack">
+
+            <!-- 01 Расписание -->
+            <article class="scr is-on" id="f-1">
+              <div class="scr__ui" aria-hidden="true">
+                <div class="w-bar"><i></i><i></i><i></i><span>кабинет / расписание</span><b>01/09</b></div>
+                <div class="w-body">
+                  <div class="wk wk--s">
+                    <div class="wk__h"><span></span><span>пн<b>28</b></span><span>вт<b>29</b></span><span class="is-td">ср<b>30</b></span><span>чт<b>1</b></span><span>пт<b>2</b></span></div>
+                    <div class="wk__b">
+                      <div class="wk__t">09:00</div>
+                      <div class="wk__c"><div class="ls ls--paid"><b>Алгебра</b><span>Марина К.</span></div></div>
+                      <div class="wk__c"></div><div class="wk__c"></div>
+                      <div class="wk__c"><div class="ls ls--wait"><b>Геометрия</b><span>группа 9-Б</span></div></div>
+                      <div class="wk__c"></div>
+                      <div class="wk__t">10:30</div>
+                      <div class="wk__c"></div>
+                      <div class="wk__c"><div class="ls ls--paid"><b>Английский</b><span>Илья П.</span></div></div>
+                      <div class="wk__c"></div><div class="wk__c"></div>
+                      <div class="wk__c"><div class="ls"><b>Английский</b><span>Илья П.</span></div></div>
+                      <div class="wk__t">14:00</div>
+                      <div class="wk__c"><div class="ls ls--paid"><b>Физика</b><span>Артем Д.</span></div></div>
+                      <div class="wk__c"></div>
+                      <div class="wk__c wk__c--now"><div class="ls ls--cur"><b>ОГЭ</b><span>Соня В.</span></div></div>
+                      <div class="wk__c"></div><div class="wk__c"></div>
+                      <div class="wk__t">15:30</div>
+                      <div class="wk__c"></div>
+                      <div class="wk__c"><div class="ls ls--paid"><b>Русский</b><span>Дима О.</span></div></div>
+                      <div class="wk__c"><div class="ls ls--paid"><b>Алгебра</b><span>Марина К.</span></div></div>
+                      <div class="wk__c"></div><div class="wk__c"></div>
+                      <div class="wk__t">17:15</div>
+                      <div class="wk__c"></div><div class="wk__c"></div>
+                      <div class="wk__c wk__c--move"><i class="ghost"></i><div class="ls ls--wait ls--move"><b>Физика</b><span>Артем Д.</span></div></div>
+                      <div class="wk__c"></div><div class="wk__c"></div>
+                    </div>
+                  </div>
+                  <div class="note"><svg class="ic"><use href="#ic-bell"/></svg><span><b>Перенос на чт, 17:15.</b> Артем Д. получит напоминание за час</span></div>
+                </div>
+              </div>
+              <div class="scr__cap">
+                <h3>Расписание</h3>
+                <p>Повторы, переносы и напоминания ученику за час до урока.</p>
+                <a class="lnk" href="/features/raspisanie/">Как устроено расписание<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+              </div>
+            </article>
+
+            <!-- 02 Учет оплат -->
+            <article class="scr" id="f-2">
+              <div class="scr__ui" aria-hidden="true">
+                <div class="w-bar"><i></i><i></i><i></i><span>кабинет / финансы</span><b>02/09</b></div>
+                <div class="w-body">
+                  <div class="pay__top">
+                    <div>
+                      <p class="lbl">просрочено</p>
+                      <p class="pay__sum"><span class="roll"><span>6 800</span><span>4 200</span></span><i>руб.</i></p>
+                    </div>
+                    <span class="ab ab--g"><svg class="ic"><use href="#ic-bell"/></svg>Напомнить всем</span>
+                  </div>
+                  <div class="tb">
+                    <div class="tb__r"><i class="av">СВ</i><span class="tb__n">Соня Ветрова<small><span class="d-only">ОГЭ, математика · 7 дней</span><span class="m-only">ОГЭ · 7 дней</span></small></span><span class="tb__v">4 200</span><span class="st st--wait st--sent"><svg class="ic"><use href="#ic-check"/></svg>напомнили</span></div>
+                    <div class="tb__r"><i class="av">АД</i><span class="tb__n">Артем Дроздов<small><span class="d-only">физика · 2 урока</span><span class="m-only">2 урока</span></small></span><span class="tb__v tb__v--x">2 600</span><span class="sw"><span class="st st--wait">ждет оплаты</span><span class="st st--paid">оплачено</span></span></div>
+                    <div class="tb__r"><i class="av">МК</i><span class="tb__n">Марина Кузнецова<small><span class="d-only">алгебра · 1 800 руб. за урок</span><span class="m-only">алгебра</span></small></span><span class="tb__v tb__v--0">0</span><span class="st st--paid">оплачено</span></div>
+                    <div class="tb__r"><i class="av">ИП</i><span class="tb__n">Илья Петров<small>английский</small></span><span class="tb__v tb__v--0">0</span><span class="st st--paid">оплачено</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="scr__cap">
+                <h3>Учет оплат</h3>
+                <p>Балансы и долги по каждому ученику. Напоминание об оплате уходит само.</p>
+                <a class="lnk" href="/features/uchet-oplat/">Как считаются оплаты<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+              </div>
+            </article>
+
+            <!-- 03 Учет учеников -->
+            <article class="scr" id="f-3">
+              <div class="scr__ui" aria-hidden="true">
+                <div class="w-bar"><i></i><i></i><i></i><span><span class="d-only">кабинет / ученики / марина кузнецова</span><span class="m-only">ученики / марина к.</span></span><b>03/09</b></div>
+                <div class="w-body">
+                  <div class="stu__head">
+                    <i class="av av--lg">МК</i>
+                    <div><p class="stu__name">Марина Кузнецова</p><p class="lbl">алгебра · 9 класс</p></div>
+                    <p class="stu__rate">1 800<i>руб. за урок</i></p>
+                  </div>
+                  <div class="stu__grid">
+                    <div class="box"><p class="lbl">родитель</p><p>Елена Кузнецова, мама</p><p class="box__m">контакты и чат в карточке</p></div>
+                    <div class="box box--note"><p class="lbl">заметка после урока</p><p class="clipin">Путает знаки при переносе. В четверг повторить дискриминант.</p></div>
+                  </div>
+                  <div class="tb tb--hist">
+                    <div class="tb__r"><time>30.09</time><span class="tb__n">Квадратные уравнения</span><span class="st st--paid">оплачено</span></div>
+                    <div class="tb__r"><time>25.09</time><span class="tb__n">Дискриминант</span><span class="st st--paid">оплачено</span></div>
+                    <div class="tb__r"><time>23.09</time><span class="tb__n">Неполные уравнения</span><span class="st st--paid">оплачено</span></div>
+                    <div class="tb__r"><time>21.09</time><span class="tb__n">Теорема Виета</span><span class="st st--paid">оплачено</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="scr__cap">
+                <h3>Учет учеников</h3>
+                <p>Карточка ученика: контакты родителей, история уроков и заметки.</p>
+                <a class="lnk" href="/features/uchet-uchenikov/">Что хранит карточка ученика<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+              </div>
+            </article>
+
+            <!-- 04 Кабинет ученика -->
+            <article class="scr" id="f-4">
+              <div class="scr__ui" aria-hidden="true">
+                <div class="w-bar"><i></i><i></i><i></i><span><span class="d-only">кабинет ученика / марина к.</span><span class="m-only">кабинет ученика</span></span><b>04/09</b></div>
+                <div class="w-body">
+                  <div class="seg"><i class="seg__i"></i><span>Видит ученик</span><span>Видит родитель</span></div>
+                  <div class="panes">
+                    <div class="pane pane--a">
+                      <div class="box"><p class="lbl">ближайший урок</p><p>Алгебра, чт 1 октября</p><p class="box__v">15:30</p></div>
+                      <div class="box"><p class="lbl">задание</p><p>Квадратные уравнения, вариант 2</p><p class="box__m">сдать до 2 октября</p></div>
+                      <div class="box"><p class="lbl">материалы</p><p>Формулы и запись доски с урока</p></div>
+                    </div>
+                    <div class="pane pane--b">
+                      <div class="box"><p class="lbl">оплаты, сентябрь</p><p>8 уроков оплачено</p><p class="box__v">14 400<i>руб.</i></p></div>
+                      <div class="box"><p class="lbl">посещаемость</p><p>8 из 9 уроков</p><div class="bar"><i style="--w:.89"></i></div></div>
+                      <div class="box"><p class="lbl">прогресс</p><p>Отчет за сентябрь готов</p></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="scr__cap">
+                <h3>Кабинет ученика</h3>
+                <p>Ученик видит расписание и задания, родитель видит оплаты и прогресс.</p>
+                <a class="lnk" href="/features/kabinet-uchenika/">Что видно в кабинете ученика<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+              </div>
+            </article>
+
+            <!-- 05 Домашние задания -->
+            <article class="scr" id="f-5">
+              <div class="scr__ui" aria-hidden="true">
+                <div class="w-bar"><i></i><i></i><i></i><span>кабинет / задания</span><b>05/09</b></div>
+                <div class="w-body">
+                  <div class="hw">
+                    <div class="hw__top">
+                      <div><p class="hw__t">Квадратные уравнения, вариант 2</p><p class="lbl">Марина К. · сдать до 2 октября</p></div>
+                      <span class="st st--wait">на проверке</span>
+                    </div>
+                    <ol class="steps3">
+                      <li class="is-done"><i></i>выдано</li>
+                      <li class="is-done"><i></i>сдано</li>
+                      <li class="is-cur"><i></i>проверка</li>
+                    </ol>
+                    <div class="hw__pg"><div class="bar"><i style="--w:.7"></i></div><span>7 из 10 задач</span></div>
+                  </div>
+                  <ol class="tasks">
+                    <li class="is-ok"><b>01</b><span>верно</span></li><li class="is-ok"><b>02</b><span>верно</span></li><li class="is-ok"><b>03</b><span>верно</span></li><li class="is-ok"><b>04</b><span>верно</span></li><li class="is-ok"><b>05</b><span>верно</span></li>
+                    <li class="is-fix"><b>06</b><span>знак</span></li><li class="is-ok"><b>07</b><span>верно</span></li><li><b>08</b><span>ждет</span></li><li><b>09</b><span>ждет</span></li><li><b>10</b><span>ждет</span></li>
+                  </ol>
+                  <div class="cmt"><i class="av">АК</i><p><b>Задача 6.</b> Проверь знак перед b, дальше решение верное.</p></div>
+                </div>
+              </div>
+              <div class="scr__cap">
+                <h3>Домашние задания</h3>
+                <p>Выдача, сдача и проверка с комментариями в одном месте.</p>
+                <a class="lnk" href="/features/domashnie-zadaniya/">Про домашние задания<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+              </div>
+            </article>
+
+            <!-- 06 Онлайн-доска -->
+            <article class="scr" id="f-6">
+              <div class="scr__ui" aria-hidden="true">
+                <div class="w-bar"><i></i><i></i><i></i><span>урок / онлайн-доска</span><b>06/09</b></div>
+                <div class="w-body w-body--board">
+                  <div class="bd__tools"><i class="is-on"><svg class="ic"><use href="#ic-pen"/></svg></i><i><svg class="ic"><use href="#ic-board"/></svg></i><i><svg class="ic"><use href="#ic-doc"/></svg></i></div>
+                  <div class="bd">
+                    <svg class="bd__svg" viewBox="0 0 420 260" fill="none" preserveAspectRatio="xMinYMid meet">
+                      <path class="bd__ax" d="M24 196h372M150 20v224"/>
+                      <path class="bd__cv" d="M176 24C200 250 276 250 300 24"/>
+                      <circle class="bd__pt" cx="194.5" cy="196" r="4.5"/>
+                      <circle class="bd__pt" cx="281.5" cy="196" r="4.5"/>
+                    </svg>
+                    <p class="bd__f">x² - 5x + 6 = 0</p>
+                    <p class="bd__a">x₁ = 2, x₂ = 3</p>
+                    <span class="cur cur--a">Анна</span>
+                    <span class="cur cur--m">Марина</span>
+                  </div>
+                  <p class="bd__save"><svg class="ic"><use href="#ic-check"/></svg>запись сохранена в карточке урока</p>
+                </div>
+              </div>
+              <div class="scr__cap">
+                <h3>Онлайн-доска</h3>
+                <p>Открывается прямо из урока. Записи сохраняются в карточке.</p>
+                <a class="lnk" href="/features/onlayn-doska/">Как работает онлайн-доска<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+              </div>
+            </article>
+
+            <!-- 07 ИИ-ассистент -->
+            <article class="scr" id="f-7">
+              <div class="scr__ui" aria-hidden="true">
+                <div class="w-bar"><i></i><i></i><i></i><span>кабинет / ассистент</span><b>07/09</b></div>
+                <div class="w-body">
+                  <p class="msg msg--me">5 упражнений: квадратные уравнения, 8 класс</p>
+                  <div class="msg msg--ai">
+                    <p class="msg__who"><svg class="ic"><use href="#ic-ai"/></svg>ИИ-ассистент</p>
+                    <ol class="msg__list" data-type>
+                      <li>x² - 5x + 6 = 0</li>
+                      <li>2x² + 3x - 2 = 0</li>
+                      <li>x² - 4x + 4 = 0</li>
+                      <li>3x² - 12 = 0</li>
+                      <li>x² + 2x - 15 = 0</li>
+                    </ol>
+                    <span class="ab ab--b msg__send">Отправить ученику<svg class="ic"><use href="#ic-arrow-right"/></svg></span>
+                  </div>
+                  <div class="ask">
+                    <p class="ask__tags"><span>план урока</span><span>упражнения</span><span>ответ на вопрос</span></p>
+                    <p class="ask__in"><span>Спросите ассистента</span><i><svg class="ic"><use href="#ic-arrow-right"/></svg></i></p>
+                  </div>
+                </div>
+              </div>
+              <div class="scr__cap">
+                <h3>ИИ-ассистент</h3>
+                <p>План урока и упражнения по теме за минуту.</p>
+                <a class="lnk" href="/features/ii-assistent/">Что умеет ИИ-ассистент<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+              </div>
+            </article>
+
+            <!-- 08 Отчеты родителям -->
+            <article class="scr" id="f-8">
+              <div class="scr__ui" aria-hidden="true">
+                <div class="w-bar"><i></i><i></i><i></i><span>кабинет / отчеты</span><b>08/09</b></div>
+                <div class="w-body">
+                  <div class="rep__top"><div><p class="hw__t">Отчет за сентябрь</p><p class="lbl">Марина Кузнецова · алгебра</p></div></div>
+                  <div class="rep__stats">
+                    <div class="box"><p class="lbl">уроки</p><p class="box__v">8<i>из 9</i></p></div>
+                    <div class="box"><p class="lbl">задания</p><p class="box__v">7<i>из 8</i></p></div>
+                    <div class="box rep__bars"><p class="lbl">по неделям</p><div class="bars"><i style="--h:.55"></i><i style="--h:.7"></i><i style="--h:.62"></i><i style="--h:.92"></i></div></div>
+                  </div>
+                  <div class="box rep__topics"><p class="lbl">темы месяца</p><ul><li>Неполные уравнения</li><li>Дискриминант</li><li>Теорема Виета</li><li>Квадратные уравнения</li></ul></div>
+                  <div class="rep__link"><span>teacherdesk.ru/r/marina-sentyabr</span><span class="sw"><span class="st"><svg class="ic"><use href="#ic-copy"/></svg>скопировать</span><span class="st st--paid"><svg class="ic"><use href="#ic-check"/></svg>ссылка у родителя</span></span></div>
+                </div>
+              </div>
+              <div class="scr__cap">
+                <h3>Отчеты родителям</h3>
+                <p>Посещаемость, темы и задания за месяц. Родитель получает одну ссылку.</p>
+                <a class="lnk" href="/features/otchety-roditelyam/">Как выглядит отчет родителям<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+              </div>
+            </article>
+
+            <!-- 09 Журнал занятий -->
+            <article class="scr" id="f-9">
+              <div class="scr__ui" aria-hidden="true">
+                <div class="w-bar"><i></i><i></i><i></i><span>кабинет / журнал</span><b>09/09</b></div>
+                <div class="w-body">
+                  <div class="tb tb--jr">
+                    <div class="tb__r tb__r--h"><span>дата</span><span>что прошли</span><span>что задали</span><span></span></div>
+                    <div class="tb__r"><time>30.09</time><span class="tb__n">Квадратные уравнения</span><span class="tb__m">вариант 2</span><span class="st st--paid">был</span></div>
+                    <div class="tb__r"><time>28.09</time><span class="tb__n">Дискриминант</span><span class="tb__m">задачи 14-20</span><span class="st st--paid">был</span></div>
+                    <div class="tb__r"><time>25.09</time><span class="tb__n"><span class="d-only">Разложение на множители</span><span class="m-only">Разложение</span></span><span class="tb__m">вариант 1</span><span class="st st--wait">пропуск</span></div>
+                    <div class="tb__r"><time>23.09</time><span class="tb__n">Неполные уравнения</span><span class="tb__m">задачи 5-12</span><span class="st st--paid">был</span></div>
+                    <div class="tb__r"><time>21.09</time><span class="tb__n">Теорема Виета</span><span class="tb__m">задачи 1-8</span><span class="st st--paid">был</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="scr__cap">
+                <h3>Журнал занятий</h3>
+                <p>Что прошли, что задали, кто пропустил. По каждому ученику.</p>
+                <a class="lnk" href="/features/zhurnal-zanyatiy/">Как вести журнал занятий<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. День репетитора -->
+<section class="sec day" aria-labelledby="h-day">
+  <div class="wrap">
+    <div class="day__panel">
+    <header class="head day__head">
+      <div>
+        <p class="eb rv">день репетитора</p>
+        <h2 class="h2 sp" id="h-day">Утром видно, кто придет, кто должен и&nbsp;что проверить</h2>
+      </div>
+      <p class="stamp rv" style="--i:2" aria-hidden="true"><span>ср, 30 сентября</span><b>08:40</b></p>
+    </header>
+
+    <div class="bento">
+      <article class="card spot bento__a rv rv--rise">
+        <div class="card__txt">
+          <p class="card__n">01</p>
+          <h3>Кто придет</h3>
+          <p>Расписание на сегодня: время, ученик и&nbsp;статус оплаты.</p>
+          <p class="card__stat" aria-hidden="true"><b>4</b><span>урока сегодня,<br>первый в 14:00</span></p>
+          <a class="lnk" href="/features/raspisanie/">Расписание<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+        </div>
+        <div class="card__ui card__ui--bleed" aria-hidden="true">
+          <p class="tile__h">Среда, 30 сентября<span>4 урока</span></p>
+          <div class="nowline"><time>08:40</time><i></i><span><span class="w-l">до первого урока 5 ч 20 мин</span><span class="w-s">до урока 5 ч 20 мин</span></span></div>
+          <div class="r"><time>14:00</time><span class="r__n"><span class="w-l">ОГЭ, математика · Соня В.</span><span class="w-s">ОГЭ · Соня В.</span></span><span class="st st--wait">ждет оплаты</span></div>
+          <div class="r"><time>15:30</time><span class="r__n">Алгебра, Марина К.</span><span class="st st--paid">оплачено</span></div>
+          <div class="r"><time>17:15</time><span class="r__n">Физика, Артем Д.</span><span class="st st--wait">ждет оплаты</span></div>
+          <div class="r"><time>19:00</time><span class="r__n"><span class="w-l">Английский, группа B1</span><span class="w-s">Английский, B1</span></span><span class="st st--paid">оплачено</span></div>
+          <p class="tile__h tile__h--next">Завтра, четверг<span>3 урока</span></p>
+          <div class="r r--dim"><time>09:00</time><span class="r__n">Геометрия, группа 9-Б</span></div>
+          <div class="r r--dim"><time>15:30</time><span class="r__n">Химия, Катя С.</span></div>
+          <div class="r r--dim"><time>19:00</time><span class="r__n">ЕГЭ, Лиза М.</span></div>
+        </div>
+      </article>
+
+      <article class="card spot bento__b rv rv--rise" style="--i:1">
+        <div class="card__txt">
+          <p class="card__n">02</p>
+          <h3>Кто должен</h3>
+          <p>Баланс считается после каждого урока.</p>
+        </div>
+        <div class="debt" aria-hidden="true">
+          <p class="lbl">просрочено</p>
+          <p class="debt__v" data-lamp=".4 .5 .95 1"><b data-count="6800">6 800</b><i>руб.</i></p>
+          <div class="r"><time>7 дней</time><span class="r__n">Соня Ветрова</span><span class="r__v">4 200</span></div>
+          <div class="r"><time>2 дня</time><span class="r__n">Артем Дроздов</span><span class="r__v">2 600</span></div>
+        </div>
+        <a class="lnk" href="/features/uchet-oplat/">Учет оплат<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+      </article>
+
+      <article class="card spot bento__c rv rv--rise">
+        <div class="card__txt">
+          <p class="card__n">03</p>
+          <h3>Что проверить</h3>
+          <p>Ученик сдал решение, осталось оставить комментарий.</p>
+        </div>
+        <div class="hwc" aria-hidden="true">
+          <p class="hw__t">Квадратные уравнения, вариант 2</p>
+          <p class="lbl">Марина К. · сдать до 2 октября</p>
+          <div class="hw__pg"><div class="bar"><i style="--w:.7"></i></div><span>7 из 10 задач</span></div>
+        </div>
+        <a class="lnk" href="/features/domashnie-zadaniya/">Домашние задания<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+      </article>
+
+      <article class="card spot bento__d rv rv--rise" style="--i:1">
+        <div class="card__txt">
+          <p class="card__n">04</p>
+          <h3>Что дать на уроке</h3>
+          <p>ИИ-ассистент собирает план из&nbsp;четырех этапов за&nbsp;минуту.</p>
+          <a class="lnk" href="/features/ii-assistent/">ИИ-ассистент<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+        </div>
+        <div class="card__ui" aria-hidden="true">
+          <p class="msg msg--me">План урока: квадратные уравнения, 8 класс, 60 минут</p>
+          <div class="msg msg--ai">
+            <p class="msg__who"><svg class="ic"><use href="#ic-ai"/></svg>ИИ-ассистент</p>
+            <ol class="msg__list msg__list--plan" data-type>
+              <li>Разминка: 3 устные задачи <b>10 мин</b></li>
+              <li>Формула дискриминанта на двух примерах <b>15 мин</b></li>
+              <li>Самостоятельная работа из 5 уравнений <b>25 мин</b></li>
+              <li>Разбор ошибок и домашнее задание <b>10 мин</b></li>
+            </ol>
+          </div>
+        </div>
+      </article>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Старт за две минуты -->
+<section class="sec start" aria-labelledby="h-start">
+  <div class="wrap">
+    <header class="start__head">
+      <p class="eb rv">старт</p>
+      <p class="timer rv rv--fade" style="--i:1" aria-hidden="true" data-lamp=".5 .5 1.2 1"><span id="timer">02:00</span></p>
+      <h2 class="h2 h2--sm sp" id="h-start">От регистрации до&nbsp;первого урока две&nbsp;минуты</h2>
+    </header>
+    <div class="tl" data-timeline>
+      <div class="tl__bar" aria-hidden="true"><i id="tlFill"></i></div>
+      <ol class="tl__steps">
+        <li class="tl__s is-on">
+          <p class="tl__m"><span>01</span><b>30 секунд</b></p>
+          <h3>Создайте аккаунт</h3>
+          <p>Нужна только почта. Карту не просим.</p>
+        </li>
+        <li class="tl__s is-on">
+          <p class="tl__m"><span>02</span><b>1 минута</b></p>
+          <h3>Добавьте учеников</h3>
+          <p>Вручную или <a class="ul" href="/baza-znanij/import-iz-excel/">импортом из&nbsp;Excel и&nbsp;Google Таблиц</a>. Ученик и&nbsp;родитель получат приглашение в&nbsp;кабинет.</p>
+        </li>
+        <li class="tl__s is-on">
+          <p class="tl__m"><span>03</span><b>30 секунд</b></p>
+          <h3>Поставьте первый урок</h3>
+          <p>TeacherDesk напомнит ученику и предложит отметить оплату.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 7. Телефон -->
+<section class="sec mob" aria-labelledby="h-mob">
+  <div class="wrap mob__grid">
+    <div class="mob__vis rv rv--phone" aria-hidden="true">
+      <i class="mob__glow"></i>
+      <div class="ph" data-lamp=".5 .42 1.1 1">
+        <div class="ph__scr">
+          <div class="ph__top"><span>14:30</span><span>TeacherDesk</span></div>
+          <div class="ph__body">
+            <p class="lbl">среда, 30 сентября</p>
+            <p class="ph__h">4 урока сегодня</p>
+            <div class="now"><i class="dot"></i><time>14:00</time><span>ОГЭ · Соня В.</span></div>
+            <div class="r r--2"><time>15:30</time><span class="r__n">Алгебра<small>Марина К.</small></span><span class="st st--paid">оплачено</span></div>
+            <div class="r r--2"><time>17:15</time><span class="r__n">Физика<small>Артем Д.</small></span><span class="st st--wait">ждет оплаты</span></div>
+            <div class="r r--2"><time>19:00</time><span class="r__n">Английский<small>группа B1</small></span><span class="st st--paid">оплачено</span></div>
+            <div class="ph__tile">
+              <p class="lbl">напоминание об оплате</p>
+              <div class="r r--plain"><span class="r__n">Артем Д., 2 урока</span><span class="r__v">2 600 руб.</span></div>
+              <span class="ab ab--b ph__btn"><span>Напомнить ученику</span><span><svg class="ic"><use href="#ic-check"/></svg>Напоминание ушло</span></span>
+            </div>
+          </div>
+          <div class="ph__tab"><span class="is-on"><svg class="ic"><use href="#ic-calendar"/></svg>Уроки</span><span><svg class="ic"><use href="#ic-users"/></svg>Ученики</span><span><svg class="ic"><use href="#ic-task"/></svg>Задания</span><span><svg class="ic"><use href="#ic-wallet"/></svg>Финансы</span></div>
+        </div>
+        <div class="push"><i class="push__ic"><svg class="ic"><use href="#ic-bell"/></svg></i><span><b>Через час урок</b><small>Алгебра · 15:30</small></span><em>сейчас</em></div>
+      </div>
+    </div>
+    <div class="mob__txt">
+      <p class="eb rv">телефон</p>
+      <h2 class="h2 sp" id="h-mob">Работает как приложение. Без&nbsp;магазина.</h2>
+      <p class="lead rv" style="--i:2">Добавьте сайт на&nbsp;главный экран, и&nbsp;TeacherDesk откроется без адресной строки.<span class="t-hide"> Урок и&nbsp;оплату можно отметить между занятиями.</span></p>
+      <ul class="ticks rv" style="--i:3">
+        <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>Android и&nbsp;iPhone, обновления приходят сами</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>Напоминания приходят уведомлениями</li>
+      </ul>
+      <p class="mob__links rv" style="--i:4">
+        <a class="lnk" href="/prilozhenie-dlya-repetitora/">Приложение для репетитора<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+        <a class="lnk lnk--dim" href="/baza-znanij/ustanovka-na-telefon/">Как установить за минуту<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 8. Отзывы -->
+<section class="sec revs" aria-labelledby="h-revs">
+  <div class="wrap">
+    <h2 class="revs__h rv" id="h-revs"><i class="dot" aria-hidden="true"></i>Воскресный вечер снова свободен</h2>
+    <figure class="q q--big">
+      <blockquote data-words>«Раньше в&nbsp;воскресенье вечером я&nbsp;сверяла таблицу с&nbsp;перепиской, кто сколько должен. Теперь открываю финансы и&nbsp;<mark>вижу&nbsp;три&nbsp;фамилии</mark>.»</blockquote>
+      <figcaption class="rv"><i class="av av--lg" aria-hidden="true">ОС</i><span><b>Ольга Сомова</b><small>математика и ОГЭ · 14 учеников</small></span></figcaption>
+    </figure>
+    <div class="revs__row">
+      <figure class="q rv">
+        <blockquote>«Перенос урока вижу я, видят ученики, и&nbsp;никто не&nbsp;приходит не&nbsp;в&nbsp;тот день.»</blockquote>
+        <figcaption><i class="av" aria-hidden="true">ДЛ</i><span><b>Денис Лаптев</b><small>английский · 3 группы и 9 учеников</small></span></figcaption>
+      </figure>
+      <figure class="q rv" style="--i:1">
+        <blockquote>«Отчет родителям собираю за&nbsp;пять минут в&nbsp;конце месяца.»</blockquote>
+        <figcaption><i class="av" aria-hidden="true">ИН</i><span><b>Ирина Нестерова</b><small>русский язык и ЕГЭ · 11 учеников</small></span></figcaption>
+      </figure>
+      <p class="revs__more rv" style="--i:2"><a class="lnk" href="/otzyvy/">Все отзывы и истории<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a></p>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Тарифы -->
+<section class="sec price" id="tarify" aria-labelledby="h-price">
+  <div class="wrap">
+    <header class="head">
+      <div>
+        <p class="eb rv">тарифы</p>
+        <h2 class="h2 sp" id="h-price">Бесплатно до&nbsp;трех учеников. Дальше от&nbsp;990&nbsp;руб.</h2>
+      </div>
+      <p class="lead rv" style="--i:2">Расписание, задания и&nbsp;учет оплат есть в&nbsp;каждом тарифе. Пробного периода нет: Free бесплатный без срока.</p>
+    </header>
+    <div class="plans">
+      <div class="plan rv">
+        <p class="plan__name">Free</p>
+        <p class="plan__price"><b>0</b><span>руб. навсегда</span></p>
+        <p class="plan__for">Для старта и первых учеников</p>
+        <ul class="ticks">
+          <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>До 3 учеников</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>Расписание, задания, учет оплат</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>10 запросов к ИИ в день</li>
+        </ul>
+        <a class="btn btn--g" href="https://teacherdesk.ru/register">Начать бесплатно</a>
+      </div>
+      <div class="plan plan--pro rv rv--rise" style="--i:4" data-lamp=".5 .3 1.15 1">
+        <div class="plan__in">
+          <p class="plan__name">Pro<span>рекомендуем</span></p>
+          <p class="plan__price"><b>990</b><span>руб. в месяц</span></p>
+          <p class="plan__for">Для постоянной практики</p>
+          <ul class="ticks">
+            <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>До 50 учеников</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>Онлайн-доска и материалы</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>100 запросов к ИИ в день</li>
+            <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>Экспорт в PDF и Excel</li>
+          </ul>
+          <a class="btn btn--y" href="https://teacherdesk.ru/register">Попробовать Pro</a>
+        </div>
+      </div>
+      <div class="plan rv" style="--i:1">
+        <p class="plan__name">Premium</p>
+        <p class="plan__price"><b>1 990</b><span>руб. в месяц</span></p>
+        <p class="plan__for">Для больших практик и&nbsp;мини-школ</p>
+        <ul class="ticks">
+          <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>Без ограничения учеников</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>Безлимитный ИИ-ассистент</li>
+          <li><svg class="ic" aria-hidden="true"><use href="#ic-check"/></svg>Приоритетная поддержка</li>
+        </ul>
+        <a class="btn btn--g" href="https://teacherdesk.ru/register">Выбрать Premium</a>
+      </div>
+    </div>
+    <p class="price__more rv"><a class="lnk" href="/pricing/">Сравнить тарифы подробно<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a><a class="lnk lnk--dim" href="/besplatnaya-platforma-dlya-repetitorov/">Что входит в бесплатный тариф<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a></p>
+  </div>
+</section>
+
+<!-- 10. Инструменты и блог -->
+<section class="sec res" id="instrumenty" aria-label="Бесплатные инструменты и блог">
+  <div class="wrap">
+    <header class="res__head">
+      <h2 class="h2 h2--xs sp" id="h-tools">Бесплатные инструменты, без&nbsp;регистрации</h2>
+      <a class="lnk rv" href="/instrumenty/">Все бесплатные инструменты<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+    </header>
+    <ul class="tools">
+      <li class="rv"><a class="tool" href="/instrumenty/tablica-ucheta/">
+        <span class="fr fr--sheet" aria-hidden="true">
+          <span class="fx"><i>F4</i><b>=C4*D4-E4</b></span>
+          <span class="sh">
+            <span class="sh__r sh__r--h"><i></i><i>уроки</i><i>ставка</i><i>оплата</i><i>долг</i></span>
+            <span class="sh__r"><i>3</i><i>6</i><i>1 500</i><i>9 000</i><i>0</i></span>
+            <span class="sh__r is-cur"><i>4</i><i>4</i><i>1 300</i><i>2 600</i><b>2 600</b></span>
+            <span class="sh__r"><i>5</i><i>6</i><i>1 400</i><i>4 200</i><i>4 200</i></span>
+          </span>
+        </span>
+        <span class="tool__n">01</span>
+        <span class="tool__t">Шаблон таблицы учета<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></span>
+        <span class="tool__d">Ученики, уроки и&nbsp;оплаты в&nbsp;xlsx с&nbsp;формулами долга</span>
+      </a></li>
+      <li class="rv" style="--i:1"><a class="tool" href="/instrumenty/dogovor/">
+        <span class="fr fr--doc" aria-hidden="true">
+          <span class="doc">
+            <b>Договор об оказании услуг</b>
+            <span class="doc__l"><i>Заказчик</i><u>Елена Кузнецова</u></span>
+            <span class="doc__l"><i>Предмет</i><u>алгебра, 9 класс</u></span>
+            <span class="doc__l"><i>Стоимость</i><u>1 800 руб. за урок</u></span>
+            <span class="doc__s"><i></i><i></i></span>
+          </span>
+        </span>
+        <span class="tool__n">02</span>
+        <span class="tool__t">Генератор договора<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></span>
+        <span class="tool__d">Заполните форму и&nbsp;скачайте договор с&nbsp;родителями</span>
+      </a></li>
+      <li class="rv" style="--i:2"><a class="tool" href="/instrumenty/kalkulyator/">
+        <span class="fr fr--calc" aria-hidden="true">
+          <span class="calc__r"><i>доход в месяц</i><b>90 000</b></span>
+          <span class="calc__r"><i>уроков в неделю</i><b class="roll"><span>12</span><span>15</span></b></span>
+          <span class="calc__sl"><i></i></span>
+          <span class="calc__out"><b class="roll"><span>1 875</span><span>1 500</span></b><i>руб. за урок</i></span>
+        </span>
+        <span class="tool__n">03</span>
+        <span class="tool__t">Калькулятор ставки<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></span>
+        <span class="tool__d">Сколько брать за&nbsp;урок, чтобы выйти на&nbsp;нужный доход</span>
+      </a></li>
+      <li class="rv" style="--i:3"><a class="tool" href="/instrumenty/plan-uroka/">
+        <span class="fr fr--ai" aria-hidden="true">
+          <span class="ai__q">Дроби, 5 класс, 45 минут</span>
+          <span class="ai__l"><i>1</i>Разминка<b>5 мин</b></span>
+          <span class="ai__l"><i>2</i>Новая тема<b>15 мин</b></span>
+          <span class="ai__l"><i>3</i>Практика<b>20 мин</b></span>
+          <span class="ai__l"><i>4</i>Итог урока<b>5 мин</b></span>
+        </span>
+        <span class="tool__n">04</span>
+        <span class="tool__t">ИИ-генератор плана урока<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></span>
+        <span class="tool__d">Три плана бесплатно по&nbsp;теме и&nbsp;уровню</span>
+      </a></li>
+    </ul>
+  </div>
+  <div class="wrap res__blog">
+    <header class="res__head">
+      <h2 class="h2 h2--xs sp" id="h-blog">Гайды о&nbsp;деньгах, налогах и&nbsp;учениках</h2>
+      <p class="res__more rv">
+        <a class="lnk" href="/blog/">Все статьи блога<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+        <a class="lnk lnk--dim" href="/baza-znanij/">База знаний<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+      </p>
+    </header>
+    <ul class="posts">
+      <li class="rv"><a class="post" href="/blog/gde-iskat-uchenikov/"><span class="post__min"><b>14</b>минут чтения</span><span class="post__tag">поиск учеников</span><span class="post__t">Где искать учеников репетитору в&nbsp;2026&nbsp;году</span><svg class="ic post__go" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a></li>
+      <li class="rv" style="--i:1"><a class="post" href="/blog/samozanyatost/"><span class="post__min"><b>11</b>минут чтения</span><span class="post__tag">налоги</span><span class="post__t">Репетитор-самозанятый: регистрация, чеки и&nbsp;налог по&nbsp;шагам</span><svg class="ic post__go" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a></li>
+      <li class="rv" style="--i:2"><a class="post" href="/blog/luchshie-crm-dlya-repetitorov/"><span class="post__min"><b>16</b>минут чтения</span><span class="post__tag">организация</span><span class="post__t">Лучшие CRM для репетиторов</span><svg class="ic post__go" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a></li>
+    </ul>
+    <div class="cmp rv">
+      <p class="lbl">выбираете сервис</p>
+      <ul>
+        <li><a class="chip" href="/sravnenie/excel/">TeacherDesk или Excel</a></li>
+        <li><a class="chip" href="/blog/luchshie-crm-dlya-repetitorov/">Обзор CRM для репетиторов</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 11. FAQ -->
+<section class="sec faq" aria-labelledby="h-faq">
+  <div class="wrap faq__grid">
+    <header class="faq__head">
+      <p class="eb rv">вопросы</p>
+      <h2 class="h2 h2--sm sp" id="h-faq">Что спрашивают перед регистрацией</h2>
+      <p class="faq__note rv" style="--i:2">Не&nbsp;нашли ответ? Напишите на&nbsp;<a class="ul" href="mailto:info@teacherdesk.ru">info@teacherdesk.ru</a>, отвечаем в&nbsp;течение рабочего дня.</p>
+    </header>
+    <div class="faq__list rv">
+      <details name="faq"><summary><span>01</span>Сколько стоит TeacherDesk?<svg class="ic" aria-hidden="true"><use href="#ic-plus"/></svg></summary><div class="faq__a"><p>Тариф Free бесплатный без срока и подходит для трех учеников. Pro стоит 990 руб. в месяц и рассчитан на 50 учеников, Premium стоит 1 990 руб. в месяц без ограничений. При оплате за год скидка 20 процентов.</p></div></details>
+      <details name="faq"><summary><span>02</span>Нужно ли что-то устанавливать?<svg class="ic" aria-hidden="true"><use href="#ic-plus"/></svg></summary><div class="faq__a"><p>Нет. TeacherDesk работает в браузере на компьютере и телефоне. На телефоне его можно добавить на главный экран, и он будет открываться как обычное приложение.</p></div></details>
+      <details name="faq"><summary><span>03</span>Можно ли перенести учеников из Excel или Google Таблиц?<svg class="ic" aria-hidden="true"><use href="#ic-plus"/></svg></summary><div class="faq__a"><p>Да. Загрузите файл xlsx или csv, сопоставьте колонки, и ученики появятся в списке вместе с контактами и балансом. Если таблицы еще нет, начните с нашего <a class="ul" href="/instrumenty/tablica-ucheta/">бесплатного шаблона</a>.</p></div></details>
+      <details name="faq"><summary><span>04</span>Что увидят ученик и родитель?<svg class="ic" aria-hidden="true"><use href="#ic-plus"/></svg></summary><div class="faq__a"><p>У ученика свой кабинет: расписание, задания и материалы. Родитель видит оплаты, посещаемость и ежемесячный отчет. Данные других учеников им недоступны.</p></div></details>
+      <details name="faq"><summary><span>05</span>Где хранятся данные учеников?<svg class="ic" aria-hidden="true"><use href="#ic-plus"/></svg></summary><div class="faq__a"><p>На серверах в России, обработка по 152-ФЗ. На тарифах Pro и Premium данные можно выгрузить в PDF и Excel в любой момент.</p></div></details>
+      <details name="faq"><summary><span>06</span>Что будет с данными, если перестать платить?<svg class="ic" aria-hidden="true"><use href="#ic-plus"/></svg></summary><div class="faq__a"><p>Данные сохраняются. Аккаунт переходит на тариф Free, и вы продолжаете работать в пределах его лимитов.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 12. Финальный призыв -->
+<section class="cta" aria-labelledby="h-cta">
+  <div class="cta__bg" aria-hidden="true"><i class="cta__arc" data-lamp=".5 0 1.5 1"></i></div>
+  <div class="wrap cta__in">
+    <p class="pill rv"><i class="dot" aria-hidden="true"></i>первый урок сегодня</p>
+    <h2 class="h2 cta__h sp" id="h-cta">Перенесите учеников из&nbsp;таблицы и&nbsp;отметьте первый урок сегодня</h2>
+    <div class="hero__cta rv" style="--i:2">
+      <a class="btn btn--y" href="https://teacherdesk.ru/register">Начать бесплатно<svg class="ic" aria-hidden="true"><use href="#ic-arrow-right"/></svg></a>
+      <a class="btn btn--g" href="/pricing/">Сравнить тарифы</a>
+    </div>
+    <p class="hero__trust rv" style="--i:3"><span>бесплатно до&nbsp;трех учеников</span><span>без карты</span><span>данные хранятся в&nbsp;России</span></p>
+  </div>
+</section>
+
+</main>
+
+<!-- 13. Подвал -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <a href="/" aria-label="TeacherDesk, на главную"><img src="../assets/img/logo-inverse.svg" width="142" height="24" alt="TeacherDesk" loading="lazy"></a>
+        <p>Платформа для частных репетиторов: расписание, учет оплат, домашние задания и ИИ-ассистент в одном окне.</p>
+        <a class="ftr__mail" href="mailto:info@teacherdesk.ru"><svg class="ic" aria-hidden="true"><use href="#ic-mail"/></svg>info@teacherdesk.ru</a>
+      </div>
+      <nav class="ftr__cols" aria-label="Карта сайта">
+        <div>
+          <p class="ftr__h">Продукт</p>
+          <ul>
+            <li><a href="/">Платформа для репетиторов</a></li>
+            <li><a href="/crm-dlya-repetitora/">CRM для репетитора</a></li>
+            <li><a href="/programma-dlya-repetitora/">Программа для репетитора</a></li>
+            <li><a href="/prilozhenie-dlya-repetitora/">Приложение для репетитора</a></li>
+            <li><a href="/besplatnaya-platforma-dlya-repetitorov/">Бесплатная платформа</a></li>
+            <li><a href="/pricing/">Тарифы</a></li>
+            <li><a href="/otzyvy/">Отзывы и истории</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="ftr__h">Возможности</p>
+          <ul>
+            <li><a href="/features/raspisanie/">Расписание</a></li>
+            <li><a href="/features/uchet-oplat/">Учет оплат</a></li>
+            <li><a href="/features/uchet-uchenikov/">Учет учеников</a></li>
+            <li><a href="/features/kabinet-uchenika/">Кабинет ученика</a></li>
+            <li><a href="/features/domashnie-zadaniya/">Домашние задания</a></li>
+            <li><a href="/features/onlayn-doska/">Онлайн-доска</a></li>
+            <li><a href="/features/ii-assistent/">ИИ-ассистент</a></li>
+            <li><a href="/features/otchety-roditelyam/">Отчеты родителям</a></li>
+            <li><a href="/features/zhurnal-zanyatiy/">Журнал занятий</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="ftr__h">Для кого</p>
+          <ul>
+            <li><a href="/dlya/anglijskij/">Английский</a></li>
+            <li><a href="/dlya/matematika/">Математика</a></li>
+            <li><a href="/dlya/ege-oge/">ЕГЭ и ОГЭ</a></li>
+            <li><a href="/dlya/nachinayushchih/">Начинающим</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="ftr__h">Инструменты</p>
+          <ul>
+            <li><a href="/instrumenty/tablica-ucheta/">Шаблон таблицы учета</a></li>
+            <li><a href="/instrumenty/dogovor/">Генератор договора</a></li>
+            <li><a href="/instrumenty/kalkulyator/">Калькулятор ставки</a></li>
+            <li><a href="/instrumenty/plan-uroka/">ИИ-генератор плана урока</a></li>
+            <li><a href="/sravnenie/excel/">TeacherDesk или Excel</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="ftr__h">Полезное</p>
+          <ul>
+            <li><a href="/blog/">Блог</a></li>
+            <li><a href="/baza-znanij/">База знаний</a></li>
+            <li><a href="/blog/gde-iskat-uchenikov/">Где искать учеников</a></li>
+            <li><a href="/blog/samozanyatost/">Репетитор-самозанятый</a></li>
+            <li><a href="/blog/luchshie-crm-dlya-repetitorov/">Лучшие CRM для репетиторов</a></li>
+            <li><a href="/about/">О сервисе</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="ftr__legal">
+      <ul class="ftr__docs">
+        <li><a href="https://teacherdesk.ru/privacy">Политика конфиденциальности</a></li>
+        <li><a href="https://teacherdesk.ru/terms">Пользовательское соглашение</a></li>
+        <li><a href="https://teacherdesk.ru/offer">Публичная оферта</a></li>
+        <li><a href="https://teacherdesk.ru/consent">Согласие на обработку ПДн</a></li>
+        <li><a href="https://teacherdesk.ru/cookies">Политика cookies</a></li>
+        <li><a href="https://teacherdesk.ru/requisites">Реквизиты</a></li>
+      </ul>
+      <p>ИП Булитко А.В. · ИНН 745604136907 · ОГРНИП 324508100646384 · г. Москва</p>
+      <p>Персональные данные обрабатываются по 152-ФЗ и хранятся на серверах в России. Регистрация лиц до 14 лет только с согласия родителя или законного представителя.</p>
+      <p>© 2026 TeacherDesk · Разработано в России · 16+</p>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+<script src="../shared/switcher.js" data-concept="2" defer></script>
+</body>
+</html>

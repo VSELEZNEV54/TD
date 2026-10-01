@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>TeacherDesk · архитектура сайта</title>
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<style>
+@font-face{font-family:"Geist";font-weight:400;font-display:swap;src:url("assets/fonts/geist-400.woff2") format("woff2")}
+@font-face{font-family:"Geist";font-weight:500;font-display:swap;src:url("assets/fonts/geist-500.woff2") format("woff2")}
+@font-face{font-family:"Geist";font-weight:600;font-display:swap;src:url("assets/fonts/geist-600.woff2") format("woff2")}
+@font-face{font-family:"Geist Mono";font-weight:400;font-display:swap;src:url("assets/fonts/geist-mono-400.woff2") format("woff2")}
+:root{--bg:#F4F4F7;--ink:#22232E;--text:#545664;--muted:#6C6D79;--line:#C9CAD3;--soft:#DFDFE4;--card:#FFFFFF;--blue:#445BF6;--blue-d:#3547C0;--blue-l:#EBEEFE;--yellow:#F4EA00;--gap:12px;--drop:22px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 Geist,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,p,ul,ol{margin:0;padding:0}
+ul,ol{list-style:none}
+::selection{background:var(--yellow);color:var(--ink)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.wrap{width:min(100% - 48px,1320px);margin:0 auto;padding:56px 0 96px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px 24px;flex-wrap:wrap;margin-bottom:48px}
+.top img{width:150px;height:auto;display:block}
+.tabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:#E9E9EE}
+.tabs a{display:inline-flex;align-items:center;height:40px;padding:0 18px;border-radius:999px;color:var(--text);text-decoration:none;font-weight:500;font-size:15px;transition:background-color .15s,color .15s}
+.tabs a:hover{color:var(--ink)}
+.tabs a[aria-current]{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(34,35,46,.10)}
+h1{font-size:clamp(34px,5vw,58px);line-height:1.03;letter-spacing:-.035em;font-weight:600;max-width:18ch}
+.lead{margin-top:20px;color:var(--text);font-size:18px;max-width:60ch}
+h2{font-size:clamp(24px,3vw,34px);line-height:1.1;letter-spacing:-.025em;font-weight:600}
+code{display:block;font:400 11px/1.35 "Geist Mono",ui-monospace,monospace;color:var(--muted);word-break:break-word}
+
+/* ---------- схема: как оргструктура ---------- */
+.org{margin-top:56px;padding:32px 24px 28px;background:var(--card);border:1px solid var(--soft);border-radius:28px}
+.root{display:grid;justify-items:center}
+.root__box{display:grid;gap:2px;justify-items:center;text-align:center;padding:14px 28px;border-radius:16px;background:var(--ink);color:#fff}
+.root__box b{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.root__box span{font-size:13px;color:#C9CAD3}
+.root__box code{color:var(--yellow)}
+.deps{display:grid;gap:var(--gap);margin-top:20px}
+.dep__box{display:grid;gap:2px;align-content:start;padding:12px 14px;border-radius:14px;background:var(--blue-l);border:1px solid #C6CDFC;min-height:104px}
+.dep__box b{font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--blue-d)}
+.dep__box span{font-size:12.5px;line-height:1.35;color:var(--text)}
+.dep__box code{color:var(--blue-d);margin-top:2px}
+.dep__box em{font-style:normal;font-size:12px;color:var(--muted);margin-top:auto;padding-top:6px;font-variant-numeric:tabular-nums}
+.dep__pages{display:grid;gap:6px;margin:10px 0 0 10px;padding-left:12px}
+.dep__pages li{position:relative;padding:8px 10px;border-radius:10px;background:var(--bg);border:1px solid var(--soft)}
+/* веточка к странице: вертикаль от предыдущей ячейки и горизонтальный отвод */
+.dep__pages li::before{content:"";position:absolute;left:-13px;top:18px;width:12px;height:1px;background:var(--line)}
+.dep__pages li::after{content:"";position:absolute;left:-13px;top:-7px;width:1px;height:calc(100% + 7px);background:var(--line)}
+.dep__pages li:first-child::after{top:-11px;height:calc(100% + 11px)}
+.dep__pages li:last-child::after{height:26px}
+.dep__pages li:first-child:last-child::after{height:30px}
+.dep__pages b{display:block;font-size:13px;line-height:1.3;font-weight:500}
+.dep__pages li:hover{background:#fff;border-color:var(--line)}
+
+@media (min-width:1180px){
+  .root{position:relative;padding-bottom:var(--drop)}
+  .root::after{content:"";position:absolute;left:50%;bottom:0;width:1px;height:var(--drop);background:var(--line)}
+  .deps{grid-template-columns:repeat(7,minmax(0,1fr));margin-top:0;padding-top:var(--drop)}
+  .dep{position:relative}
+  /* вертикаль от общей линии к разделу и сама общая линия */
+  .dep::before{content:"";position:absolute;left:50%;top:calc(-1 * var(--drop));width:1px;height:var(--drop);background:var(--line)}
+  .dep::after{content:"";position:absolute;top:calc(-1 * var(--drop));left:calc(-0.5 * var(--gap));right:calc(-0.5 * var(--gap));height:1px;background:var(--line)}
+  .dep:first-child::after{left:50%}
+  .dep:last-child::after{right:50%}
+}
+@media (min-width:640px) and (max-width:1179px){
+  .deps{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px 16px}
+  .dep__box{min-height:0}
+}
+@media (max-width:639px){
+  .org{padding:24px 16px}
+  .root{justify-items:stretch}
+  .deps{margin:0 0 0 14px;padding:16px 0 0 14px;border-left:1px solid var(--line);gap:18px}
+  .dep{position:relative}
+  .dep::before{content:"";position:absolute;left:-15px;top:24px;width:14px;height:1px;background:var(--line)}
+  .dep__box{min-height:0}
+}
+.org__legend{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:24px;padding-top:16px;border-top:1px solid var(--soft);font-size:13px;color:var(--muted)}
+.org__legend span{display:inline-flex;align-items:center;gap:8px}
+.org__legend i{width:14px;height:14px;border-radius:4px;display:block}
+.i-root{background:var(--ink)}
+.i-dep{background:var(--blue-l);border:1px solid #C6CDFC}
+.i-pg{background:var(--bg);border:1px solid var(--soft)}
+
+/* ---------- плюсы ---------- */
+.plus{margin-top:72px}
+.plus ol{display:grid;margin-top:24px;border-top:1px solid var(--soft);counter-reset:pl}
+@media (min-width:860px){.plus ol{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:56px}}
+.plus li{counter-increment:pl;display:grid;grid-template-columns:36px minmax(0,1fr);gap:4px 12px;padding:20px 0;border-bottom:1px solid var(--soft)}
+.plus li::before{content:counter(pl,decimal-leading-zero);font:400 13px/1.9 "Geist Mono",ui-monospace,monospace;color:var(--muted)}
+.plus b{font-size:18px;font-weight:600;letter-spacing:-.01em}
+.plus p{grid-column:2;color:var(--text);max-width:52ch}
+.plus mark{background:linear-gradient(transparent 62%,var(--yellow) 62%);color:inherit}
+
+.src{margin-top:48px;font-size:13px;color:var(--muted);max-width:80ch}
+.back{display:inline-flex;align-items:center;height:44px;padding:0 20px;margin-top:28px;border-radius:999px;background:var(--ink);color:#fff;text-decoration:none;font-weight:500;transition:background-color .15s}
+.back:hover{background:var(--blue)}
+@media (prefers-reduced-motion:reduce){*{transition:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="top">
+      <img src="assets/img/logo.svg" alt="TeacherDesk" width="150" height="25">
+      <nav class="tabs" aria-label="Разделы презентации">
+        <a href="index.html">Концепции дизайна</a>
+        <a href="architecture.html" aria-current="page">Архитектура сайта</a>
+      </nav>
+    </div>
+    <h1>Структура нового сайта: 45 страниц в семи разделах</h1>
+    <p class="lead">Сайт устроен как компания: главная наверху, под ней разделы, у каждого раздела свои страницы и своя задача. Сейчас на сайте 23 страницы и все функции описаны на одной.</p>
+  </header>
+
+  <main>
+  <section class="org" aria-label="Схема сайта">
+    <div class="root"><div class="root__box"><b>Главная</b><span>объясняет продукт и ведет во все разделы</span><code>/</code></div></div>
+    <ol class="deps">
+    <li class="dep">
+      <div class="dep__box"><b>Продукт</b><span>для тех, кто ищет сервис</span><em>5 страниц</em></div>
+      <ul class="dep__pages"><li title="/crm-dlya-repetitora/"><b>CRM для репетитора</b></li><li title="/programma-dlya-repetitora/"><b>Программа для репетитора</b></li><li title="/prilozhenie-dlya-repetitora/"><b>Приложение для репетитора</b></li><li title="/besplatnaya-platforma-dlya-repetitorov/"><b>Бесплатная платформа</b></li><li title="/pricing/"><b>Тарифы</b></li></ul>
+    </li><li class="dep">
+      <div class="dep__box" title="/features/"><b>Возможности</b><span>страница под каждую функцию</span><em>10 страниц</em></div>
+      <ul class="dep__pages"><li title="/features/raspisanie/"><b>Расписание</b></li><li title="/features/uchet-oplat/"><b>Учет оплат</b></li><li title="/features/uchet-uchenikov/"><b>Учет учеников</b></li><li title="/features/kabinet-uchenika/"><b>Кабинет ученика</b></li><li title="/features/domashnie-zadaniya/"><b>Домашние задания</b></li><li title="/features/onlayn-doska/"><b>Онлайн-доска</b></li><li title="/features/ii-assistent/"><b>ИИ-ассистент</b></li><li title="/features/otchety-roditelyam/"><b>Отчеты родителям</b></li><li title="/features/zhurnal-zanyatiy/"><b>Журнал занятий</b></li></ul>
+    </li><li class="dep">
+      <div class="dep__box" title="/instrumenty/"><b>Инструменты</b><span>бесплатная польза и сравнение с таблицами</span><em>6 страниц</em></div>
+      <ul class="dep__pages"><li title="/instrumenty/tablica-ucheta/"><b>Шаблон таблицы учета</b></li><li title="/instrumenty/dogovor/"><b>Генератор договора</b></li><li title="/instrumenty/kalkulyator/"><b>Калькулятор ставки</b></li><li title="/instrumenty/plan-uroka/"><b>ИИ-генератор плана урока</b></li><li title="/sravnenie/excel/"><b>TeacherDesk или Excel</b></li></ul>
+    </li><li class="dep">
+      <div class="dep__box"><b>Для кого</b><span>под предмет и ситуацию</span><em>4 страницы</em></div>
+      <ul class="dep__pages"><li title="/dlya/anglijskij/"><b>Репетиторам английского</b></li><li title="/dlya/matematika/"><b>Репетиторам математики</b></li><li title="/dlya/ege-oge/"><b>Подготовка к ЕГЭ и ОГЭ</b></li><li title="/dlya/nachinayushchih/"><b>Начинающим репетиторам</b></li></ul>
+    </li><li class="dep">
+      <div class="dep__box" title="/blog/"><b>Блог</b><span>ответы на вопросы репетиторов</span><em>7 страниц</em></div>
+      <ul class="dep__pages"><li title="/blog/kak-stat-repetitorom/"><b>Как стать репетитором</b></li><li title="/blog/gde-iskat-uchenikov/"><b>Где искать учеников</b></li><li title="/blog/samozanyatost/"><b>Репетитор-самозанятый</b></li><li title="/blog/skolko-brat-za-urok/"><b>Сколько брать за урок</b></li><li title="/blog/luchshie-crm-dlya-repetitorov/"><b>Лучшие CRM для репетиторов</b></li><li title="/blog/kak-sostavit-raspisanie/"><b>Как составить расписание</b></li></ul>
+    </li><li class="dep">
+      <div class="dep__box" title="/baza-znanij/"><b>База знаний</b><span>как пользоваться сервисом</span><em>9 страниц</em></div>
+      <ul class="dep__pages"><li title="/baza-znanij/pervye-shagi/"><b>Первые шаги</b></li><li title="/baza-znanij/import-iz-excel/"><b>Перенос учеников из Excel</b></li><li title="/baza-znanij/ustanovka-na-telefon/"><b>Установка на телефон</b></li><li title="/baza-znanij/povtoryayushchiesya-uroki/"><b>Повторяющиеся уроки и напоминания</b></li><li title="/baza-znanij/priglasit-uchenika/"><b>Как пригласить ученика и родителя</b></li><li title="/baza-znanij/proverka-zadaniy/"><b>Выдать и проверить задание</b></li><li title="/baza-znanij/napominaniya-ob-oplate/"><b>Напоминания об оплате</b></li><li title="/baza-znanij/tarify-i-oplata/"><b>Смена тарифа и оплата</b></li></ul>
+    </li><li class="dep">
+      <div class="dep__box"><b>Доверие</b><span>кто мы и что о нас говорят</span><em>3 страницы</em></div>
+      <ul class="dep__pages"><li title="/otzyvy/"><b>Отзывы и истории</b></li><li title="/about/"><b>О сервисе</b></li><li title="/404.html"><b>Страница не найдена</b></li></ul>
+    </li>
+    </ol>
+    <p class="org__legend"><span><i class="i-root"></i>главная</span><span><i class="i-dep"></i>раздел</span><span><i class="i-pg"></i>страница, адрес виден при наведении</span></p>
+  </section>
+
+  <section class="plus" aria-labelledby="plus-h">
+    <h2 id="plus-h">В чем плюсы такой структуры</h2>
+    <ol>
+      <li><b>Под каждый запрос своя страница</b><p>Человек ищет «расписание репетитора» и попадает на страницу про расписание, а не на общую. Сейчас <mark>71 из 80 запросов</mark> ниши остаются без страницы.</p></li>
+      <li><b>Больше входов на сайт</b><p>Люди приходят не только за сервисом: за шаблоном таблицы, договором, ответом про налоги. У каждого повода свой раздел, и каждый ведет к бесплатной регистрации.</p></li>
+      <li><b>Все в двух кликах от главной</b><p>Главная, раздел, страница. Посетитель не теряется, а поисковики быстро находят и понимают каждую страницу.</p></li>
+      <li><b>Понятные адреса</b><p>По адресу <mark>/features/raspisanie/</mark> ясно, что внутри. Такие ссылки охотнее открывают в поиске и ими проще делиться.</p></li>
+      <li><b>Сайт легко растет</b><p>Новая статья, инструмент или предмет просто добавляются в свой раздел. Перестраивать сайт для этого не нужно.</p></li>
+      <li><b>Страницы помогают друг другу</b><p>Статья ведет к инструменту, инструмент к функции, функция к регистрации. Посетитель не упирается в тупик на любой странице.</p></li>
+    </ol>
+  </section>
+  </main>
+
+  <p class="src">Состав страниц и запросы взяты из исследования ниши от 24.09.2026: 80 запросов репетиторов, под 71 из них на текущем сайте нет страницы.</p>
+  <a class="back" href="index.html">Посмотреть концепции дизайна</a>
+</div>
+</body>
+</html>
