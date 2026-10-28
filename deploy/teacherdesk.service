@@ -1,0 +1,23 @@
+[Unit]
+Description=TeacherDesk website and request API
+After=network.target
+
+[Service]
+User=teacherdesk
+Group=teacherdesk
+WorkingDirectory=/var/www/teacherdesk
+EnvironmentFile=/var/www/teacherdesk/.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/var/www/teacherdesk/.venv/bin/gunicorn --config deploy/gunicorn.conf.py server.app:application
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/teacherdesk/server/data
+TimeoutStopSec=35
+
+[Install]
+WantedBy=multi-user.target
