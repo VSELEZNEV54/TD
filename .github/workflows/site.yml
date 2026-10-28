@@ -24,15 +24,15 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      DATA_DIR: ${{ runner.temp }}/teacherdesk-test-data
-      ADMIN_TOKEN: ci-only-test-token-not-a-production-secret-2026
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
       - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: '3.12'
       - name: Проверки сервера и Pages
+        env:
+          DATA_DIR: ${{ runner.temp }}/teacherdesk-test-data
+          ADMIN_TOKEN: ci-only-test-token-not-a-production-secret-2026
         run: python3 -m unittest discover -s tests -v
       - name: Собрать все страницы для проверки
         run: |
