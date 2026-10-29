@@ -7,7 +7,7 @@
 .fx-board-canvas.board{min-width:0;border-radius:var(--r-s);box-shadow:0 0 0 1px var(--line),var(--sh-1)}
 .fx-board-canvas .board__bar{height:38px;padding-inline:10px;gap:8px}
 .fx-board-tools{display:flex;gap:4px;min-width:0}
-.fx-board-tool{display:grid;place-items:center;width:24px;height:24px;border-radius:6px;color:var(--muted)}
+.fx-board-tool{display:grid;place-items:center;width:24px;height:24px;border-radius:var(--r-xs);color:var(--muted)}
 .fx-board-tool.is-on{background:var(--blue);color:#fff}
 .fx-board-canvas .board__sheet{padding:5px 7px;font-size:10px;white-space:nowrap}
 .fx-board-paper.board__area{height:236px}

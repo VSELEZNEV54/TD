@@ -342,11 +342,11 @@ def zhurnal():
         'chapters': [
             {'t': 'Урок отмечен', 'cap': 'Проведенный урок встает в журнал с темой.', 'scene': f'''<div class="mf mf--one">
   <div class="mf-card mf-card--wide"><p class="mf-jh"><span>Дата</span><span>Ученик</span><span>Тема</span><span>Статус</span></p>
-    <ul class="mf-jr"><li class="mf-jr--new"{A(400, "pop")}><time>01.10</time><b>Марина К.</b><span>Неравенства</span>{chip("paid", "был")}</li><li><time>30.09</time><b>Соня В.</b><span>ОГЭ, задание 20</span>{chip("paid", "был")}</li><li><time>29.09</time><b>Илья П.</b><span>Present Perfect</span>{chip("paid", "был")}</li></ul></div>
+    <ul class="mf-jr"><li class="mf-jr--new"{A(400, "pop")}><time>30.09</time><b>Марина К.</b><span>Неравенства</span>{chip("paid", "был")}</li><li><time>30.09</time><b>Соня В.</b><span>ОГЭ, задание 20</span>{chip("paid", "был")}</li><li><time>29.09</time><b>Илья П.</b><span>Present Perfect</span>{chip("paid", "был")}</li></ul></div>
 </div>'''},
             {'t': 'Что задано', 'cap': 'Задание к уроку записано рядом с темой.', 'scene': f'''<div class="mf mf--one">
   <div class="mf-card mf-card--wide"><p class="mf-jh"><span>Дата</span><span>Ученик</span><span>Тема</span><span>Задано</span></p>
-    <ul class="mf-jr"><li><time>01.10</time><b>Марина К.</b><span>Неравенства</span><em{A(400, "type")}>Вариант 3</em></li><li><time>30.09</time><b>Соня В.</b><span>ОГЭ, задание 20</span><em{A(1000, "type")}>5 задач</em></li><li><time>29.09</time><b>Илья П.</b><span>Present Perfect</span><em{A(1600, "type")}>Упр. 4-6</em></li></ul></div>
+    <ul class="mf-jr"><li><time>30.09</time><b>Марина К.</b><span>Неравенства</span><em{A(400, "type")}>Вариант 3</em></li><li><time>30.09</time><b>Соня В.</b><span>ОГЭ, задание 20</span><em{A(1000, "type")}>5 задач</em></li><li><time>29.09</time><b>Илья П.</b><span>Present Perfect</span><em{A(1600, "type")}>Упр. 4-6</em></li></ul></div>
 </div>'''},
             {'t': 'Пропуск виден', 'cap': 'Пропуски отмечены, их легко обсудить с родителем.', 'scene': f'''<div class="mf mf--one">
   <div class="mf-card mf-card--wide"><p class="mf-jh"><span>Дата</span><span>Ученик</span><span>Тема</span><span>Статус</span></p>

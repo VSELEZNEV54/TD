@@ -21,7 +21,7 @@ def frame(title, body, cls='', pd=None, live=True, label=''):
 
 TL = '''<figure class="pd-demo pd-tl" role="img" aria-label="Лента дня: четыре урока с 14:00 до 20:00, урок с Соней идет сейчас. Марине К. ушло напоминание за час до урока">
   <div class="pd-tl__in" aria-hidden="true">
-    <div class="pd-tl__axis"><span style="--s:0">13:00</span><span style="--s:1">14:00</span><span style="--s:2">15:00</span><span style="--s:3">16:00</span><span class="pd-tl__far" style="--s:4">17:00</span><span class="pd-tl__far" style="--s:5">18:00</span><span class="pd-tl__far" style="--s:6">19:00</span><span class="pd-tl__far" style="--s:7">20:00</span></div>
+    <div class="pd-tl__axis"><span style="--s:0">13:00</span><span style="--s:1">14:00</span><span style="--s:2">15:00</span><span style="--s:3">16:00</span><span style="--s:4">17:00</span><span class="pd-tl__far" style="--s:5">18:00</span><span class="pd-tl__far" style="--s:6">19:00</span><span class="pd-tl__far" style="--s:7">20:00</span></div>
     <div class="pd-tl__track">
       <div class="pd-tl__ls pd-tl__ls--now" style="--s:1"><b>ОГЭ</b><span>Соня В.</span></div>
       <div class="pd-tl__ls pd-tl__ls--paid" style="--s:2.5"><b>Алгебра</b><span>Марина К.</span></div>
@@ -80,17 +80,32 @@ AI = '''<div class="pd-demo pd-ai">
   <p class="pd-ai__save"><svg class="ic"><use href="#i-lock"/></svg>Сохранится только после вашего подтверждения</p>
 </div>'''
 
+# Тот же диалог ассистента, но запрос на задания: подборка с ответами, выдача после проверки.
+AI_TASKS = '''<div class="pd-demo pd-ai">
+  <p class="pd-ai__me">4 задания: квадратные уравнения, 8&nbsp;класс, с&nbsp;ответами</p>
+  <div class="pd-ai__bot">
+    <p class="pd-ai__who"><span class="pulse" aria-hidden="true"></span>ИИ-ассистент<span class="pd-ai__dots" aria-hidden="true"><i></i><i></i><i></i></span></p>
+    <ol class="pd-ai__plan">
+      <li><span data-pd-type>x² - 7x + 12 = 0</span><time>3; 4</time></li>
+      <li><span data-pd-type>x² + 2x - 15 = 0</span><time>-5; 3</time></li>
+      <li><span data-pd-type>2x² - 8 = 0</span><time>-2; 2</time></li>
+      <li><span data-pd-type>Задача: площадь прямоугольника 48&nbsp;см²</span><time>6 и 8</time></li>
+    </ol>
+  </div>
+  <p class="pd-ai__save"><svg class="ic"><use href="#i-lock"/></svg>Ученик получит задания после вашей проверки</p>
+</div>'''
+
 
 def week():
     body = '''<div class="pd-week pd-week--hero">
       <div class="pd-week__head"><b>Неделя</b><span>28.09&nbsp;- 02.10</span></div>
       <div class="pd-week__grid">
         <span class="pd-week__d"></span><span class="pd-week__d">пн</span><span class="pd-week__d">вт</span><span class="pd-week__d is-today">ср</span><span class="pd-week__d">чт</span><span class="pd-week__d">пт</span>
-        <span class="pd-week__h">09:00</span><i class="pd-wl pd-wl--paid">Алгебра</i><i></i><i></i><i class="pd-wl pd-wl--wait">Геометрия</i><i></i>
-        <span class="pd-week__h">10:30</span><i></i><i class="pd-wl pd-wl--paid">Английский</i><i></i><i></i><i class="pd-wl pd-wl--paid">Английский</i>
-        <span class="pd-week__h">14:00</span><i class="pd-wl pd-wl--paid">Физика</i><i></i><i class="pd-wl pd-wl--now">ОГЭ</i><i></i><i></i>
-        <span class="pd-week__h">15:30</span><i></i><i></i><i class="pd-wl pd-wl--paid">Алгебра</i><i class="pd-wl pd-wl--move">Химия</i><i></i>
-        <span class="pd-week__h">17:15</span><i></i><i class="pd-wl pd-wl--paid">Русский</i><i class="pd-wl pd-wl--wait">Физика</i><i></i><i></i>
+        <span class="pd-week__h">09:00</span><i class="pd-wl pd-wl--paid" data-s="Алг">Алгебра</i><i></i><i></i><i class="pd-wl pd-wl--wait" data-s="Геом">Геометрия</i><i></i>
+        <span class="pd-week__h">10:30</span><i></i><i class="pd-wl pd-wl--paid" data-s="Англ">Английский</i><i></i><i></i><i class="pd-wl pd-wl--paid" data-s="Англ">Английский</i>
+        <span class="pd-week__h">14:00</span><i class="pd-wl pd-wl--paid" data-s="Физ">Физика</i><i></i><i class="pd-wl pd-wl--now">ОГЭ</i><i></i><i></i>
+        <span class="pd-week__h">15:30</span><i></i><i></i><i class="pd-wl pd-wl--paid" data-s="Алг">Алгебра</i><i class="pd-wl pd-wl--move" data-s="Хим">Химия</i><i></i>
+        <span class="pd-week__h">17:15</span><i></i><i class="pd-wl pd-wl--paid" data-s="Рус">Русский</i><i class="pd-wl pd-wl--wait" data-s="Физ">Физика</i><i></i><i></i>
       </div>
     </div>
     <div class="pd-week__foot"><p><b>4 урока</b><span>сегодня</span></p><p><small>СЛЕДУЮЩИЙ УРОК</small><b>Алгебра · 15:30</b></p></div>
@@ -176,13 +191,14 @@ def report():
 
 
 def journal():
-    rows = [('30.09', 'Марина К.', 'Квадратные уравнения', 'Вариант 2', 'chip--paid', 'был'),
-            ('29.09', 'Соня В.', 'ОГЭ, задание 20', '5 задач', 'chip--paid', 'был'),
+    # Сегодня среда, 30 сентября, как во всех кадрах сайта
+    rows = [('29.09', 'Соня В.', 'ОГЭ, задание 20', '5 задач', 'chip--paid', 'был'),
             ('28.09', 'Артем Д.', 'Законы Ньютона', 'нет', 'chip--debt', 'пропуск'),
-            ('25.09', 'Илья П.', 'Present Perfect', 'Упр. 4-6', 'chip--soon', 'перенос')]
+            ('25.09', 'Илья П.', 'Present Perfect', 'Упр. 4-6', 'chip--soon', 'перенос'),
+            ('23.09', 'Марина К.', 'Квадратные уравнения', 'Вариант 2', 'chip--paid', 'был')]
     lis = ''.join(f'<li><time>{d}</time><b>{w}</b><span>{t}</span><span class="pd-jr__hw">{h}</span><span class="chip {c}">{s}</span></li>' for d, w, t, h, c, s in rows)
     body = f'''<p class="pd-jr__head"><span>Дата</span><span>Ученик</span><span>Тема</span><span>Задано</span><span>Статус</span></p>
-    <ul class="pd-jr__rows"><li class="pd-jr__new"><time>01.10</time><b>Марина К.</b><span>Неравенства</span><span class="pd-jr__hw">Вариант 3</span><span class="chip chip--done">сегодня</span></li>{lis}</ul>
+    <ul class="pd-jr__rows"><li class="pd-jr__new"><time>30.09</time><b>Марина К.</b><span>Неравенства</span><span class="pd-jr__hw">Вариант 3</span><span class="chip chip--done">сегодня</span></li>{lis}</ul>
     <p class="pd-jr__foot"><span>За&nbsp;сентябрь</span><b>31 урок · 2 пропуска</b></p>'''
     return frame('Журнал · сентябрь', body, 'frame--jr', label='Журнал занятий: даты, ученики, темы, заданное и статусы посещения, итог месяца 31 урок и 2 пропуска')
 
@@ -223,5 +239,7 @@ def get(name):
         return frame('Задания · проверка', HW, 'frame--hw', pd='hw')
     if name == 'ai':
         return frame('ИИ-ассистент', AI, 'frame--ai', pd='ai')
+    if name == 'ai-tasks':
+        return frame('ИИ-ассистент · задания', AI_TASKS, 'frame--ai', pd='ai')
     return {'week': week, 'board': board, 'phone': phone, 'card': card, 'cabinet': cabinet,
             'report': report, 'journal': journal, 'desk': desk, 'trial': trial}[name]()

@@ -9,7 +9,7 @@ def heading(kick, title, *args):
 
 
 def counter(index, total, icon='calendar'):
-    return f'<div class="sc-index"><span class="sc-index__icon">{ic("home")}</span><span>Возможность <b>1</b><span class="sc-index__of"> из 9</span></span></div>'
+    return f'<div class="sc-index"><span class="sc-index__icon">{ic(icon)}</span><span>Возможность <b>{index}</b><span class="sc-index__of"> из {total}</span></span></div>'
 
 
 def story(c):
@@ -24,7 +24,7 @@ def story(c):
     ]
     windows = ''.join(f'<div class="ftool" style="--x:{x};--y:{y};--r:0deg"><span class="ftool__bar">{ic(icon)}<span class="ftool__name">{typo(title)}</span></span><span class="ftool__body">{typo(body)}</span><span class="ftool__ping">{typo(ping)}</span></div>' for icon, title, body, ping, x, y in tools)
     benefits = [
-        ('plus', 'Новый урок за 5 секунд', 'Ученик, дата, повтор, сохранить'),
+        ('plus', 'Новый урок за секунды', 'Ученик, дата, повтор, сохранить'),
         ('refresh', 'Повтор задали один раз', 'Без копирования каждой недели'),
         ('calendar', 'Перенос в два клика', 'Новое время сразу у ученика'),
         ('bell', 'Напоминание за час', 'Вместо ручных сообщений'),

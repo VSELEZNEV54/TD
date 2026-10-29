@@ -19,7 +19,7 @@ def visual(kind, lines):
     elif kind == 'notice':
         body = f'<span class="fx-mini__icon">{ic("bell")}</span><b>{title}</b><small>{items[0]}</small>'
     elif kind == 'link':
-        body = f'<small>{title}</small><span class="fx-mini__link">{ic("link")}Ссылка в кабинете</span><b class="fx-mini__action">{items[0]} {ic("arrow", "ic ic--12")}</b>'
+        body = f'<small>{title}</small><span class="fx-mini__link">{ic("link")}Ссылка в кабинете</span><b class="fx-mini__action">{items[0]}</b>'
     elif kind == 'phone':
         body = f'<i class="fx-mini__notch"></i><small>{title}</small><b>{items[0]}</b><span class="fx-mini__row">{items[1]}</span><span class="fx-mini__action">{ic("check", "ic ic--12")}В кабинете</span>'
     elif kind == 'cards':
