@@ -106,7 +106,7 @@ def hero_vis(h):
 LANDINGS = ['crm', 'programma', 'prilozhenie', 'besplatnaya', 'onlayn']
 FEATURES = ['raspisanie', 'uchet-oplat', 'uchet-uchenikov', 'kabinet-uchenika', 'domashnie-zadaniya', 'onlayn-doska',
             'ii-assistent', 'otchety-roditelyam', 'zhurnal-zanyatiy']
-TOOLS = ['kalkulyator', 'dogovor']
+TOOLS = ['kalkulyator', 'anketa', 'dogovor']
 TAGS = {
     'home': LANDINGS + ['onlayn-doska', 'raspisanie', 'uchet-oplat', 'ii-assistent', 'tablica-ucheta', 'pricing'],
     'landing': LANDINGS + ['onlayn-doska', 'raspisanie', 'uchet-oplat', 'ii-assistent', 'zhurnal-zanyatiy', 'tablica-ucheta', 'pricing'],
@@ -229,7 +229,7 @@ def product(p, c, x):
            P.compare(c['compare']),
            P.about(),
            feature_cards(x.reg, feats, x.visible, fa.get('h2', 'Девять функций TeacherDesk в&nbsp;одном кабинете'), fa.get('kicker', 'Все функции'),
-                         fa.get('lead', ''), 'h-all', ('Все возможности', '/features/')).replace('class="sec"', 'class="sec sec--tint sec--allf"', 1),
+                         fa.get('lead', ''), 'h-all', ('Все возможности', '/features/')).replace('class="sec sec--allf"', 'class="sec sec--tint sec--allf"', 1),
            pricing_block(c.get('pricing_h2', 'Две недели бесплатно, дальше от <em class="em">990 руб.</em>'), tint=False),
            stories_block(tint=True),
            faq(c['faq'], c.get('faq_h2', 'Частые вопросы')),
@@ -263,7 +263,7 @@ def feature(p, c, x):
     out.append(feature_cards(x.reg, other_features, x.visible,
                              f'Еще {count_label} платформы',
                              'Другие возможности', 'Все функции TeacherDesk связаны между собой. Выберите, что посмотреть дальше.',
-                             'h-related', ('Все возможности', '/features/')).replace('<section class="sec"', '<section class="sec sec--tint"', 1))
+                             'h-related', ('Все возможности', '/features/')).replace('<section class="sec sec--allf"', '<section class="sec sec--tint sec--allf"', 1))
     out.append(faq(c['faq'], h2='Частые вопросы'))
     cc = c.get('cta', {})
     out.append(cta(cc.get('title'), cc.get('second')))
@@ -278,7 +278,7 @@ def tool(p, c, x):
     h = c['hero']
     widget = f'<div class="toolbox" id="tool" data-tool="{p["id"]}">{typo(c["tool"])}</div>'
     variant = 'wide' if c.get('wide') else 'tool'
-    acts = [btn('Попробовать TeacherDesk бесплатно', REG, 'primary', 'lg')]
+    acts = [btn('Начать бесплатно', REG, 'primary', 'lg')]
     if h.get('cta'):
         acts.append(btn(h['cta'][0], h['cta'][1], 'ghost', 'lg', h['cta'][2] if len(h['cta']) > 2 else None))
     trust = h.get('trust', ['Бесплатно', 'Без регистрации', 'Работает в браузере'])
@@ -299,8 +299,7 @@ def tool(p, c, x):
     if c.get('objections'):
         out.append(S.objections(c['objections'], h2='Частые <em class="em">сомнения</em>'))
     out.append(faq(c['faq'], tint=True))
-    rel = [i for i in TOOLS if i != p['id']]
-    out.append(section(sec_head('Инструменты', 'Другие бесплатные <em class="em">инструменты</em>', '', 'h-rel', 'q', ('Все инструменты', '/instrumenty/')) + tool_cards(rel, x).replace('ftools ftools--hub', 'ftools ftools--rel'), '', 'h-rel'))
+    out.append(other_tools(p, x))
     cc = c.get('cta', {})
     out.append(cta(cc.get('title'), cc.get('second')))
     out.append(seo_of(c, p, x))
@@ -310,6 +309,15 @@ def tool(p, c, x):
                    "operatingSystem": "Web", "inLanguage": "ru-RU", "description": p['description'],
                    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "RUB"}})
     return '\n'.join(out), ld
+
+
+def other_tools(p, x):
+    """Общий конец страниц раздела «Инструменты»: другие бесплатные инструменты сайта."""
+    rel = [i for i in TOOLS if i != p['id'] and x.visible(i)]
+    if not rel:
+        return ''
+    return section(sec_head('Инструменты', 'Другие бесплатные <em class="em">инструменты</em>', '', 'h-rel', 'q', ('Все инструменты', '/instrumenty/')) +
+                   previews.cards(x.reg, rel, x.visible, 'ftools ftools--rel'), '', 'h-rel')
 
 
 # ---------- хабы ----------
@@ -337,13 +345,8 @@ def post_cards(ids, x, cls='posts3'):
 
 
 def kb_cards(ids, x):
-    lis = []
-    for i, pid in enumerate(ids):
-        q = x.reg[pid]
-        if not x.visible(pid):
-            continue
-        lis.append(f'<li data-reveal="piece" style="--i:{i}"><a class="kbc" href="{q["url"]}"><span class="kbc__ic">{ic(q["icon"], "ic ic--20")}</span><span class="kbc__t"><b>{typo(q["nav"])}</b><small>{typo(q.get("card", ""))}</small></span><span class="kbc__go" aria-hidden="true">{ic("arrow")}</span></a></li>')
-    return f'<ul class="kbcs">{"".join(lis)}</ul>'
+    """Инструкции в хабе теми же карточками, что «Другие инструкции» и «Бесплатные инструменты» на главной."""
+    return previews.cards(x.reg, ids, x.visible, 'ftools ftools--hub')
 
 
 def hub(p, c, x):
@@ -508,11 +511,12 @@ def notfound(p, c, x):
 
 
 def ai_access(p, c, x):
-    out = [phero(p, x.trail(p), 'ИИ-помощник в платформе', c['lead'], demos.get('ai'),
-                 [btn('Попробовать TeacherDesk бесплатно', REG, 'primary', 'lg'), btn('Все возможности ИИ', '/features/ii-assistent/', 'ghost', 'lg')],
+    out = [phero(p, x.trail(p), 'ИИ-помощник в платформе', c['lead'], demos.get(c.get('demo', 'ai')),
+                 [btn('Начать бесплатно', REG, 'primary', 'lg'), btn('Все возможности ИИ', '/features/ii-assistent/', 'ghost', 'lg')],
                  ['14 дней полного доступа', 'В личном кабинете', 'Без карты'])]
     out.append(steps(c['howto'], 'h-howto', tint=True))
-    out.append(cta('Подготовьте первый урок в TeacherDesk', ('ИИ-помощник', '/features/ii-assistent/')))
+    out.append(other_tools(p, x))
+    out.append(cta(c.get('cta_title', 'Подготовьте первый урок в TeacherDesk'), ('ИИ-помощник', '/features/ii-assistent/')))
     out.append(seo_of(c, p, x))
     return '\n'.join(out), []
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Посадочные таблицы учета и расписания: интерфейс платформы и сравнение способов работы."""
-from blocks import REG, btn, phero, sec_head, section, typo, steps, faq, cta, related
+from blocks import REG, btn, phero, sec_head, section, typo, steps, faq, cta
 import demos
 import product
 import sections
@@ -29,9 +29,9 @@ def render(p, c, x):
     out.append(interface(c['interface']))
     out.append(product.compare(c['compare']))
     out.append(steps(c['howto'], 'h-table-start'))
-    out.append(related(x.reg, c['related'], x.visible, h2='Еще для работы репетитора',
-                       kick='Рядом с таблицей', hid='h-table-related'))
     out.append(faq(c['faq'], h2='Частые вопросы'))
+    from templates import other_tools
+    out.append(other_tools(p, x))
     out.append(cta(c['cta']['title'], c['cta'].get('second')))
     from templates import seo_of, app_ld
     out.append(seo_of(c, p, x))

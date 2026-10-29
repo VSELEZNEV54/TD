@@ -53,7 +53,7 @@ PAGE = {
       <div class="tf__f"><label for="d-until">Действует до</label><input id="d-until" name="until" type="date" required></div>
     </div>
     <p class="tool-form-note" data-doc-state role="status">Заполните данные сторон и выберите срок договора перед скачиванием.</p>
-    <div class="tf__act"><button class="btn btn--primary btn--lg" type="button" data-docx><span>Скачать договор docx</span><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg></button></div>
+    <div class="tf__act"><button class="btn btn--primary btn--lg" type="button" data-docx><span>Скачать DOCX</span><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg></button></div>
   </form>
   <div class="tdoc-preview"><h2 class="tool-form-head">Предпросмотр договора</h2><p class="tool-form-note">Выделенные фрагменты обновляются из формы. Данные остаются в вашем браузере.</p>{DOC}</div>
 </div>''',
@@ -128,7 +128,7 @@ PAGE = {
         'title': 'Храните условия и оплаты рядом с учеником',
         'text': 'В TeacherDesk у каждого ученика своя карточка: контакты родителя, ставка, расписание и оплаты. Баланс считается после каждого урока.',
         'points': ['Карточка ученика с контактами родителя', 'Баланс и долги по каждому ученику', 'Напоминание об оплате уходит само'],
-        'btn': 'Попробовать 14 дней бесплатно',
+        'btn': 'Попробовать бесплатно',
         'second': ('Карточка ученика', '/features/uchet-uchenikov/'),
     },
     'objections': [
