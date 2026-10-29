@@ -473,11 +473,13 @@
     var pick = function (n) { var c = adf.querySelector('[name=' + n + ']:checked'); return c ? c.value : ''; };
     var upd = function () {
       var subj = v('subject') || 'математике';
-      var who = v('who') || 'школьников 5-11 классов';
+      var who = v('who') || 'школьниками 5-11 классов';
+      // «со школьниками», «со студентами», но «с детьми»
+      var withPrep = /^([сзшжщ][^аеёиоуыэюя]|мн)/i.test(who) ? 'со ' : 'с ';
       var exp = num(f.exp, 0);
       var lines = [];
       lines.push('Репетитор по ' + subj + (v('goal') ? ', ' + v('goal') : '') + '.');
-      lines.push('Занимаюсь с ' + who + (exp ? '. Опыт ' + exp + NB + plural(exp, 'год', 'года', 'лет') : '') + '.');
+      lines.push('Занимаюсь ' + withPrep + who + (exp ? '. Опыт ' + exp + NB + plural(exp, 'год', 'года', 'лет') : '') + '.');
       var fmt = pick('format');
       if (fmt) lines.push('Формат: ' + fmt + '.');
       if (v('about')) lines.push(v('about').replace(/\s+$/, '').replace(/([^.])$/, '$1.'));
