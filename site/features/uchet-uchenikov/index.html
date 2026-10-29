@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>База учеников репетитора: карточка ученика | TeacherDesk</title>
+<meta name="description" content="Учет учеников для репетитора: карточка с историей занятий, заданиями, прогрессом, контактами ученика и родителей и заметками. Вся база в одном месте.">
+<link rel="canonical" href="https://teacherdesk.ru/features/uchet-uchenikov/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TeacherDesk">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://teacherdesk.ru/features/uchet-uchenikov/">
+<meta property="og:title" content="База учеников для репетитора">
+<meta property="og:description" content="Учет учеников для репетитора: карточка с историей занятий, заданиями, прогрессом, контактами ученика и родителей и заметками. Вся база в одном месте.">
+<meta property="og:image" content="https://teacherdesk.ru/assets/img/og/uchet-uchenikov.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/favicon-120.png" type="image/png" sizes="120x120">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/geist-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/playfair-display-italic-500.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="/assets/css/main.css?v=0259f26a">
+<link rel="stylesheet" href="/assets/css/home.css?v=a1221c07">
+<link rel="stylesheet" href="/assets/css/pages.css?v=fa21beca">
+<link rel="stylesheet" href="/assets/css/schedule.css?v=f11f9a5e">
+<link rel="stylesheet" href="/assets/css/features.css?v=2202d612">
+<link rel="stylesheet" href="/assets/css/feature-scene-people.css?v=d76f7e5c">
+<script>document.documentElement.classList.add('js')</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://teacherdesk.ru/#org","name":"TeacherDesk","url":"https://teacherdesk.ru/","logo":"https://teacherdesk.ru/assets/img/logo.svg","email":"info@teacherdesk.ru","contactPoint":{"@type":"ContactPoint","contactType":"customer support","email":"info@teacherdesk.ru","availableLanguage":"ru"}},{"@type":"WebPage","@id":"https://teacherdesk.ru/features/uchet-uchenikov/#page","url":"https://teacherdesk.ru/features/uchet-uchenikov/","name":"База учеников репетитора: карточка ученика | TeacherDesk","description":"Учет учеников для репетитора: карточка с историей занятий, заданиями, прогрессом, контактами ученика и родителей и заметками. Вся база в одном месте.","inLanguage":"ru-RU","isPartOf":{"@id":"https://teacherdesk.ru/#site"},"publisher":{"@id":"https://teacherdesk.ru/#org"},"dateModified":"2026-10-26","primaryImageOfPage":"https://teacherdesk.ru/assets/img/og/uchet-uchenikov.jpg"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://teacherdesk.ru/"},{"@type":"ListItem","position":2,"name":"Возможности","item":"https://teacherdesk.ru/features/"},{"@type":"ListItem","position":3,"name":"Учет учеников","item":"https://teacherdesk.ru/features/uchet-uchenikov/"}]},{"@type":"SoftwareApplication","name":"TeacherDesk: Учет учеников","url":"https://teacherdesk.ru/features/uchet-uchenikov/","applicationCategory":"BusinessApplication","applicationSubCategory":"CRM для репетиторов","operatingSystem":"Web, iOS, Android","inLanguage":"ru-RU","description":"Учет учеников для репетитора: карточка с историей занятий, заданиями, прогрессом, контактами ученика и родителей и заметками. Вся база в одном месте.","offers":[{"@type":"Offer","name":"Пробный период 14 дней","price":"0","priceCurrency":"RUB","description":"Полный доступ на 14 дней без карты","url":"https://teacherdesk.ru/pricing/","availability":"https://schema.org/InStock"},{"@type":"Offer","name":"Pro","price":"990","priceCurrency":"RUB","description":"До 50 активных учеников, 100 запросов к ИИ в день, живые уроки с онлайн-доской","url":"https://teacherdesk.ru/pricing/","availability":"https://schema.org/InStock","priceSpecification":{"@type":"UnitPriceSpecification","price":"990","priceCurrency":"RUB","referenceQuantity":{"@type":"QuantitativeValue","value":1,"unitCode":"MON"}}},{"@type":"Offer","name":"Premium","price":"1990","priceCurrency":"RUB","description":"Без лимита учеников, ИИ-ассистент без дневного лимита, все возможности Pro","url":"https://teacherdesk.ru/pricing/","availability":"https://schema.org/InStock","priceSpecification":{"@type":"UnitPriceSpecification","price":"1990","priceCurrency":"RUB","referenceQuantity":{"@type":"QuantitativeValue","value":1,"unitCode":"MON"}}}],"publisher":{"@id":"https://teacherdesk.ru/#org"},"featureList":["Контакты ученика и родителей","Предмет, цель и цена занятия","История занятий с датами и темами","Выданные задания и их результаты","Прогресс ученика по темам","Заметки репетитора к каждому ученику","Приглашение в кабинет по ссылке"]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Как вести базу учеников репетитору?","acceptedAnswer":{"@type":"Answer","text":"Заведите на каждого ученика карточку: контакты, цель, заметки. Остальное заполнится по ходу работы, когда появятся уроки в расписании и проверенные задания."}},{"@type":"Question","name":"Что есть в карточке ученика?","acceptedAnswer":{"@type":"Answer","text":"Контакты ученика и родителей, история занятий, выданные задания и их результаты, прогресс и ваши заметки. Уроки и задания попадают туда сами из расписания и проверок."}},{"@type":"Question","name":"Можно ли хранить контакты родителей?","acceptedAnswer":{"@type":"Answer","text":"Да, в карточке есть место для контактов ученика и родителей. Имя и телефон мамы или папы всегда рядом с историей занятий."}},{"@type":"Question","name":"Как добавить ученика?","acceptedAnswer":{"@type":"Answer","text":"Вручную или ссылкой-приглашением. По ссылке ученик сам регистрируется и попадает в свой кабинет, а у вас появляется его карточка."}},{"@type":"Question","name":"Что делать, если ученики сейчас в Excel?","acceptedAnswer":{"@type":"Answer","text":"Внесите их вручную или пригласите по ссылке, таблицу можно держать под рукой для сверки. Если список большой, напишите на info@teacherdesk.ru, и мы подскажем, как перенести его удобнее."}},{"@type":"Question","name":"Можно ли открыть карточку ученика с телефона?","acceptedAnswer":{"@type":"Answer","text":"Да. TeacherDesk работает в браузере смартфона и ставится на главный экран как приложение, поэтому карточку можно открыть за пять минут до урока или во время звонка родителя."}},{"@type":"Question","name":"Сколько учеников можно вести?","acceptedAnswer":{"@type":"Answer","text":"На пробном периоде и тарифе Pro до 50 активных учеников, на Premium за 1 990 руб. в месяц фиксированного лимита нет."}},{"@type":"Question","name":"Кому доступна база учеников?","acceptedAnswer":{"@type":"Answer","text":"Только вам. Ученик в своем кабинете видит лишь свои уроки, задания и материалы."}}]}]}</script>
+</head>
+<body id="top" class="pg pg--feature">
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+<symbol id="i-home" viewBox="0 0 16 16"><path d="M2.2 6.6 8 2.2l5.8 4.4V13a1 1 0 0 1-1 1H3.2a1 1 0 0 1-1-1z"/><path d="M6.3 14V9.6h3.4V14"/></symbol>
+<symbol id="i-users" viewBox="0 0 16 16"><circle cx="6" cy="5.6" r="2.2"/><path d="M2 13.6c0-2.3 1.8-3.7 4-3.7s4 1.4 4 3.7"/><path d="M10.9 3.9a2.2 2.2 0 0 1 0 3.6M11.6 10.1c1.5.3 2.4 1.5 2.4 3.2"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 16 16"><rect x="2.2" y="3.4" width="11.6" height="10.4" rx="1.6"/><path d="M2.2 6.6h11.6M5.4 2.2v2.4M10.6 2.2v2.4"/></symbol>
+<symbol id="i-task" viewBox="0 0 16 16"><rect x="2.8" y="2.6" width="10.4" height="10.8" rx="1.6"/><path d="m5.4 7.8 1.5 1.5 3.7-3.7"/><path d="M5.4 11.4h5.2"/></symbol>
+<symbol id="i-sheet" viewBox="0 0 16 16"><rect x="2.2" y="2.6" width="11.6" height="10.8" rx="1.6"/><path d="M2.2 6.4h11.6M6.6 6.4v7"/></symbol>
+<symbol id="i-ai" viewBox="0 0 16 16"><circle cx="8" cy="8" r="2"/><path d="M4.2 4.6a4.8 4.8 0 0 0 0 6.8M11.8 4.6a4.8 4.8 0 0 1 0 6.8"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 16 16"><path d="M2.4 5.6A1.6 1.6 0 0 1 4 4h8a1.6 1.6 0 0 1 1.6 1.6v4.8A1.6 1.6 0 0 1 12 12H4a1.6 1.6 0 0 1-1.6-1.6z"/><circle cx="11.2" cy="8" r="1"/></symbol>
+<symbol id="i-board" viewBox="0 0 16 16"><rect x="2.2" y="2.8" width="11.6" height="8.2" rx="1.5"/><path d="M8 11v2.8M5.6 13.8h4.8"/></symbol>
+<symbol id="i-report" viewBox="0 0 16 16"><path d="M2.4 13.6h11.2"/><path d="M5 13.6V7.4M8 13.6V3.6M11 13.6V8.8"/></symbol>
+<symbol id="i-bell" viewBox="0 0 16 16"><path d="M4.1 6.9a3.9 3.9 0 0 1 7.8 0c0 2.9 1 3.9 1 3.9H3.1s1-1 1-3.9"/><path d="M6.6 12.9a1.6 1.6 0 0 0 2.8 0"/></symbol>
+<symbol id="i-search" viewBox="0 0 16 16"><circle cx="7.1" cy="7.1" r="4.3"/><path d="m10.3 10.3 3.4 3.4"/></symbol>
+<symbol id="i-clock" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.6"/><path d="M8 4.8V8l2.3 1.5"/></symbol>
+<symbol id="i-plus" viewBox="0 0 16 16"><path d="M8 3.2v9.6M3.2 8h9.6"/></symbol>
+<symbol id="i-close" viewBox="0 0 16 16"><path d="m4 4 8 8M12 4l-8 8"/></symbol>
+<symbol id="i-check" viewBox="0 0 16 16"><path d="m3.2 8.4 3.4 3.4L12.8 5"/></symbol>
+<symbol id="i-menu" viewBox="0 0 16 16"><path d="M2.6 5.2h10.8M2.6 10.8h10.8"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 16 16"><path d="M2.8 8h10.2M9.2 4.2 13 8l-3.8 3.8"/></symbol>
+<symbol id="i-phone" viewBox="0 0 16 16"><rect x="4.4" y="1.8" width="7.2" height="12.4" rx="1.6"/><path d="M7 11.8h2"/></symbol>
+<symbol id="i-doc" viewBox="0 0 16 16"><path d="M4 2.4h5.2l3.2 3.2V13a.6.6 0 0 1-.6.6H4a.6.6 0 0 1-.6-.6V3a.6.6 0 0 1 .6-.6z"/><path d="M9 2.6v3.2h3.2M5.8 8.6h4.4M5.8 11h4.4"/></symbol>
+<symbol id="i-calc" viewBox="0 0 16 16"><rect x="3.2" y="2.2" width="9.6" height="11.6" rx="1.6"/><path d="M5.6 5h4.8M5.6 8.2h.1M8 8.2h.1M10.4 8.2h.1M5.6 11h.1M8 11h.1M10.4 11h.1"/></symbol>
+<symbol id="i-mail" viewBox="0 0 16 16"><rect x="2.2" y="3.6" width="11.6" height="8.8" rx="1.6"/><path d="m2.6 4.4 5.4 4.2 5.4-4.2"/></symbol>
+<symbol id="i-play" viewBox="0 0 16 16"><path d="M5.4 3.6v8.8l7-4.4z"/></symbol>
+<symbol id="i-pause" viewBox="0 0 16 16"><path d="M5 3.6h1.6v8.8H5zM9.4 3.6H11v8.8H9.4z"/></symbol>
+<symbol id="i-shield" viewBox="0 0 16 16"><path d="M8 2.2 3.2 4v3.6c0 3 2 5.2 4.8 6.2 2.8-1 4.8-3.2 4.8-6.2V4z"/></symbol>
+<symbol id="i-chat" viewBox="0 0 16 16"><path d="M3.2 3.4h9.6a1.2 1.2 0 0 1 1.2 1.2v5.6a1.2 1.2 0 0 1-1.2 1.2H7.4L4.4 13.6v-2.2H3.2A1.2 1.2 0 0 1 2 10.2V4.6a1.2 1.2 0 0 1 1.2-1.2z"/></symbol>
+<symbol id="i-note" viewBox="0 0 16 16"><path d="M3.6 2.4h8.8v11.2H3.6z"/><path d="M5.8 5.4h4.4M5.8 8h4.4M5.8 10.6h2.6"/></symbol>
+<symbol id="i-chev" viewBox="0 0 16 16"><path d="m4.4 6.2 3.6 3.6 3.6-3.6"/></symbol>
+<symbol id="i-chevr" viewBox="0 0 16 16"><path d="m6.2 4.4 3.6 3.6-3.6 3.6"/></symbol>
+<symbol id="i-download" viewBox="0 0 16 16"><path d="M8 2.6v7.6M4.8 7.2 8 10.4l3.2-3.2M3 13.4h10"/></symbol>
+<symbol id="i-upload" viewBox="0 0 16 16"><path d="M8 10.4V2.8M4.8 6 8 2.8 11.2 6M3 13.4h10"/></symbol>
+<symbol id="i-print" viewBox="0 0 16 16"><path d="M4.6 6V2.6h6.8V6"/><rect x="2.2" y="6" width="11.6" height="5.4" rx="1.2"/><path d="M4.6 9.6h6.8v3.8H4.6z"/></symbol>
+<symbol id="i-copy" viewBox="0 0 16 16"><rect x="5.4" y="5.4" width="8" height="8" rx="1.4"/><path d="M10.6 5.4V3.8a1.2 1.2 0 0 0-1.2-1.2H3.8a1.2 1.2 0 0 0-1.2 1.2v5.6a1.2 1.2 0 0 0 1.2 1.2h1.6"/></symbol>
+<symbol id="i-video" viewBox="0 0 16 16"><rect x="1.8" y="4" width="8.8" height="8" rx="1.6"/><path d="m10.6 7 3.6-2v6l-3.6-2"/></symbol>
+<symbol id="i-mic" viewBox="0 0 16 16"><rect x="6" y="1.8" width="4" height="7.6" rx="2"/><path d="M3.6 7.6a4.4 4.4 0 0 0 8.8 0M8 12v2.2"/></symbol>
+<symbol id="i-pen" viewBox="0 0 16 16"><path d="m10.6 2.8 2.6 2.6-7.4 7.4H3.2v-2.6z"/><path d="m9.2 4.2 2.6 2.6"/></symbol>
+<symbol id="i-eraser" viewBox="0 0 16 16"><path d="m6.2 13.2-3.4-3.4 6.6-6.6 4 4-5.2 5.2z"/><path d="M6.2 13.2h7.4M5.4 6.6l4 4"/></symbol>
+<symbol id="i-type" viewBox="0 0 16 16"><path d="M3.4 4V2.8h9.2V4M8 2.8v10.4M6 13.2h4"/></symbol>
+<symbol id="i-shape" viewBox="0 0 16 16"><rect x="2.4" y="7.2" width="6.4" height="6.4" rx="1"/><circle cx="10.8" cy="5.2" r="2.8"/></symbol>
+<symbol id="i-lock" viewBox="0 0 16 16"><rect x="3" y="7" width="10" height="7" rx="1.6"/><path d="M5.4 7V5a2.6 2.6 0 0 1 5.2 0v2"/></symbol>
+<symbol id="i-link" viewBox="0 0 16 16"><path d="M6.8 9.2a2.8 2.8 0 0 0 4 0l2-2a2.8 2.8 0 0 0-4-4l-.8.8"/><path d="M9.2 6.8a2.8 2.8 0 0 0-4 0l-2 2a2.8 2.8 0 0 0 4 4l.8-.8"/></symbol>
+<symbol id="i-cards" viewBox="0 0 16 16"><rect x="2.4" y="4.4" width="8.4" height="9.2" rx="1.4"/><path d="M5.2 2.4h7a1.4 1.4 0 0 1 1.4 1.4v7.6"/></symbol>
+<symbol id="i-user" viewBox="0 0 16 16"><circle cx="8" cy="5.4" r="2.6"/><path d="M3 13.6c0-2.7 2.2-4.4 5-4.4s5 1.7 5 4.4"/></symbol>
+<symbol id="i-book" viewBox="0 0 16 16"><path d="M2.6 3.4h4A1.6 1.6 0 0 1 8 5v8.4a1.4 1.4 0 0 0-1.4-1.2h-4zM13.4 3.4h-4A1.6 1.6 0 0 0 8 5v8.4a1.4 1.4 0 0 1 1.4-1.2h4z"/></symbol>
+<symbol id="i-x" viewBox="0 0 16 16"><path d="m5 5 6 6M11 5l-6 6"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 16 16"><path d="M13 8a5 5 0 1 1-1.5-3.6"/><path d="M13 2.8v2.6h-2.6"/></symbol>
+</svg>
+
+<a class="skip" href="#main">К&nbsp;содержанию</a>
+
+<header class="hdr" data-hdr>
+  <div class="hdr__bar">
+    <a class="hdr__logo" href="/" aria-label="TeacherDesk, на главную"><img class="hdr__word" src="/assets/img/logo.svg" width="142" height="24" alt="TeacherDesk"><img class="hdr__sign" src="/assets/img/sign.svg" width="30" height="30" alt=""></a>
+    <nav class="hdr__nav" aria-label="Основное меню">
+      <div class="hdr__dd is-cur" data-dd>
+        <button class="hdr__ddb" type="button" aria-expanded="false" aria-controls="dd-feat">Возможности<svg class="ic ic--12" aria-hidden="true"><use href="#i-chev"/></svg></button>
+        <div class="mm mm--feat" id="dd-feat">
+          <div class="mm__grid mm__grid--3"><a class="mm__i" href="/features/raspisanie/"><span class="mm__ic mm__ic--0"><svg class="ic ic--20" aria-hidden="true"><use href="#i-calendar"/></svg></span><span class="mm__tx"><b>Расписание</b><small>Повторы, переносы и&nbsp;напоминания за&nbsp;час</small></span></a><a class="mm__i" href="/features/uchet-oplat/"><span class="mm__ic mm__ic--1"><svg class="ic ic--20" aria-hidden="true"><use href="#i-wallet"/></svg></span><span class="mm__tx"><b>Учет оплат</b><small>Балансы, долги и&nbsp;напоминания об&nbsp;оплате</small></span></a><a class="mm__i" href="/features/uchet-uchenikov/" aria-current="page"><span class="mm__ic mm__ic--2"><svg class="ic ic--20" aria-hidden="true"><use href="#i-users"/></svg></span><span class="mm__tx"><b>Учет учеников</b><small>Карточка, контакты родителей, заметки</small></span></a><a class="mm__i" href="/features/kabinet-uchenika/"><span class="mm__ic mm__ic--0"><svg class="ic ic--20" aria-hidden="true"><use href="#i-home"/></svg></span><span class="mm__tx"><b>Кабинет ученика</b><small>Расписание, задания и&nbsp;вход в&nbsp;урок для ученика</small></span></a><a class="mm__i" href="/features/domashnie-zadaniya/"><span class="mm__ic mm__ic--1"><svg class="ic ic--20" aria-hidden="true"><use href="#i-task"/></svg></span><span class="mm__tx"><b>Домашние задания</b><small>Выдача, сдача и&nbsp;проверка в&nbsp;одном месте</small></span></a><a class="mm__i" href="/features/onlayn-doska/"><span class="mm__ic mm__ic--2"><svg class="ic ic--20" aria-hidden="true"><use href="#i-board"/></svg></span><span class="mm__tx"><b>Онлайн-доска</b><small>Открывается из&nbsp;урока, листы сохраняются</small></span></a><a class="mm__i" href="/features/ii-assistent/"><span class="mm__ic mm__ic--0"><svg class="ic ic--20" aria-hidden="true"><use href="#i-ai"/></svg></span><span class="mm__tx"><b>ИИ-ассистент</b><small>План урока и&nbsp;упражнения за&nbsp;минуту</small></span></a><a class="mm__i" href="/features/otchety-roditelyam/"><span class="mm__ic mm__ic--1"><svg class="ic ic--20" aria-hidden="true"><use href="#i-report"/></svg></span><span class="mm__tx"><b>Отчеты родителям</b><small>Прогресс ученика за&nbsp;месяц одной ссылкой</small></span></a><a class="mm__i" href="/features/zhurnal-zanyatiy/"><span class="mm__ic mm__ic--2"><svg class="ic ic--20" aria-hidden="true"><use href="#i-note"/></svg></span><span class="mm__tx"><b>Журнал занятий</b><small>Что прошли, что задали, кто пропустил</small></span></a></div>
+          <a class="btn btn--ghost btn--sm mm__all" href="/features/"><span>Все возможности</span></a>
+        </div>
+      </div>
+      <a href="/instrumenty/">Инструменты</a>
+      <div class="hdr__dd" data-dd>
+        <button class="hdr__ddb" type="button" aria-expanded="false" aria-controls="dd-sol">Решения<svg class="ic ic--12" aria-hidden="true"><use href="#i-chev"/></svg></button>
+        <div class="mm mm--sol" id="dd-sol">
+          <div class="mm__grid"><a class="mm__i" href="/crm-dlya-repetitora/"><span class="mm__ic mm__ic--0"><svg class="ic ic--20" aria-hidden="true"><use href="#i-users"/></svg></span><span class="mm__tx"><b>CRM для репетитора</b><small>Ученики, уроки и&nbsp;деньги в&nbsp;одной базе</small></span></a><a class="mm__i" href="/programma-dlya-repetitora/"><span class="mm__ic mm__ic--1"><svg class="ic ic--20" aria-hidden="true"><use href="#i-sheet"/></svg></span><span class="mm__tx"><b>Программа для репетитора</b><small>Все рабочие задачи в&nbsp;одном окне</small></span></a><a class="mm__i" href="/prilozhenie-dlya-repetitora/"><span class="mm__ic mm__ic--2"><svg class="ic ic--20" aria-hidden="true"><use href="#i-phone"/></svg></span><span class="mm__tx"><b>Приложение для репетитора</b><small>TeacherDesk на&nbsp;телефоне без магазина</small></span></a><a class="mm__i" href="/besplatnaya-platforma-dlya-repetitorov/"><span class="mm__ic mm__ic--0"><svg class="ic ic--20" aria-hidden="true"><use href="#i-check"/></svg></span><span class="mm__tx"><b>Бесплатная платформа</b><small>14&nbsp;дней полного доступа без карты</small></span></a><a class="mm__i" href="/onlayn-zanyatiya/"><span class="mm__ic mm__ic--1"><svg class="ic ic--20" aria-hidden="true"><use href="#i-board"/></svg></span><span class="mm__tx"><b>Платформа для онлайн-уроков</b><small>Видео и&nbsp;доска прямо из&nbsp;расписания</small></span></a><a class="mm__i" href="/instrumenty/tablica-ucheta/"><span class="mm__ic mm__ic--2"><svg class="ic ic--20" aria-hidden="true"><use href="#i-sheet"/></svg></span><span class="mm__tx"><b>Таблица учета</b><small>Ученики, уроки и&nbsp;оплаты в&nbsp;одной таблице платформы</small></span></a><a class="mm__i" href="/instrumenty/shablon-raspisaniya/"><span class="mm__ic mm__ic--0"><svg class="ic ic--20" aria-hidden="true"><use href="#i-calendar"/></svg></span><span class="mm__tx"><b>Таблица расписания</b><small>Занятия, повторы и&nbsp;переносы в&nbsp;календаре платформы</small></span></a></div>
+          <a class="mm__promo" href="https://app.teacherdesk.ru/register"><span class="mm__pk">14 дней бесплатно</span><b>Полный доступ ко всем функциям без карты</b><span class="mm__pgo">Начать</span></a>
+        </div>
+      </div>
+      <a href="/pricing/">Тарифы</a><a href="/blog/">Блог</a>
+    </nav>
+    <div class="hdr__act">
+      <a class="hdr__login" href="https://app.teacherdesk.ru/login">Войти</a>
+      <a class="btn btn--primary btn--sm" href="https://app.teacherdesk.ru/register"><span>Начать бесплатно</span></a>
+      <details class="hdr__menu" data-menu>
+        <summary aria-label="Меню"><svg class="ic ic--20 hdr__menu-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="ic ic--20 hdr__menu-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
+        <nav class="hdr__sheet" aria-label="Меню для телефона"><p class="hdr__sh">Возможности</p><a href="/features/raspisanie/">Расписание</a><a href="/features/uchet-oplat/">Учет оплат</a><a href="/features/uchet-uchenikov/" aria-current="page">Учет учеников</a><a href="/features/kabinet-uchenika/">Кабинет ученика</a><a href="/features/domashnie-zadaniya/">Домашние задания</a><a href="/features/onlayn-doska/">Онлайн-доска</a><a href="/features/ii-assistent/">ИИ-ассистент</a><a href="/features/otchety-roditelyam/">Отчеты родителям</a><a href="/features/zhurnal-zanyatiy/">Журнал занятий</a><a href="/instrumenty/">Инструменты</a><p class="hdr__sh">Решения</p><a href="/crm-dlya-repetitora/">CRM для репетитора</a><a href="/programma-dlya-repetitora/">Программа для репетитора</a><a href="/prilozhenie-dlya-repetitora/">Приложение для репетитора</a><a href="/besplatnaya-platforma-dlya-repetitorov/">Бесплатная платформа</a><a href="/onlayn-zanyatiya/">Платформа для онлайн-уроков</a><a href="/instrumenty/tablica-ucheta/">Таблица учета</a><a href="/instrumenty/shablon-raspisaniya/">Таблица расписания</a><a href="/pricing/">Тарифы</a><a href="/blog/">Блог</a><p class="hdr__sh">Помощь и информация</p><a href="/baza-znanij/">База знаний</a><a href="/about/">О сервисе</a><a href="/kontakty/">Контакты</a><a href="https://app.teacherdesk.ru/login">Войти</a></nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+<section class="phero phero--feature">
+  <div class="phero__bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Хлебные крошки"><ol><li><a href="/">Главная</a><svg class="ic ic--12" aria-hidden="true"><use href="#i-chevr"/></svg></li><li><a href="/features/">Возможности</a><svg class="ic ic--12" aria-hidden="true"><use href="#i-chevr"/></svg></li><li aria-current="page">Учет учеников</li></ol></nav>
+    <div class="phero__in">
+      <div class="phero__txt"><div class="sc-index"><span class="sc-index__icon"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><span>Возможность <b>3</b><span class="sc-index__of"> из 9</span></span></div>
+        <p class="kicker kicker--pill phero__k"><span class="pulse" aria-hidden="true"></span>База учеников репетитора</p>
+        <h1 class="phero__h">База учеников для <em class="em">репетитора</em></h1>
+        <p class="phero__lead">У&nbsp;каждого ученика своя карточка: контакты ученика и&nbsp;родителей, цель занятий, история уроков, выданные задания и&nbsp;ваши заметки. Номер мамы и&nbsp;договоренности больше не&nbsp;теряются в&nbsp;переписке.</p>
+        <div class="phero__cta"><a class="btn btn--primary btn--lg" href="https://app.teacherdesk.ru/register"><span>Начать бесплатно</span></a><a class="btn btn--ghost btn--lg" href="/features/uchet-oplat/"><span>Учет оплат и&nbsp;долгов</span></a></div>
+        <ul class="trust"><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>14&nbsp;дней бесплатно</li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Без карты</li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Данные хранятся в&nbsp;России</li></ul>
+      </div>
+      <div class="phero__vis"><figure class="frame frame--card" data-live role="img" aria-label="Карточка ученицы Марины Кузнецовой: контакты родителя, цель, история занятий и заметка репетитора"><div class="frame__bar" aria-hidden="true"><span class="frame__dots"><i></i><i></i><i></i></span><span class="frame__t">Ученики · карточка</span></div><div class="frame__body" aria-hidden="true"><div class="pd-scard__head"><span class="av av--lg">МК</span><span class="pd-scard__who"><b>Марина Кузнецова</b><small>Алгебра · 9&nbsp;класс · 1&nbsp;800&nbsp;руб. за&nbsp;урок</small></span><span class="chip chip--paid">баланс 0</span></div>
+    <dl class="pd-scard__info"><div><dt>Родитель</dt><dd>Елена Кузнецова</dd></div><div><dt>Телефон</dt><dd>+7 9•• •••-••-12</dd></div><div><dt>Цель</dt><dd>ОГЭ на&nbsp;4 и&nbsp;выше</dd></div></dl>
+    <p class="pd-scard__tabs"><span class="is-on">Занятия</span><span>Задания</span><span>Заметки</span><i class="pd-scard__ul"></i></p>
+    <ul class="pd-scard__hist">
+      <li><time>30.09</time><span>Квадратные уравнения</span><span class="chip chip--paid">был</span></li>
+      <li><time>25.09</time><span>Теорема Виета</span><span class="chip chip--paid">был</span></li>
+      <li><time>23.09</time><span>Неравенства</span><span class="chip chip--soon">перенос</span></li>
+    </ul>
+    <p class="pd-scard__note sticker" style="--tilt:-2deg"><svg class="ic" aria-hidden="true"><use href="#i-note"/></svg><span>Слабое место: текстовые задачи</span></p></div></figure><p class="hst hst--0" aria-hidden="true"><span class="hst__ic hst__ic--yellow"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><span><b>Вся история ученика</b>уроки, задания, оплаты</span></p><p class="hst hst--1" aria-hidden="true"><span class="hst__ic hst__ic--ink"><svg class="ic" aria-hidden="true"><use href="#i-note"/></svg></span><span><b>Заметка перед уроком</b>слабое место: текстовые задачи</span></p></div>
+    </div>
+    <dl class="facts facts--page" aria-label="Коротко о&nbsp;главном" data-reveal><div class="fact"><dt><i class="geo geo--sq" aria-hidden="true"></i><span class="fact__n">1</span><span class="fact__u">карточка</span></dt><dd>контакты, уроки, задания и&nbsp;заметки</dd></div><div class="fact fact--w"><dt><i class="geo geo--q geo--y" aria-hidden="true"></i><span class="fact__n">ссылка</span></dt><dd>по&nbsp;которой ученик регистрируется сам</dd></div><div class="fact fact--w"><dt><i class="geo geo--q" aria-hidden="true"></i><span class="fact__n">до&nbsp;50</span></dt><dd>активных учеников на&nbsp;Pro, на&nbsp;Premium без лимита</dd></div><div class="fact fact--w"><dt><i class="geo geo--sq geo--ink" aria-hidden="true"></i><span class="fact__n">РФ</span></dt><dd>данные учеников хранятся на&nbsp;серверах в&nbsp;России</dd></div></dl>
+  </div>
+</section>
+<section class="sec sc-story-section" aria-labelledby="h-feature-story"><div class="wrap"><header class="shead">
+      <div><p class="kicker" data-reveal><i class="geo geo--sq" aria-hidden="true"></i>Было и&nbsp;стало</p><h2 class="h2 h2--sm" id="h-feature-story" data-reveal>Те&nbsp;же&nbsp;ученики. Вся история рядом.</h2></div>
+      <p class="lead" data-reveal>Контакты, заметки и&nbsp;история занятий переходят из&nbsp;разных записей в&nbsp;карточку ученика.</p>
+    </header></div>
+      <div class="film sc-film fx-film" data-film="feature" data-scene="2">
+        <figure class="film__stage"><div class="film__tools" aria-hidden="true"><div class="ftool" style="--x:4%;--y:10%;--r:0deg">
+      <span class="ftool__bar"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg><span class="ftool__name">Мама Марины</span></span>
+      <span class="ftool__body"><span class="ft-bub">Анна, напомните, на&nbsp;чем вы&nbsp;остановились в&nbsp;прошлый раз?</span></span><span class="ftool__ping">Сообщение в&nbsp;переписке</span></div><div class="ftool" style="--x:38%;--y:8%;--r:0deg">
+      <span class="ftool__bar"><svg class="ic" aria-hidden="true"><use href="#i-note"/></svg><span class="ftool__name">Контакты родителей</span></span>
+      <span class="ftool__body"><span class="ft-bub">В&nbsp;телефоне, часть в&nbsp;чатах, часть на&nbsp;бумаге</span></span><span class="ftool__ping">Все вручную</span></div><div class="ftool" style="--x:72%;--y:12%;--r:0deg">
+      <span class="ftool__bar"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg><span class="ftool__name">Что было на&nbsp;прошлом уроке</span></span>
+      <span class="ftool__body"><span class="ft-bub">Листаете тетрадь или вспоминаете</span></span><span class="ftool__ping">Все вручную</span></div><div class="ftool" style="--x:7%;--y:52%;--r:0deg">
+      <span class="ftool__bar"><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg><span class="ftool__name">Договоренности с&nbsp;семьей</span></span>
+      <span class="ftool__body"><span class="ft-bub">Теряются в&nbsp;длинной переписке</span></span><span class="ftool__ping">Все вручную</span></div><div class="ftool" style="--x:39%;--y:55%;--r:0deg">
+      <span class="ftool__bar"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg><span class="ftool__name">Новый ученик</span></span>
+      <span class="ftool__body"><span class="ft-bub">Заводите контакт, чат и&nbsp;строку в&nbsp;таблице</span></span><span class="ftool__ping">Все вручную</span></div><div class="ftool" style="--x:71%;--y:53%;--r:0deg">
+      <span class="ftool__bar"><svg class="ic" aria-hidden="true"><use href="#i-sheet"/></svg><span class="ftool__name">Вопрос родителя об&nbsp;успехах</span></span>
+      <span class="ftool__body"><span class="ft-bub">Собираете ответ по&nbsp;чатам и&nbsp;тетрадям</span></span><span class="ftool__ping">Все вручную</span></div></div>
+          <p class="film__hud" aria-hidden="true">Без TeacherDesk</p>
+          <div class="film__app"><div class="win"><div class="win__bar"><span class="win__crumb"><img src="/assets/img/sign.svg" width="18" height="18" alt="">TeacherDesk / <b>Учет учеников</b></span></div>
+      <div class="fx-app fx-app--uchet-uchenikov" role="img" aria-label="Новый ученик. Добавляете ученика вручную или приглашаете ссылкой. История занятий. Уроки и задания связаны с карточкой Марины. Заметки перед уроком. Вся история ученика рядом с контактами и прогрессом"><div class="fx-app__steps" aria-hidden="true"><div class="fx-step" data-feature-step="6000">
+          <p class="fapp__h">Новый ученик<span>01 / 03</span></p>
+          <div class="fx-people-register">
+      <aside class="fx-people-list"><p class="fhw__m">Ученики · 12</p><ul><li class="is-on"><span class="av">МК</span><span><b>Марина К.</b><small>Алгебра · 9&nbsp;класс</small></span></li><li class=""><span class="av">АД</span><span><b>Артем Д.</b><small>Физика · 8&nbsp;класс</small></span></li><li class=""><span class="av">СВ</span><span><b>Соня В.</b><small>Подготовка к&nbsp;ОГЭ</small></span></li></ul></aside>
+      <div class="scard fx-people-record">
+        <div class="scard__head"><span class="av av--lg">МК</span><span class="scard__who"><b>Марина Кузнецова</b><span>Алгебра · 9&nbsp;класс</span></span></div>
+        <p class="pd-scard__tabs fx-people-tabs"><span class="is-on">Профиль</span><span class="">Задания</span><span class="">Заметки</span></p>
+        <div class="fx-people-record__body"><dl class="pd-scard__info fx-people-info">
+          <div><dt>Родитель</dt><dd>Елена Кузнецова</dd></div><div><dt>Цель занятий</dt><dd>Подготовка к&nbsp;ОГЭ</dd></div>
+        </dl><p class="pd-cab__deck"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg><span><b>Контакты семьи</b><small>+7 9•• •••-••-12 · Елена, мама</small></span></p>
+        <p class="pd-scard__note fx-people-note"><svg class="ic" aria-hidden="true"><use href="#i-note"/></svg><span>Пробник раз в&nbsp;месяц. Начали в&nbsp;сентябре.</span></p></div>
+      </div></div><p class="fx-app__note"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Добавляете ученика вручную или приглашаете ссылкой</span></p>
+        </div><div class="fx-step" data-feature-step="11400">
+          <p class="fapp__h">История занятий<span>02 / 03</span></p>
+          <div class="fx-people-register">
+      <aside class="fx-people-list"><p class="fhw__m">Ученики · 12</p><ul><li class="is-on"><span class="av">МК</span><span><b>Марина К.</b><small>Алгебра · 9&nbsp;класс</small></span></li><li class=""><span class="av">АД</span><span><b>Артем Д.</b><small>Физика · 8&nbsp;класс</small></span></li><li class=""><span class="av">СВ</span><span><b>Соня В.</b><small>Подготовка к&nbsp;ОГЭ</small></span></li></ul></aside>
+      <div class="scard fx-people-record">
+        <div class="scard__head"><span class="av av--lg">МК</span><span class="scard__who"><b>Марина Кузнецова</b><span>Алгебра · 9&nbsp;класс</span></span></div>
+        <p class="pd-scard__tabs fx-people-tabs"><span class="">Профиль</span><span class="is-on">Задания</span><span class="">Заметки</span></p>
+        <div class="fx-people-record__body"><ul class="pd-scard__hist fx-people-history">
+          <li><time>30.09</time><span>Квадратные уравнения</span><span class="chip chip--paid">8 из&nbsp;10</span></li>
+          <li><time>25.09</time><span>Теорема Виета</span><span class="chip chip--done">сдано</span></li>
+          <li><time>23.09</time><span>Неравенства</span><span class="chip chip--wait">не&nbsp;сдано</span></li>
+        </ul><ul class="pd-rep__bars fx-people-progress">
+      <li><span>Уравнения</span><span class="pd-bar"><i style="--v:.9"></i></span><b>90%</b></li>
+      <li><span>Текстовые задачи</span><span class="pd-bar"><i style="--v:.5"></i></span><b>50%</b></li>
+    </ul></div>
+      </div></div><p class="fx-app__note"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Уроки и&nbsp;задания связаны с&nbsp;карточкой Марины</span></p>
+        </div><div class="fx-step is-on" data-feature-step="16500">
+          <p class="fapp__h">Заметки перед уроком<span>03 / 03</span></p>
+          <div class="fx-people-register">
+      <aside class="fx-people-list"><p class="fhw__m">Ученики · 12</p><ul><li class="is-on"><span class="av">МК</span><span><b>Марина К.</b><small>Алгебра · 9&nbsp;класс</small></span></li><li class=""><span class="av">АД</span><span><b>Артем Д.</b><small>Физика · 8&nbsp;класс</small></span></li><li class=""><span class="av">СВ</span><span><b>Соня В.</b><small>Подготовка к&nbsp;ОГЭ</small></span></li></ul></aside>
+      <div class="scard fx-people-record">
+        <div class="scard__head"><span class="av av--lg">МК</span><span class="scard__who"><b>Марина Кузнецова</b><span>Алгебра · 9&nbsp;класс</span></span></div>
+        <p class="pd-scard__tabs fx-people-tabs"><span class="">Профиль</span><span class="">Задания</span><span class="is-on">Заметки</span></p>
+        <div class="fx-people-record__body"><p class="pd-scard__note fx-people-note fx-people-enter"><svg class="ic" aria-hidden="true"><use href="#i-note"/></svg><span>Путает знак перед 5x. Повторить текстовые задачи перед пробником.</span></p>
+          <ul class="pd-rep__bars fx-people-progress">
+      <li><span>Уравнения</span><span class="pd-bar"><i style="--v:.9"></i></span><b>90%</b></li>
+      <li><span>Текстовые задачи</span><span class="pd-bar"><i style="--v:.5"></i></span><b>50%</b></li>
+    </ul><p class="pd-cab__deck"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span><b>Последняя работа проверена</b><small>Вариант 2 · 8 из&nbsp;10&nbsp;задач</small></span></p></div>
+      </div></div><p class="fx-app__note"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Вся история ученика рядом с&nbsp;контактами и&nbsp;прогрессом</span></p>
+        </div></div></div></div></div>
+          <ul class="film__bens" aria-label="Что меняется с TeacherDesk"><li class="fben" style="--x:3%;--y:12%;--r:0deg"><span class="fben__ic" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><span><b>Контакты семьи</b><small>Телефон и&nbsp;почта ученика и&nbsp;родителей</small></span></li><li class="fben" style="--x:77%;--y:14%;--r:0deg"><span class="fben__ic" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span><span><b>Условия занятий</b><small>Предмет, цель и&nbsp;стоимость урока</small></span></li><li class="fben" style="--x:4%;--y:40%;--r:0deg"><span class="fben__ic" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg></span><span><b>История занятий</b><small>Даты, темы и&nbsp;посещаемость</small></span></li><li class="fben" style="--x:76%;--y:42%;--r:0deg"><span class="fben__ic" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-task"/></svg></span><span><b>Задания ученика</b><small>Выданные работы и&nbsp;результаты проверки</small></span></li><li class="fben" style="--x:3%;--y:68%;--r:0deg"><span class="fben__ic" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-report"/></svg></span><span><b>Прогресс по&nbsp;темам</b><small>Результаты и&nbsp;слабые места ученика</small></span></li><li class="fben" style="--x:77%;--y:70%;--r:0deg"><span class="fben__ic" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-doc"/></svg></span><span><b>Заметки репетитора</b><small>Договоренности и&nbsp;подсказки к&nbsp;уроку</small></span></li></ul>
+          <figcaption class="film__sub"><span data-film-at="0">Контакты в&nbsp;телефоне, темы в&nbsp;тетради, договоренности в&nbsp;чатах</span><span data-film-at="6000">Новый ученик. Добавляете ученика вручную или приглашаете ссылкой</span><span data-film-at="11400">История занятий. Уроки и&nbsp;задания связаны с&nbsp;карточкой Марины</span><span data-film-at="16500">Заметки перед уроком. Вся история ученика рядом с&nbsp;контактами и&nbsp;прогрессом</span><span data-film-at="20000">TeacherDesk: контакты, занятия, задания и&nbsp;заметки в&nbsp;одном месте.</span></figcaption>
+        </figure>
+        <div class="film__ctrl"><button class="film__play" type="button" data-film-play aria-label="Пауза"><svg class="ic ic--fill i-pa" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic--fill i-pl" aria-hidden="true"><use href="#i-play"/></svg></button>
+          <div class="film__chapters" role="group" aria-label="Части ролика">
+            <button type="button" data-ch="0"><span>Было<span class="film__lx">: записи и&nbsp;чаты</span></span><i class="film__track"><i class="film__fill"></i></i></button>
+            <button type="button" data-ch="1"><span>Стало<span class="film__lx">: карточка ученика</span></span><i class="film__track"><i class="film__fill"></i></i></button>
+          </div>
+        </div>
+      </div></section>
+<section class="sec sc-situations" aria-labelledby="h-schedule-situations"><div class="wrap"><header class="shead">
+      <div><p class="kicker" data-reveal><i class="geo geo--sq" aria-hidden="true"></i>Из&nbsp;жизни репетитора</p><h2 class="h2 h2--sm" id="h-schedule-situations" data-reveal>Карточка ученика под рукой, когда она нужна</h2></div>
+      <p class="lead" data-reveal>Обычно сведения об&nbsp;ученике разбросаны по&nbsp;телефону, чатам и&nbsp;памяти. Несколько ситуаций, где карточка экономит время.</p>
+    </header><ul class="sc-situations__grid"><li class="sc-situation" data-reveal="piece"><span class="sc-situation__top"><svg class="ic" aria-hidden="true"><use href="#i-users"/></svg><small>Сентябрь</small></span><h3 class="pfc__t">Пришел новый ученик</h3><p class="pfc__d">Нужно сохранить контакты, предмет и&nbsp;условия занятий.</p></li><li class="sc-situation" data-reveal="piece"><span class="sc-situation__top"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg><small>Четверг, 15:20</small></span><h3 class="pfc__t">Урок через десять минут</h3><p class="pfc__d">Перед занятием нужно вспомнить прошлую тему и&nbsp;задание.</p></li><li class="sc-situation" data-reveal="piece"><span class="sc-situation__top"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg><small>Конец четверти</small></span><h3 class="pfc__t">Родитель спрашивает, как дела</h3><p class="pfc__d">Нужно показать родителю прогресс по&nbsp;темам.</p></li><li class="sc-situation" data-reveal="piece"><span class="sc-situation__top"><svg class="ic" aria-hidden="true"><use href="#i-calendar"/></svg><small>После лета</small></span><h3 class="pfc__t">Ученик вернулся после перерыва</h3><p class="pfc__d">Нужно восстановить историю занятий и&nbsp;договоренности.</p></li></ul></div></section>
+<section class="sec sec--tint sc-capabilities" aria-labelledby="h-feature-capabilities"><div class="wrap"><header class="shead">
+      <div><p class="kicker" data-reveal><i class="geo geo--sq" aria-hidden="true"></i>Что умеет</p><h2 class="h2 h2--sm" id="h-feature-capabilities" data-reveal>Карточка ученика</h2></div>
+      <p class="lead" data-reveal>Контакты, занятия, задания и&nbsp;заметки в&nbsp;одном месте.</p>
+    </header><ul class="pfcs pfcs--4"><li><div class="pfc sc-cap sc-cap--0" data-live>
+      <div class="sc-cap__visual" aria-hidden="true"><div class="fx-mini fx-mini--list"><small>Марина Кузнецова</small><span class="fx-mini__row"><svg class="ic ic--12" aria-hidden="true"><use href="#i-doc"/></svg><span>Ученик · контакты</span></span><span class="fx-mini__row"><svg class="ic ic--12" aria-hidden="true"><use href="#i-doc"/></svg><span>Елена · мама</span></span></div></div>
+      <div class="sc-cap__copy"><h3 class="pfc__t">Контакты семьи</h3><p class="pfc__d">Телефон и&nbsp;почта ученика и&nbsp;родителей</p></div>
+    </div></li><li><div class="pfc sc-cap sc-cap--1" data-live>
+      <div class="sc-cap__visual" aria-hidden="true"><div class="fx-mini fx-mini--form"><small>Карточка ученика</small><span class="fx-mini__row">Алгебра · 9&nbsp;класс</span><span class="fx-mini__row">1&nbsp;800&nbsp;руб. за&nbsp;урок</span><b class="fx-mini__action"><svg class="ic ic--12" aria-hidden="true"><use href="#i-check"/></svg>Сохранено</b></div></div>
+      <div class="sc-cap__copy"><h3 class="pfc__t">Условия занятий</h3><p class="pfc__d">Предмет, цель и&nbsp;стоимость урока</p></div>
+    </div></li><li><div class="pfc sc-cap sc-cap--2" data-live>
+      <div class="sc-cap__visual" aria-hidden="true"><div class="fx-mini fx-mini--list"><small>Занятия Марины</small><span class="fx-mini__row"><svg class="ic ic--12" aria-hidden="true"><use href="#i-doc"/></svg><span>30.09 · Уравнения</span></span><span class="fx-mini__row"><svg class="ic ic--12" aria-hidden="true"><use href="#i-doc"/></svg><span>25.09 · Теорема Виета</span></span></div></div>
+      <div class="sc-cap__copy"><h3 class="pfc__t">История занятий</h3><p class="pfc__d">Даты, темы и&nbsp;посещаемость</p></div>
+    </div></li><li><div class="pfc sc-cap sc-cap--3" data-live>
+      <div class="sc-cap__visual" aria-hidden="true"><div class="fx-mini fx-mini--checklist"><small>Домашние задания</small><span class="fx-mini__row"><svg class="ic ic--12" aria-hidden="true"><use href="#i-check"/></svg><span>Вариант 2 · проверено</span></span><span class="fx-mini__row"><svg class="ic ic--12" aria-hidden="true"><use href="#i-check"/></svg><span>Задачи 4-6 · сдано</span></span></div></div>
+      <div class="sc-cap__copy"><h3 class="pfc__t">Задания ученика</h3><p class="pfc__d">Выданные работы и&nbsp;результаты проверки</p></div>
+    </div></li><li><div class="pfc sc-cap sc-cap--4" data-live>
+      <div class="sc-cap__visual" aria-hidden="true"><div class="fx-mini fx-mini--bars"><span>Уравнения<b>90%</b></span><i class="fx-mini__bar" style="--v:.9"></i><span>Текстовые задачи<b>50%</b></span><i class="fx-mini__bar" style="--v:.5"></i></div></div>
+      <div class="sc-cap__copy"><h3 class="pfc__t">Прогресс по&nbsp;темам</h3><p class="pfc__d">Результаты и&nbsp;слабые места ученика</p></div>
+    </div></li><li><div class="pfc sc-cap sc-cap--5" data-live>
+      <div class="sc-cap__visual" aria-hidden="true"><div class="fx-mini fx-mini--document"><small>Заметки к&nbsp;Марине</small><span class="fx-mini__row"><svg class="ic ic--12" aria-hidden="true"><use href="#i-doc"/></svg><span>Повторить текстовые задачи</span></span><span class="fx-mini__row"><svg class="ic ic--12" aria-hidden="true"><use href="#i-doc"/></svg><span>Пробник раз в&nbsp;месяц</span></span></div></div>
+      <div class="sc-cap__copy"><h3 class="pfc__t">Заметки репетитора</h3><p class="pfc__d">Договоренности и&nbsp;подсказки к&nbsp;уроку</p></div>
+    </div></li><li><div class="pfc sc-cap sc-cap--6" data-live>
+      <div class="sc-cap__visual" aria-hidden="true"><div class="fx-mini fx-mini--link"><small>Приглашение Марины</small><span class="fx-mini__link"><svg class="ic" aria-hidden="true"><use href="#i-link"/></svg>Ссылка в кабинете</span><b class="fx-mini__action">Открыть кабинет</b></div></div>
+      <div class="sc-cap__copy"><h3 class="pfc__t">Приглашение ученика</h3><p class="pfc__d">Регистрация и&nbsp;доступ в&nbsp;кабинет по&nbsp;ссылке</p></div>
+    </div></li></ul></div></section>
+<section class="sec sc-objections" aria-labelledby="h-schedule-objections"><div class="wrap"><header class="shead">
+      <div><p class="kicker" data-reveal><i class="geo geo--q" aria-hidden="true"></i>Сомнения</p><h2 class="h2 h2--sm" id="h-schedule-objections" data-reveal>Сомнения, которые есть у&nbsp;каждого репетитора</h2></div>
+
+    </header><ul class="sc-objections__grid"><li class="sc-objection" data-reveal="piece"><div class="sc-objection__question"><p><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>Сомнение <span>01</span></p><h3 class="pfc__t">А&nbsp;если я&nbsp;и&nbsp;так помню всех своих учеников?</h3></div><div class="sc-objection__answer"><p><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>На практике</p><div class="pfc__d">Пока их&nbsp;пятеро, наверное, да. С&nbsp;ростом нагрузки детали начинают путаться, и&nbsp;карточка держит их&nbsp;за&nbsp;вас: что прошли, что задали, о&nbsp;чем договорились с&nbsp;семьей.</div></div></li><li class="sc-objection" data-reveal="piece"><div class="sc-objection__question"><p><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>Сомнение <span>02</span></p><h3 class="pfc__t">Долго ли&nbsp;заводить всех учеников заново?</h3></div><div class="sc-objection__answer"><p><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>На практике</p><div class="pfc__d">Ученика можно внести вручную или отправить ему ссылку-приглашение, и&nbsp;он&nbsp;зарегистрируется сам. Уроки, задания и&nbsp;прогресс заполнятся по&nbsp;ходу работы.</div></div></li><li class="sc-objection" data-reveal="piece"><div class="sc-objection__question"><p><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg>Сомнение <span>03</span></p><h3 class="pfc__t">Можно ли&nbsp;хранить данные детей в&nbsp;онлайн-сервисе?</h3></div><div class="sc-objection__answer"><p><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>На практике</p><div class="pfc__d">Данные хранятся на&nbsp;серверах в&nbsp;России. Ученика младше 14&nbsp;лет можно зарегистрировать только с&nbsp;согласия родителя или законного представителя.</div></div></li></ul></div></section>
+<section class="sec sec--tint sec--allf" aria-labelledby="h-related">
+  <div class="wrap">
+    <header class="shead">
+      <div><p class="kicker" data-reveal><i class="geo geo--sq" aria-hidden="true"></i>Другие возможности</p><h2 class="h2 h2--sm" id="h-related" data-reveal>Еще 8&nbsp;функций платформы</h2></div>
+      <p class="lead" data-reveal>Все функции TeacherDesk связаны между собой. Выберите, что посмотреть дальше.</p><a class="btn btn--ghost btn--sm shead__btn" data-reveal href="/features/"><span>Все возможности</span></a>
+    </header><ul class="pfcs pfcs--4"><li data-reveal="piece" style="--i:0"><a class="pfc" href="/features/raspisanie/"><span class="pfc__ic"><svg class="ic ic--20" aria-hidden="true"><use href="#i-calendar"/></svg></span>
+          <h3 class="pfc__t">Расписание</h3>
+          <p class="pfc__d">Повторы, переносы и&nbsp;напоминания за&nbsp;час</p>
+          <span class="pfc__go" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li><li data-reveal="piece" style="--i:1"><a class="pfc" href="/features/uchet-oplat/"><span class="pfc__ic"><svg class="ic ic--20" aria-hidden="true"><use href="#i-wallet"/></svg></span>
+          <h3 class="pfc__t">Учет оплат</h3>
+          <p class="pfc__d">Балансы, долги и&nbsp;напоминания об&nbsp;оплате</p>
+          <span class="pfc__go" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li><li data-reveal="piece" style="--i:2"><a class="pfc" href="/features/kabinet-uchenika/"><span class="pfc__ic"><svg class="ic ic--20" aria-hidden="true"><use href="#i-home"/></svg></span>
+          <h3 class="pfc__t">Кабинет ученика</h3>
+          <p class="pfc__d">Расписание, задания и&nbsp;вход в&nbsp;урок для ученика</p>
+          <span class="pfc__go" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li><li data-reveal="piece" style="--i:3"><a class="pfc" href="/features/domashnie-zadaniya/"><span class="pfc__ic"><svg class="ic ic--20" aria-hidden="true"><use href="#i-task"/></svg></span>
+          <h3 class="pfc__t">Домашние задания</h3>
+          <p class="pfc__d">Выдача, сдача и&nbsp;проверка в&nbsp;одном месте</p>
+          <span class="pfc__go" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li><li data-reveal="piece" style="--i:4"><a class="pfc" href="/features/onlayn-doska/"><span class="pfc__ic"><svg class="ic ic--20" aria-hidden="true"><use href="#i-board"/></svg></span>
+          <h3 class="pfc__t">Онлайн-доска</h3>
+          <p class="pfc__d">Открывается из&nbsp;урока, листы сохраняются</p>
+          <span class="pfc__go" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li><li data-reveal="piece" style="--i:5"><a class="pfc" href="/features/ii-assistent/"><span class="pfc__ic"><svg class="ic ic--20" aria-hidden="true"><use href="#i-ai"/></svg></span>
+          <h3 class="pfc__t">ИИ-ассистент</h3>
+          <p class="pfc__d">План урока и&nbsp;упражнения за&nbsp;минуту</p>
+          <span class="pfc__go" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li><li data-reveal="piece" style="--i:6"><a class="pfc" href="/features/otchety-roditelyam/"><span class="pfc__ic"><svg class="ic ic--20" aria-hidden="true"><use href="#i-report"/></svg></span>
+          <h3 class="pfc__t">Отчеты родителям</h3>
+          <p class="pfc__d">Прогресс ученика за&nbsp;месяц одной ссылкой</p>
+          <span class="pfc__go" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li><li data-reveal="piece" style="--i:7"><a class="pfc" href="/features/zhurnal-zanyatiy/"><span class="pfc__ic"><svg class="ic ic--20" aria-hidden="true"><use href="#i-note"/></svg></span>
+          <h3 class="pfc__t">Журнал занятий</h3>
+          <p class="pfc__d">Что прошли, что задали, кто пропустил</p>
+          <span class="pfc__go" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a></li></ul>
+  </div>
+</section>
+<section class="sec sec--faq" aria-labelledby="h-faq">
+  <div class="wrap">
+    <div class="faqw">
+      <header class="faqw__head">
+        <p class="kicker" data-reveal><i class="geo geo--sq" aria-hidden="true"></i>Вопросы</p>
+        <h2 class="h2 h2--sm" id="h-faq" data-reveal>Частые вопросы</h2>
+        <p class="faqw__mail" data-reveal>Не&nbsp;нашли ответ? Задайте вопрос или напишите на <a class="tlink" href="mailto:info@teacherdesk.ru">info@teacherdesk.ru</a>, отвечаем в&nbsp;течение рабочего дня.</p>
+      </header>
+      <div class="faq" data-faq data-reveal>
+        <details name="faq" open><summary>Как вести базу учеников репетитору?<span class="faq__x" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="faq__a"><p>Заведите на&nbsp;каждого ученика карточку: контакты, цель, заметки. Остальное заполнится по&nbsp;ходу работы, когда появятся уроки в&nbsp;расписании и&nbsp;проверенные задания.</p></div></details><details name="faq"><summary>Что есть в&nbsp;карточке ученика?<span class="faq__x" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="faq__a"><p>Контакты ученика и&nbsp;родителей, история занятий, выданные задания и&nbsp;их&nbsp;результаты, прогресс и&nbsp;ваши заметки. Уроки и&nbsp;задания попадают туда сами из&nbsp;расписания и&nbsp;проверок.</p></div></details><details name="faq"><summary>Можно ли&nbsp;хранить контакты родителей?<span class="faq__x" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="faq__a"><p>Да, в&nbsp;карточке есть место для контактов ученика и&nbsp;родителей. Имя и&nbsp;телефон мамы или папы всегда рядом с&nbsp;историей занятий.</p></div></details><details name="faq"><summary>Как добавить ученика?<span class="faq__x" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="faq__a"><p>Вручную или ссылкой-приглашением. По&nbsp;ссылке ученик сам регистрируется и&nbsp;попадает в&nbsp;свой кабинет, а&nbsp;у&nbsp;вас появляется его карточка.</p></div></details><details name="faq"><summary>Что делать, если ученики сейчас в&nbsp;Excel?<span class="faq__x" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="faq__a"><p>Внесите их&nbsp;вручную или пригласите по&nbsp;ссылке, таблицу можно держать под рукой для сверки. Если список большой, напишите на&nbsp;info@teacherdesk.ru, и&nbsp;мы&nbsp;подскажем, как перенести его удобнее.</p></div></details><details name="faq"><summary>Можно ли&nbsp;открыть карточку ученика с&nbsp;телефона?<span class="faq__x" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="faq__a"><p>Да. TeacherDesk работает в&nbsp;браузере смартфона и&nbsp;ставится на&nbsp;главный экран как приложение, поэтому карточку можно открыть за&nbsp;пять минут до&nbsp;урока или во&nbsp;время звонка родителя.</p></div></details><details name="faq"><summary>Сколько учеников можно вести?<span class="faq__x" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="faq__a"><p>На&nbsp;пробном периоде и&nbsp;тарифе Pro до&nbsp;50 активных учеников, на&nbsp;Premium за&nbsp;1&nbsp;990&nbsp;руб. в&nbsp;месяц фиксированного лимита нет.</p></div></details><details name="faq"><summary>Кому доступна база учеников?<span class="faq__x" aria-hidden="true"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="faq__a"><p>Только вам. Ученик в&nbsp;своем кабинете видит лишь свои уроки, задания и&nbsp;материалы.</p></div></details>
+        <button class="btn btn--dark faq__ask" type="button" data-ask-open><span>Задать свой вопрос</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="cta" aria-labelledby="h-cta">
+  <div class="wrap">
+    <div class="cta__box" data-reveal>
+      <div class="tee" aria-hidden="true" data-tee><i class="tee__bar"></i><i class="tee__block"></i><i class="tee__stem"></i></div>
+      <h2 class="cta__t" id="h-cta">Заведите карточки учеников <span class="pill-now pill-now--xl"><i aria-hidden="true"></i>сегодня</span></h2>
+      <div class="cta__act">
+        <a class="btn btn--white btn--lg" href="https://app.teacherdesk.ru/register"><span>Начать бесплатно</span></a>
+        <a class="btn btn--onblue btn--lg" href="/features/kabinet-uchenika/"><span>Кабинет ученика</span></a>
+      </div>
+      <ul class="trust trust--inv"><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>14&nbsp;дней полного доступа</li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Без карты</li><li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Данные хранятся в&nbsp;России</li></ul>
+    </div>
+  </div>
+</section>
+<section class="seo" aria-labelledby="h-seo">
+  <div class="wrap">
+    <div class="seo__in" data-seo>
+      <h2 class="seo__h" id="h-seo">База учеников репетитора: карточка ученика с&nbsp;контактами, историей и&nbsp;заметками</h2>
+      <div class="seo__body" id="seo-body"><h3>Что такое база учеников репетитора</h3>
+<p>База учеников репетитора&nbsp;- это все ваши ученики в&nbsp;одном списке, где у&nbsp;каждого есть своя карточка. В&nbsp;TeacherDesk в&nbsp;карточке ученика лежат контакты ученика и&nbsp;родителей, история занятий, выданные задания, прогресс и&nbsp;ваши заметки. Уроки и&nbsp;результаты попадают туда сами из&nbsp;расписания и&nbsp;проверок, а&nbsp;контакты и&nbsp;заметки вы&nbsp;дописываете от&nbsp;себя. Номер мамы и&nbsp;договоренности с&nbsp;семьей больше не&nbsp;нужно искать по&nbsp;переписке.</p>
+<h3>Что хранится в&nbsp;карточке ученика</h3>
+<p>Часть сведений вы&nbsp;вносите один раз, остальное карточка собирает по&nbsp;ходу работы. Вот из&nbsp;чего она состоит и&nbsp;когда каждый раздел выручает.</p>
+<div class="seo__tbl"><table>
+<thead><tr><th>Раздел</th><th>Откуда берется</th><th>Когда пригодится</th></tr></thead>
+<tbody>
+<tr><td>Контакты ученика и&nbsp;родителей</td><td>Вносите вы</td><td>Мама пишет с&nbsp;нового номера</td></tr>
+<tr><td>История занятий</td><td>Из&nbsp;расписания</td><td>Вспомнить, на&nbsp;чем остановились</td></tr>
+<tr><td>Задания и&nbsp;результаты</td><td>Из&nbsp;домашних заданий</td><td>Понять, что сделано, а&nbsp;что нет</td></tr>
+<tr><td>Прогресс</td><td>Из&nbsp;проверок</td><td>Ответить родителю об&nbsp;успехах</td></tr>
+<tr><td>Заметки</td><td>Пишете вы</td><td>Цели и&nbsp;договоренности с&nbsp;семьей</td></tr>
+</tbody>
+</table></div>
+<h3>Как это работает</h3>
+<ol>
+<li>Добавьте ученика вручную или отправьте ему ссылку-приглашение, и&nbsp;он&nbsp;зарегистрируется сам.</li>
+<li>Впишите в&nbsp;карточку контакты родителей и&nbsp;короткую заметку о&nbsp;цели занятий.</li>
+<li>Поставьте уроки в&nbsp;расписание: история занятий начнет копиться сама.</li>
+<li>Выдавайте задания на <a href="/features/domashnie-zadaniya/">платформе для домашних заданий</a>: результаты и&nbsp;прогресс появятся в&nbsp;той же&nbsp;карточке.</li>
+<li>Перед уроком откройте карточку и&nbsp;начните с&nbsp;того места, где остановились.</li>
+</ol>
+<h3>Пример: карточка Марины Кузнецовой</h3>
+<p>Марина учится в&nbsp;9&nbsp;классе и&nbsp;занимается алгеброй. В&nbsp;ее&nbsp;карточке номер мамы, история уроков с&nbsp;темами, сданные варианты и&nbsp;заметка Анны Ковалевой: «путает знаки при переносе слагаемых, повторить в&nbsp;четверг». За&nbsp;десять минут до&nbsp;урока Анна открывает карточку с&nbsp;телефона и&nbsp;видит, что последнее задание сдано, но&nbsp;с&nbsp;той же&nbsp;ошибкой. Когда в&nbsp;конце четверти звонит мама, ответ на&nbsp;вопрос «как у&nbsp;нас дела» уже собран на&nbsp;одном экране.</p>
+<h3>Что писать в&nbsp;заметках об&nbsp;ученике</h3>
+<p>Заметки&nbsp;- самая ценная часть карточки, потому что их&nbsp;не&nbsp;восстановить ни&nbsp;из&nbsp;расписания, ни&nbsp;из&nbsp;заданий. Хорошая заметка короткая и&nbsp;пригодится через месяц:</p>
+<ul>
+<li>цель: «ОГЭ на&nbsp;4 и&nbsp;выше» или «подтянуть грамматику к&nbsp;контрольной»;</li>
+<li>слабые места: «путает Present Perfect и&nbsp;Past Simple»;</li>
+<li>что работает на&nbsp;уроке: «лучше начинать с&nbsp;устной разминки»;</li>
+<li>договоренности с&nbsp;семьей: кому писать о&nbsp;переносах и&nbsp;о&nbsp;чем.</li>
+</ul>
+<h3>Как вести базу учеников: 5 правил</h3>
+<ul>
+<li>Заводите карточку на&nbsp;каждого ученика, даже на&nbsp;пробный урок.</li>
+<li>Записывайте контакты обоих родителей, а&nbsp;не&nbsp;только того, кто нашел вас первым.</li>
+<li>После урока оставляйте заметку в&nbsp;одну строку: что получилось и&nbsp;что повторить.</li>
+<li>Фиксируйте договоренности, например у&nbsp;Ильи Петрова «в&nbsp;этой четверти только грамматика».</li>
+<li>Раз в&nbsp;месяц просматривайте прогресс, прежде чем отправить <a href="/features/otchety-roditelyam/">отчет о&nbsp;прогрессе за&nbsp;месяц</a> семье.</li>
+</ul>
+<h3>Чем карточка удобнее телефона и&nbsp;таблицы</h3>
+<p>В&nbsp;телефоне хранится номер, в&nbsp;таблице строка с&nbsp;оплатами, в&nbsp;мессенджере договоренности, а&nbsp;связи между ними держите в&nbsp;голове вы. Карточка соединяет эти сведения с&nbsp;уроками и&nbsp;заданиями, поэтому сверять ничего не&nbsp;нужно. Особенно это заметно, когда ученик возвращается после лета: пройденные темы и&nbsp;заметки на&nbsp;месте, и&nbsp;уровень не&nbsp;приходится выяснять заново. Деньги ведутся рядом, в&nbsp;разделе <a href="/features/uchet-oplat/">учета оплат и&nbsp;долгов</a>, а&nbsp;если нужен взгляд на&nbsp;учеников и&nbsp;деньги вместе, посмотрите <a href="/crm-dlya-repetitora/">CRM для репетитора</a>.</p>
+<h3>Кто видит базу учеников и&nbsp;где хранятся данные</h3>
+<p>Базу учеников видите только вы. Ученик в&nbsp;своем <a href="/features/kabinet-uchenika/">личном кабинете</a> видит лишь свои уроки, задания и&nbsp;материалы, чужие карточки ему недоступны. TeacherDesk&nbsp;- российская платформа, данные хранятся на&nbsp;серверах в&nbsp;России. Ученика младше 14&nbsp;лет можно зарегистрировать только с&nbsp;согласия родителя или законного представителя.</p>
+<h3>Сколько учеников можно вести</h3>
+<p>На&nbsp;пробном периоде и&nbsp;тарифе Pro за&nbsp;990&nbsp;руб. в&nbsp;месяц можно вести до&nbsp;50 активных учеников, на&nbsp;Premium за&nbsp;1&nbsp;990&nbsp;руб. в&nbsp;месяц фиксированного лимита нет. Первые 14&nbsp;дней бесплатно и&nbsp;без карты, цены актуальны на&nbsp;октябрь 2026, все условия на&nbsp;странице <a href="/pricing/">тарифов</a>. Как пригласить первых учеников, показываем в <a href="/baza-znanij/priglasit-uchenika/" data-opt>инструкции по&nbsp;приглашению</a>.</p></div>
+      <button class="seo__more" type="button" data-seo-more aria-expanded="false" aria-controls="seo-body"><span>Читать полностью</span><svg class="ic ic--12" aria-hidden="true"><use href="#i-chev"/></svg></button>
+      <nav class="seo__tags" aria-labelledby="h-seo-tags"><p class="seo__tagh" id="h-seo-tags">Часто ищут</p><ul><li><a class="seo__tag" href="/features/uchet-oplat/">учет занятий и&nbsp;оплат</a></li><li><a class="seo__tag" href="/features/kabinet-uchenika/">личный кабинет для репетитора</a></li><li><a class="seo__tag" href="/features/otchety-roditelyam/">отчет о&nbsp;прогрессе ученика</a></li><li><a class="seo__tag" href="/features/zhurnal-zanyatiy/">журнал репетитора</a></li><li><a class="seo__tag" href="/features/raspisanie/">приложение для расписания репетитора</a></li><li><a class="seo__tag" href="/features/domashnie-zadaniya/">домашние задания онлайн</a></li><li><a class="seo__tag" href="/instrumenty/tablica-ucheta/">таблица учета</a></li><li><a class="seo__tag" href="/crm-dlya-repetitora/">срм для репетитора</a></li><li><a class="seo__tag" href="/programma-dlya-repetitora/">программа учета учеников репетитора</a></li><li><a class="seo__tag" href="/prilozhenie-dlya-repetitora/">приложение для репетиторов онлайн</a></li><li><a class="seo__tag" href="/besplatnaya-platforma-dlya-repetitorov/">платформа для репетиторов бесплатно</a></li><li><a class="seo__tag" href="/pricing/">тарифы TeacherDesk</a></li></ul></nav>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <a href="/" aria-label="TeacherDesk, на главную"><img src="/assets/img/logo.svg" width="142" height="24" alt="TeacherDesk" loading="lazy"></a>
+        <p>Платформа для частных репетиторов: расписание, учет оплат, домашние задания и&nbsp;ИИ-ассистент в&nbsp;одном окне.</p>
+        <a class="ftr__mail" href="mailto:info@teacherdesk.ru"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>info@teacherdesk.ru</a>
+      </div>
+      <nav class="ftr__cols" aria-label="Карта сайта">
+        <details class="ftr__col" open>
+          <summary class="ftr__h">Возможности<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <ul><li><a href="/features/raspisanie/">Расписание</a></li><li><a href="/features/uchet-oplat/">Учет оплат</a></li><li><a href="/features/uchet-uchenikov/">Учет учеников</a></li><li><a href="/features/kabinet-uchenika/">Кабинет ученика</a></li><li><a href="/features/domashnie-zadaniya/">Домашние задания</a></li><li><a href="/features/onlayn-doska/">Онлайн-доска</a></li><li><a href="/features/ii-assistent/">ИИ-ассистент</a></li><li><a href="/features/otchety-roditelyam/">Отчеты родителям</a></li><li><a href="/features/zhurnal-zanyatiy/">Журнал занятий</a></li></ul>
+        </details><details class="ftr__col" open>
+          <summary class="ftr__h">Инструменты<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <ul><li><a href="/instrumenty/kalkulyator/">Калькулятор дохода</a></li><li><a href="/instrumenty/anketa/">Объявление репетитора</a></li><li><a href="/instrumenty/tablica-ucheta/">Таблица учета</a></li><li><a href="/instrumenty/shablon-raspisaniya/">Таблица расписания</a></li><li><a href="/instrumenty/dogovor/">Генератор договора</a></li><li><a href="/instrumenty/">Все инструменты</a></li></ul>
+        </details><details class="ftr__col" open>
+          <summary class="ftr__h">Решения<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <ul><li><a href="/crm-dlya-repetitora/">CRM для репетитора</a></li><li><a href="/programma-dlya-repetitora/">Программа для репетитора</a></li><li><a href="/prilozhenie-dlya-repetitora/">Приложение для репетитора</a></li><li><a href="/besplatnaya-platforma-dlya-repetitorov/">Бесплатная платформа</a></li><li><a href="/onlayn-zanyatiya/">Платформа для онлайн-уроков</a></li><li><a href="/instrumenty/tablica-ucheta/">Таблица учета</a></li><li><a href="/instrumenty/shablon-raspisaniya/">Таблица расписания</a></li><li><a href="/pricing/">Тарифы</a></li><li><a href="/otzyvy/">Отзывы и&nbsp;истории</a></li></ul>
+        </details><details class="ftr__col" open>
+          <summary class="ftr__h">База знаний<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <ul><li><a href="/baza-znanij/pervye-shagi/">Первые шаги</a></li><li><a href="/baza-znanij/import-iz-excel/">Перенос из&nbsp;Excel</a></li><li><a href="/baza-znanij/ustanovka-na-telefon/">Установка на&nbsp;телефон</a></li><li><a href="/baza-znanij/napominaniya-ob-oplate/">Напоминания об&nbsp;оплате</a></li><li><a href="/baza-znanij/">Все инструкции</a></li></ul>
+        </details><details class="ftr__col" open>
+          <summary class="ftr__h">Полезное<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <ul><li><a href="/blog/">Блог</a></li><li><a href="/blog/gde-iskat-uchenikov/">Где искать учеников</a></li><li><a href="/blog/samozanyatost/">Репетитор-самозанятый</a></li><li><a href="/blog/luchshie-crm-dlya-repetitorov/">Лучшие CRM для репетиторов</a></li><li><a href="/about/">О&nbsp;сервисе</a></li><li><a href="/kontakty/">Контакты</a></li></ul>
+        </details>
+      </nav>
+    </div>
+    <div class="ftr__legal">
+      <ul class="ftr__docs"><li><a href="/privacy/">Политика конфиденциальности</a></li><li><a href="/terms/">Пользовательское соглашение</a></li><li><a href="/offer/">Публичная оферта</a></li><li><a href="/consent/">Согласие на&nbsp;обработку ПДн</a></li><li><a href="/marketing-consent/">Согласие на&nbsp;рассылку</a></li><li><a href="/cookies/">Политика cookies</a></li><li><a href="/requisites/">Реквизиты</a></li><li><button class="ftr__cset" type="button" data-cbar-open>Настройки аналитики</button></li></ul>
+      <p>ИП Булитко А.В. · ИНН 745604136907 · ОГРНИП 324508100646384 · г. Москва · <a href="mailto:info@teacherdesk.ru">info@teacherdesk.ru</a></p>
+      <p>Персональные данные обрабатываются по&nbsp;152-ФЗ и&nbsp;хранятся на&nbsp;серверах в&nbsp;России. Регистрация лиц до&nbsp;14&nbsp;лет только с&nbsp;согласия родителя или законного представителя.</p>
+      <p>© 2026&nbsp;TeacherDesk · Разработано в&nbsp;России · 16+</p>
+    </div>
+  </div>
+</footer>
+
+<dialog class="ask" id="ask" aria-labelledby="ask-t" data-endpoint="/api/requests">
+  <form class="ask__form" method="post" action="/api/requests" novalidate data-ask-form>
+    <button class="ask__x" type="button" data-ask-close aria-label="Закрыть"><svg class="ic ic--20" aria-hidden="true"><use href="#i-close"/></svg></button>
+    <p class="kicker"><i class="geo geo--q" aria-hidden="true"></i><span data-ask-kicker>Вопрос команде</span></p>
+    <h2 class="ask__t" id="ask-t">Задать свой вопрос</h2>
+    <p class="ask__lead" data-ask-lead>Ответим в&nbsp;течение рабочего дня на&nbsp;почту или по&nbsp;телефону.</p>
+    <div class="ask__f"><label for="ask-name">Имя</label><input id="ask-name" type="text" name="name" autocomplete="name" minlength="2" maxlength="100" required aria-describedby="ask-e-name"><p class="ask__fe" id="ask-e-name"></p></div>
+    <div class="ask__f"><label for="ask-phone">Телефон</label><input id="ask-phone" type="tel" name="phone" autocomplete="tel" inputmode="tel" maxlength="40" placeholder="+7" aria-describedby="ask-e-phone ask-hint"><p class="ask__fe" id="ask-e-phone"></p></div>
+    <div class="ask__f"><label for="ask-email">Email</label><input id="ask-email" type="email" name="email" autocomplete="email" maxlength="254" placeholder="name@mail.ru" aria-describedby="ask-e-email ask-hint"><p class="ask__fe" id="ask-e-email"></p><p class="ask__hint" id="ask-hint">Хватит одного: телефона или email.</p></div>
+    <div class="ask__f" data-ask-contact hidden><label for="ask-preferred-contact">Как с вами связаться</label><select id="ask-preferred-contact" name="preferred_contact" aria-describedby="ask-e-preferred_contact"><option value="any">Любым удобным способом</option><option value="email">Написать на почту</option><option value="phone">Позвонить</option></select><p class="ask__fe" id="ask-e-preferred_contact"></p></div>
+    <div class="ask__f"><label for="ask-question" data-ask-question-label>Вопрос</label><textarea id="ask-question" name="question" rows="4" maxlength="4000" required aria-describedby="ask-e-question"></textarea><p class="ask__fe" id="ask-e-question"></p></div>
+    <div class="ask__trap" aria-hidden="true"><label for="ask-website">Ваш сайт</label><input id="ask-website" type="text" name="website" autocomplete="off" tabindex="-1"></div>
+    <div class="ask__okw"><label class="ask__ok"><input type="checkbox" name="consent" required aria-describedby="ask-e-consent"><span>Согласен на&nbsp;<a class="tlink" href="/consent/" target="_blank" rel="noopener">обработку персональных данных</a></span></label><p class="ask__fe" id="ask-e-consent"></p></div>
+    <label class="ask__ok ask__ok--news"><input type="checkbox" name="news"><span>Получать полезные материалы и&nbsp;новости от&nbsp;TeacherDesk (<a class="tlink" href="/marketing-consent/" target="_blank" rel="noopener" data-opt>согласие на&nbsp;рассылку</a>)</span></label>
+    <p class="ask__err" data-ask-err role="alert"></p>
+    <button class="btn btn--primary btn--lg ask__send" type="submit"><span>Отправить вопрос</span></button>
+  </form>
+  <div class="ask__done" data-ask-done hidden>
+    <span class="ask__done-ic" aria-hidden="true"><svg class="ic ic--20"><use href="#i-check"/></svg></span>
+    <h2 class="ask__t" id="ask-done-t" tabindex="-1" data-ask-done-title>Вопрос отправлен</h2>
+    <p class="ask__lead" id="ask-done-d" data-ask-done-text>Спасибо, вопрос у&nbsp;нас. Ответим в&nbsp;течение рабочего дня.</p>
+    <button class="btn btn--ghost" type="button" data-ask-close><span>Закрыть</span></button>
+  </div>
+</dialog>
+
+<script src="/assets/js/main.js?v=be6c8eb6" defer></script>
+<script src="/assets/js/home.js?v=14549040" defer></script>
+<script src="/assets/js/pages.js?v=5aecf61a" defer></script>
+<script src="/assets/js/features.js?v=27fc8be4" defer></script>
+</body>
+</html>

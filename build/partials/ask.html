@@ -1,0 +1,24 @@
+<dialog class="ask" id="ask" aria-labelledby="ask-t" data-endpoint="/api/requests">
+  <form class="ask__form" method="post" action="/api/requests" novalidate data-ask-form>
+    <button class="ask__x" type="button" data-ask-close aria-label="Закрыть"><svg class="ic ic--20" aria-hidden="true"><use href="#i-close"/></svg></button>
+    <p class="kicker"><i class="geo geo--q" aria-hidden="true"></i><span data-ask-kicker>Вопрос команде</span></p>
+    <h2 class="ask__t" id="ask-t">Задать свой вопрос</h2>
+    <p class="ask__lead" data-ask-lead>Ответим в&nbsp;течение рабочего дня на&nbsp;почту или по&nbsp;телефону.</p>
+    <div class="ask__f"><label for="ask-name">Имя</label><input id="ask-name" type="text" name="name" autocomplete="name" minlength="2" maxlength="100" required aria-describedby="ask-e-name"><p class="ask__fe" id="ask-e-name"></p></div>
+    <div class="ask__f"><label for="ask-phone">Телефон</label><input id="ask-phone" type="tel" name="phone" autocomplete="tel" inputmode="tel" maxlength="40" placeholder="+7" aria-describedby="ask-e-phone ask-hint"><p class="ask__fe" id="ask-e-phone"></p></div>
+    <div class="ask__f"><label for="ask-email">Email</label><input id="ask-email" type="email" name="email" autocomplete="email" maxlength="254" placeholder="name@mail.ru" aria-describedby="ask-e-email ask-hint"><p class="ask__fe" id="ask-e-email"></p><p class="ask__hint" id="ask-hint">Хватит одного: телефона или email.</p></div>
+    <div class="ask__f" data-ask-contact hidden><label for="ask-preferred-contact">Как с вами связаться</label><select id="ask-preferred-contact" name="preferred_contact" aria-describedby="ask-e-preferred_contact"><option value="any">Любым удобным способом</option><option value="email">Написать на почту</option><option value="phone">Позвонить</option></select><p class="ask__fe" id="ask-e-preferred_contact"></p></div>
+    <div class="ask__f"><label for="ask-question" data-ask-question-label>Вопрос</label><textarea id="ask-question" name="question" rows="4" maxlength="4000" required aria-describedby="ask-e-question"></textarea><p class="ask__fe" id="ask-e-question"></p></div>
+    <div class="ask__trap" aria-hidden="true"><label for="ask-website">Ваш сайт</label><input id="ask-website" type="text" name="website" autocomplete="off" tabindex="-1"></div>
+    <div class="ask__okw"><label class="ask__ok"><input type="checkbox" name="consent" required aria-describedby="ask-e-consent"><span>Согласен на&nbsp;<a class="tlink" href="/consent/" target="_blank" rel="noopener">обработку персональных данных</a></span></label><p class="ask__fe" id="ask-e-consent"></p></div>
+    <label class="ask__ok ask__ok--news"><input type="checkbox" name="news"><span>Получать полезные материалы и&nbsp;новости от&nbsp;TeacherDesk (<a class="tlink" href="/marketing-consent/" target="_blank" rel="noopener" data-opt>согласие на&nbsp;рассылку</a>)</span></label>
+    <p class="ask__err" data-ask-err role="alert"></p>
+    <button class="btn btn--primary btn--lg ask__send" type="submit"><span>Отправить вопрос</span></button>
+  </form>
+  <div class="ask__done" data-ask-done hidden>
+    <span class="ask__done-ic" aria-hidden="true"><svg class="ic ic--20"><use href="#i-check"/></svg></span>
+    <h2 class="ask__t" id="ask-done-t" tabindex="-1" data-ask-done-title>Вопрос отправлен</h2>
+    <p class="ask__lead" id="ask-done-d" data-ask-done-text>Спасибо, вопрос у&nbsp;нас. Ответим в&nbsp;течение рабочего дня.</p>
+    <button class="btn btn--ghost" type="button" data-ask-close><span>Закрыть</span></button>
+  </div>
+</dialog>

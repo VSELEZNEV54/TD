@@ -1,0 +1,31 @@
+name: teacherdesk
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    init: true
+    ports:
+      - "127.0.0.1:8131:8000"
+    environment:
+      ADMIN_TOKEN: ${ADMIN_TOKEN:?Run python3 -m server.manage init-env first}
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-}
+      REGISTER_URL: ${REGISTER_URL:-https://app.teacherdesk.ru/register}
+      LOGIN_URL: ${LOGIN_URL:-https://app.teacherdesk.ru/login}
+      TRUST_PROXY: ${TRUST_PROXY:-false}
+      RATE_LIMIT: ${RATE_LIMIT:-5}
+      RATE_WINDOW: ${RATE_WINDOW:-600}
+      DATA_DIR: /data
+      SITE_DIR: /app/site
+    volumes:
+      - teacherdesk-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    stop_grace_period: 35s
+
+volumes:
+  teacherdesk-data:

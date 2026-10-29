@@ -1,0 +1,46 @@
+/* Компоновка страницы. Карточки, ползунок, шрифты и кнопки из общих стилей сайта. */
+.pricing-start{padding:104px 0 calc(var(--sec) * .5)}
+.pricing-start .crumbs{margin-bottom:20px}
+.pricing-start__head{margin-bottom:24px}
+.pricing-start__head .phero__h{max-width:none}
+.pricing-start__intro{max-width:none;margin-top:12px}
+.pricing-controls{display:grid;grid-template-columns:minmax(0,4.5fr) minmax(0,7.5fr);gap:32px;align-items:center;margin-bottom:64px}
+.pricing-seats{min-width:0}
+.pricing-period{min-width:0;display:grid;align-content:start;gap:10px}
+.pricing-period__options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.pricing-period__options .btn{min-width:0;width:100%}
+.pricing-period__hint,.pricing-start__foot,.pricing-plan__charge,.pricing-plan__old{padding-right:0}
+.pricing-plan__charge{margin-top:12px}
+.pricing-plan__old{margin-top:8px}
+.pricing-start__foot{margin-top:38px}
+.pricing-page .pricing-comparison{padding-top:calc(var(--sec) * .5)}
+.pricing-comparison .shead{margin-bottom:22px}
+.pricing-compare .ctab__row>span{min-width:0;overflow-wrap:anywhere;flex-wrap:wrap;gap:4px 6px}
+.pricing-compare .ctab__row>span small{display:block;width:100%}
+.pricing-compare__value{display:inline-flex;align-items:center;gap:6px}
+.pricing-compare__value>.ic{flex:none}
+@media(max-width:1040px){
+  .pricing-controls{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:720px){
+  .pricing-start{padding-top:92px}
+  .pricing-controls{gap:24px;margin-bottom:28px}
+  .pricing-seats .seats__q{flex-wrap:wrap;gap:8px}
+  .pricing-seats .seats__out{margin-left:auto}
+  .pricing-period__options{grid-template-columns:minmax(0,1fr)}
+  .pricing-page .btn{width:100%;min-width:0;max-width:100%}
+  .pricing-page .cta__act{display:grid;grid-template-columns:minmax(0,1fr);width:100%}
+  .pricing-page .trust{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+  .pricing-page .trust li:nth-child(3){display:inline-flex}
+  .pricing-start__foot{margin-top:24px}
+  /* Телефон: название строки сверху, три тарифа в ряд под ним, шапка с тарифами остается */
+  .pricing-compare{overflow:clip}
+  .pricing-compare .ctab__row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pricing-compare .ctab__row>span{padding:4px 8px 14px;font-size:13.5px}
+  .pricing-compare .ctab__row>span[role=rowheader]{grid-column:1/-1;justify-content:flex-start;padding:14px 16px 6px;font-weight:500;background:none}
+  .pricing-compare .ctab__row--h{position:sticky;top:64px;z-index:2}
+  .pricing-compare .ctab__row--h>span:first-child{display:none}
+  .pricing-compare .ctab__row--h>span{padding:12px 8px}
+  .pricing-compare__value>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .pricing-compare .ctab__row>span small{font-size:11px}
+}

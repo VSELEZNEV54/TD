@@ -1,0 +1,24 @@
+/* Контакты: компоненты карточек и заголовков общие с остальным сайтом. */
+.contact-hours{display:flex;align-items:center;gap:8px;margin-top:26px;color:var(--muted);font-size:14px;line-height:1.4}
+.contact-hours>.ic{color:var(--blue);flex:none}
+.contact-card .pfc__d{padding-right:0}
+.contact-card__mail{display:inline-flex;align-items:center;gap:8px;margin-top:auto;padding-top:16px;font-size:15px;font-weight:500;overflow-wrap:anywhere}
+.contact-card__mail>.ic{flex:none}
+.contact-company{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px clamp(28px,5vw,72px);align-items:start}
+.contact-company__facts{display:grid}
+.contact-company__facts>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:12px;padding:18px 0;border-top:1px solid var(--line-2);font-size:15px;line-height:1.5}
+.contact-company__facts>div:last-child{border-bottom:1px solid var(--line-2)}
+.contact-company__facts dt{color:var(--muted)}
+.contact-company__facts dd{color:var(--ink);font-weight:500;overflow-wrap:anywhere}
+.contact-company__more{display:grid;gap:22px;padding:24px;border:1px solid var(--blue-100);border-radius:var(--r-m);background:var(--blue-50);color:var(--muted);font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+.contact-company__actions{display:flex;flex-wrap:wrap;gap:12px}
+@media(max-width:1040px){.contact-company{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:720px){
+  .contact-page .phero__cta,.contact-page .cta__act,.contact-company__actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%}
+  .contact-page .btn{width:100%;max-width:100%;min-width:0}
+  .contact-page .btn--lg{min-height:54px}
+  .contact-page .pfcs,.contact-page .ftools{grid-template-columns:minmax(0,1fr)}
+  .contact-hours{align-items:flex-start}
+  .contact-company__facts>div{grid-template-columns:minmax(0,1fr);gap:4px}
+  .contact-company__more{padding:20px}
+}

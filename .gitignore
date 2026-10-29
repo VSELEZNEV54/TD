@@ -7,3 +7,22 @@ node_modules/
 *.ai
 *.sketch
 _drafts/
+
+# генератор: служебные файлы сборки
+__pycache__/
+build/.manifest.json
+
+# backend: secrets, user data, local environment and backups
+.env.*
+!.env.example
+.venv/
+server/data/
+*.sqlite3
+*.sqlite3-*
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+backups/
+dist/
+.pages-preview/
