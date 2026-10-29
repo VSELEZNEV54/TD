@@ -15,7 +15,7 @@
 @media(max-width:1040px){.contact-company{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:720px){
   .contact-page .phero__cta,.contact-page .cta__act,.contact-company__actions{display:grid;grid-template-columns:minmax(0,1fr);width:100%}
-  .contact-page .btn{width:100%;max-width:100%;min-width:0;height:auto;min-height:48px;padding-block:14px;white-space:normal;text-align:center;line-height:1.3}
+  .contact-page .btn{width:100%;max-width:100%;min-width:0}
   .contact-page .btn--lg{min-height:54px}
   .contact-page .pfcs,.contact-page .ftools{grid-template-columns:minmax(0,1fr)}
   .contact-hours{align-items:flex-start}

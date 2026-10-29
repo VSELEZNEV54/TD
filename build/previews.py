@@ -59,6 +59,13 @@ def _blog(reg, visible):
     return f'<span class="mini-tasks"><span class="mt__h">Блог для репетиторов</span>{rows}</span>'
 
 
+def _kb(reg):
+    # Список инструкций, чтобы превью хаба не повторяло карточку «Первые шаги» рядом с ним.
+    docs = [p for p in reg.values() if p.get('type') == 'kb'][:3]
+    rows = ''.join(f'<span class="mt__r"><i>{i}</i>{typo(p["nav"])}</span>' for i, p in enumerate(docs, 1))
+    return f'<span class="mini-tasks"><span class="mt__h">База знаний</span>{rows}</span>'
+
+
 def preview(pid, reg, visible):
     if pid in TOOL_PREVIEW:
         return TOOL_PREVIEW[pid]
@@ -67,7 +74,7 @@ def preview(pid, reg, visible):
     if pid == 'blog':
         return _blog(reg, visible)
     if pid == 'baza-znanij':
-        pid = 'pervye-shagi'
+        return _kb(reg)
     p = reg[pid]
     steps = _page(pid).get('steps') or []
     if steps:
