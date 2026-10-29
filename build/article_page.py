@@ -33,6 +33,33 @@ def media(p, variant='inline', caption=''):
     return f'<figure class="article-media article-media--{variant}">{picture}{caption}</figure>'
 
 
+# Иллюстрации в тексте: живые кадры TeacherDesk по теме статьи (продукт вместо картинок).
+# Свой набор можно задать в контенте ключом media: ['debt', 'report'].
+RUBRIC_DEMOS = {'Поиск учеников': ['card', 'week'], 'Налоги': ['debt', 'report'], 'Организация': ['desk', 'week'],
+                'Начало работы': ['trial', 'week'], 'ИИ на уроках': ['ai', 'ai-tasks'], 'Онлайн-уроки': ['board', 'cabinet'],
+                'Работа с учениками': ['hw', 'report']}
+DEMO_CAPTIONS = {
+    'card': 'Карточка ученика в TeacherDesk: уроки, задания и оплаты в одном месте',
+    'week': 'Расписание недели в TeacherDesk: перенос ученик видит сразу',
+    'debt': 'Оплаты в TeacherDesk: видно, кто должен, напоминание уходит само',
+    'report': 'Отчет за месяц родитель открывает по ссылке, без входа',
+    'desk': 'Главный экран кабинета: уроки на сегодня, долги и работы на проверку',
+    'trial': 'Пробный период TeacherDesk: 14 дней полного доступа без карты',
+    'ai': 'ИИ-ассистент готовит план урока по теме и длительности занятия',
+    'ai-tasks': 'Ассистент подбирает задания с ответами по теме и уровню ученика',
+    'board': 'Видео и онлайн-доска в одном окне, листы сохраняются после урока',
+    'cabinet': 'Кабинет ученика: вход в урок, задания и ошибки на повторение',
+    'hw': 'Проверка задания: ошибки сами уходят в карточки на повторение',
+    'journal': 'Журнал занятий: темы и задания рядом с каждым уроком',
+}
+
+
+def demo_media(name):
+    import demos
+    return (f'<figure class="article-media article-media--demo"><div class="article-media__demo">{demos.get(name)}</div>'
+            f'<figcaption>{typo(DEMO_CAPTIONS.get(name, ""))}</figcaption></figure>')
+
+
 def sidebar(p, toc):
     nav = f'<nav class="art__toc" aria-label="Ключевые блоки статьи"><h2 class="art__toch">В статье</h2><ol data-toc>{toc}</ol></nav>' if toc else ''
     return f'''<aside class="article-sidebar" aria-label="Навигация и знакомство с TeacherDesk">
@@ -63,15 +90,20 @@ def render(p, c, x):
     if any(sid not in targets for sid, _ in entries):
         raise ValueError('Краткая навигация ведет к неизвестному разделу статьи')
     toc = ''.join(f'<li><a href="#{escape(sid, quote=True)}">{typo(escape(label))}</a></li>' for sid, label in entries)
-    # Две иллюстрации в тексте плюс широкая обложка. Существующие тексты не меняются.
-    positions = [max(0, len(secs) // 3 - 1), max(0, 2 * len(secs) // 3 - 1)]
+    # Обложка как у карточки статьи и два кадра продукта по теме в тексте, после первой и второй трети.
+    shots = c.get('media') or RUBRIC_DEMOS.get(p.get('rubric'), ['desk', 'week'])
+    positions = [max(0, len(secs) // 3 - 1), max(1, 2 * len(secs) // 3 - 1)]
     body = []
     for i, s in enumerate(secs):
         sid = s.get('id') or 'r' + str(i + 1)
         body.append(f'<h2 id="{sid}">{typo(s["h2"])}</h2>\n{typo(expand(s["html"], x))}')
-        for pos in positions:
-            if i == pos:
-                body.append(media(p, caption=plain(s['h2'])))
+        for k, pos in enumerate(positions):
+            if i == pos and k < len(shots):
+                body.append(demo_media(shots[k]))
+    upd = c.get('updated', c['published'])
+    dates = f'Опубликовано <time datetime="{c["published"]}">{x.date(c["published"])}</time>'
+    if upd != c['published']:
+        dates += f' · обновлено <time datetime="{upd}">{x.date(upd)}</time>'
     words = len(plain(' '.join(s['html'] for s in secs)).split())
     mins = max(3, round(words / 180))
     note = ''
@@ -84,7 +116,7 @@ def render(p, c, x):
     <p class="art__cat"><span class="pcard__cat">{typo(p.get('rubric', ''))}</span><span>{mins}&nbsp;мин чтения</span></p>
     <h1 class="art__h">{typo(p['h1'])}</h1>
     <p class="art__lead">{typo(c['lead'])}</p>
-    <p class="art__meta"><span class="av av--me" aria-hidden="true">TD</span><span><b>{typo(c.get('author', 'Редакция TeacherDesk'))}</b><small>Опубликовано <time datetime="{c['published']}">{x.date(c['published'])}</time> · обновлено <time datetime="{c.get('updated', c['published'])}">{x.date(c.get('updated', c['published']))}</time></small></span></p>
+    <p class="art__meta"><span class="av av--me" aria-hidden="true">TD</span><span><b>{typo(c.get('author', 'Редакция TeacherDesk'))}</b><small>{dates}</small></span></p>
     {note}
     {media(p, 'cover')}
   </div></header>
