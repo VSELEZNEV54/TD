@@ -218,6 +218,18 @@ def stickers(items):
     return ''.join(out)
 
 
+FACT_GEO = ['geo--sq', 'geo--q geo--y', 'geo--q', 'geo--sq geo--ink']
+
+
 def facts(items):
-    lis = ''.join(f'<li><b>{typo(n)}</b><span>{typo(t)}</span></li>' for n, t in items)
-    return f'<ul class="pfacts" data-reveal>{lis}</ul>'
+    """Полоса фактов как на главной: значок, крупное число, единица и пояснение.
+    «14 дней» делится на число и единицу, слова вроде «за час» остаются целиком."""
+    out = []
+    for i, (n, t) in enumerate(items):
+        m = re.match(r'^(\d[\d\s\u00a0]*)\s+(.+)$', n)
+        num, unit = (m.group(1).strip(), m.group(2)) if m else (n, '')
+        word = '' if re.fullmatch(r'[\d\s\u00a0]+', num) else ' fact--w'
+        u = f'<span class="fact__u">{typo(unit)}</span>' if unit else ''
+        out.append(f'<div class="fact{word}"><dt><i class="geo {FACT_GEO[i % 4]}" aria-hidden="true"></i>'
+                   f'<span class="fact__n">{typo(num)}</span>{u}</dt><dd>{typo(t)}</dd></div>')
+    return f'<dl class="facts facts--page" aria-label="Коротко о&nbsp;главном" data-reveal>{"".join(out)}</dl>'

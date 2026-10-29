@@ -83,7 +83,7 @@ FEATURES = ['raspisanie', 'uchet-oplat', 'uchet-uchenikov', 'kabinet-uchenika', 
 
 
 def header(page, reg, visible):
-    """Шапка: «Возможности», «Решения», «Инструменты», «Тарифы», «Блог».
+    """Шапка: «Возможности», «Инструменты», «Решения», «Тарифы», «Блог».
     reg: словарь id -> страница; visible(id) решает, показывать ли ссылку."""
     cur = page['url']
     sec = page.get('section')
@@ -119,9 +119,11 @@ def header(page, reg, visible):
         return f'<a href="{p["url"]}"{cur_attr(p["url"], section)}>{p["nav"]}</a>'
 
     sheet = ['<p class="hdr__sh">Возможности</p>'] + [f'<a href="{p["url"]}"{cur_attr(p["url"])}>{p["nav"]}</a>' for p in feats]
+    if visible('instrumenty'):
+        sheet.append(f'<a href="{reg["instrumenty"]["url"]}"{cur_attr(reg["instrumenty"]["url"])}>{reg["instrumenty"]["nav"]}</a>')
     sheet.append('<p class="hdr__sh">Решения</p>')
     sheet += [f'<a href="{p["url"]}"{cur_attr(p["url"])}>{p["nav"]}</a>' for p in sol]
-    for pid in ('instrumenty', 'pricing', 'blog'):
+    for pid in ('pricing', 'blog'):
         if visible(pid):
             p = reg[pid]
             sheet.append(f'<a href="{p["url"]}"{cur_attr(p["url"])}>{p["nav"]}</a>')
@@ -139,11 +141,11 @@ def header(page, reg, visible):
         <button class="hdr__ddb" type="button" aria-expanded="false" aria-controls="dd-feat">Возможности{ic("chev", "ic ic--12")}</button>
         {feat_panel}
       </div>
+      {link('instrumenty', 'tools')}
       <div class="hdr__dd{on_sol}" data-dd>
         <button class="hdr__ddb" type="button" aria-expanded="false" aria-controls="dd-sol">Решения{ic("chev", "ic ic--12")}</button>
         {sol_panel}
       </div>
-      {link('instrumenty', 'tools')}
       {link('pricing')}{link('blog', 'blog')}
     </nav>
     <div class="hdr__act">
@@ -161,8 +163,8 @@ def header(page, reg, visible):
 # Порядок разделов повторяет основное меню.
 FOOTER_COLS = [
     ('Возможности', ['raspisanie', 'uchet-oplat', 'uchet-uchenikov', 'kabinet-uchenika', 'domashnie-zadaniya', 'onlayn-doska', 'ii-assistent', 'otchety-roditelyam', 'zhurnal-zanyatiy']),
+    ('Инструменты', ['kalkulyator', 'anketa', 'tablica-ucheta', 'shablon-raspisaniya', 'dogovor', ('instrumenty', 'Все инструменты')]),
     ('Решения', SOLUTIONS + ['pricing', 'otzyvy']),
-    ('Инструменты', ['kalkulyator', 'dogovor', ('ii-assistent', 'ИИ-помощник в платформе')]),
     ('База знаний', ['pervye-shagi', 'import-iz-excel', 'ustanovka-na-telefon', 'napominaniya-ob-oplate', ('baza-znanij', 'Все инструкции')]),
     ('Полезное', ['blog', 'gde-iskat-uchenikov', 'samozanyatost', 'luchshie-crm', 'about', 'kontakty']),
 ]
@@ -300,7 +302,8 @@ def feature_cards(reg, items, visible, h2, kick='Что внутри', lead='', 
             cards.append(f'<li data-reveal="piece" style="--i:{i}"><div class="pfc">{inner}</div></li>')
     n = len(items)
     cols = {2: 'pfcs--2', 4: 'pfcs--4', 5: 'pfcs--5', 8: 'pfcs--4'}.get(n, '')
-    return section(sec_head(kick, h2, lead, hid, 'sq', link) + f'<ul class="pfcs {cols}">{"".join(cards)}</ul>', label=hid)
+    # Один вид сетки функций на всех страницах: компактные карточки, как на страницах продукта.
+    return section(sec_head(kick, h2, lead, hid, 'sq', link) + f'<ul class="pfcs {cols}">{"".join(cards)}</ul>', 'sec--allf', label=hid)
 
 
 def vs(d):
