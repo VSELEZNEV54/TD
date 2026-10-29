@@ -33,11 +33,14 @@
   .pricing-page .trust{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
   .pricing-page .trust li:nth-child(3){display:inline-flex}
   .pricing-start__foot{margin-top:24px}
-  .pricing-compare{display:grid;gap:12px;box-shadow:none;background:none;border-radius:0;overflow:visible}
-  .pricing-compare .ctab__row{grid-template-columns:minmax(0,1fr);border:1px solid var(--line-2);border-radius:var(--r-m);overflow:hidden}
-  .pricing-compare .ctab__row--h{display:none}
-  .pricing-compare .ctab__row>span,.pricing-compare .ctab__row>span:first-child{justify-content:flex-start;text-align:left;padding:10px 16px}
-  .pricing-compare .ctab__row>span:first-child{padding-top:16px}
-  .pricing-compare .ctab__row>span:not(:first-child)::before{content:attr(data-label);width:100%}
-  .pricing-compare .ctab__row>span:last-child{padding-bottom:16px}
+  /* Телефон: название строки сверху, три тарифа в ряд под ним, шапка с тарифами остается */
+  .pricing-compare{overflow:clip}
+  .pricing-compare .ctab__row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pricing-compare .ctab__row>span{padding:4px 8px 14px;font-size:13.5px}
+  .pricing-compare .ctab__row>span[role=rowheader]{grid-column:1/-1;justify-content:flex-start;padding:14px 16px 6px;font-weight:500;background:none}
+  .pricing-compare .ctab__row--h{position:sticky;top:64px;z-index:2}
+  .pricing-compare .ctab__row--h>span:first-child{display:none}
+  .pricing-compare .ctab__row--h>span{padding:12px 8px}
+  .pricing-compare__value>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .pricing-compare .ctab__row>span small{font-size:11px}
 }
