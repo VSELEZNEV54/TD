@@ -1,0 +1,26 @@
+/* Посадочные таблицы учета и расписания используют интерфейсы и типографику сайта. */
+.table-showcases{display:grid;gap:24px}
+.table-page .pcell__txt>.pfc__d{padding-right:0}
+.table-page .pcell__txt>.btn{margin-top:4px}
+.table-page .cmp__r{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,1.5fr)}
+.table-page .phero__vis .frame{width:100%;margin-left:0}
+@media(max-width:720px){
+  .table-page .btn{width:100%;min-width:0;max-width:100%}
+  .table-page .btn--lg{min-height:54px}
+  .table-page .cta__act{display:grid;grid-template-columns:minmax(0,1fr);width:100%}
+  .table-page .trust{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;width:100%}
+  .table-page .trust li:nth-child(3){display:inline-flex}
+  .table-page .cmp__r,.table-page .psteps{grid-template-columns:minmax(0,1fr)}
+  .table-page .pcells .pcell{width:100%;min-width:0;grid-template-columns:minmax(0,1fr);padding:20px 16px}
+  .table-page .pcell__txt{align-items:stretch}
+  .table-page .pcell__demo .frame__body,.table-page .pcell__demo .pd-demo{padding:16px}
+  .table-page .pcell__demo .pd-debt__rows li{grid-template-columns:26px minmax(0,1fr)}
+  .table-page .pcell__demo .pd-debt__who{min-width:0;white-space:normal}
+  .table-page .pcell__demo .pd-rbtn{grid-column:1/-1;justify-self:stretch;width:100%;height:40px}
+  .table-page .pcell__demo .pd-cab__next{grid-template-columns:minmax(0,1fr);padding:14px}
+  .table-page .pcell__demo .pd-cab__go{grid-column:1;grid-row:auto;justify-content:center;width:100%;height:40px;margin-top:10px}
+  .table-page .pcell__demo .pd-cab__hw li{flex-direction:column;align-items:flex-start;gap:7px}
+  .table-page .pcell__demo .pd-cab__hw li>span:first-child{align-items:flex-start}
+  .table-page .pcell__demo .pd-cab__next b{font-size:16px}
+  .table-page .pcell__demo .pd-jr__rows li{grid-template-columns:40px minmax(0,1fr) auto;gap:6px;font-size:12px}
+}

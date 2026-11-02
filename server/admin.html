@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Обращения | TeacherDesk</title>
+<style>
+@font-face{font-family:Geist;src:url('/assets/fonts/geist-400.woff2') format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:Geist;src:url('/assets/fonts/geist-600.woff2') format('woff2');font-weight:600;font-display:swap}
+:root{font-family:Geist,system-ui,sans-serif;color:#212625;background:#f7f7f2;font-size:15px;line-height:1.5;--blue:#2458e8;--line:#dedfd6;--muted:#62685e}
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:wait;opacity:.6}input,select,textarea{width:100%;border:1px solid #b5baaf;border-radius:9px;background:#fff;padding:11px 12px;color:inherit}textarea{resize:vertical}input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #9bb6ff;outline-offset:3px}label{display:block;font-size:13px;font-weight:600;margin-bottom:5px}h1,h2,h3,p{margin-top:0}h1{font-size:27px;line-height:1.2;letter-spacing:-.7px;margin:0}h2{font-size:23px;line-height:1.3;letter-spacing:-.4px}h3{font-size:16px}a{color:var(--blue)}[hidden]{display:none!important}.muted{color:var(--muted)}.small{font-size:13px}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 17px;border:1px solid var(--line);border-radius:9px;background:#fff;white-space:nowrap}.button--blue{color:#fff;background:var(--blue);border-color:var(--blue)}.header{padding:24px 36px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:24px;background:#fff}.brand{font-size:18px;font-weight:600;letter-spacing:-.6px;text-decoration:none;color:#212625}.brand span{color:var(--blue)}.header__right{display:flex;align-items:center;gap:18px}.header__right a{font-size:13px}.wrap{max-width:1400px;margin:auto;padding:32px 36px}.intro{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:24px}.intro p{margin:8px 0 0}.login{max-width:450px;margin:9vh auto;padding:32px;border:1px solid var(--line);border-radius:18px;background:#fff}.login h1{margin-bottom:14px}.login .button{width:100%;margin-top:16px}.login p{margin-bottom:22px}.login .hint{margin:16px 0 0;font-size:13px;color:var(--muted)}.notice{font-size:14px;min-height:21px;color:#a32727;white-space:pre-wrap;margin:12px 0}.notice--success{color:#246c35}.toolbar{display:grid;grid-template-columns:minmax(180px,1fr) 170px 170px auto;gap:12px;align-items:end;padding:18px;background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:22px}.workspace{display:grid;grid-template-columns:minmax(300px, .85fr) minmax(340px,1.15fr);gap:22px;align-items:start}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}.panel__head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}.panel__head h2{font-size:16px;margin:0}.list{max-height:660px;overflow:auto}.request{border:0;border-bottom:1px solid var(--line);border-radius:0;background:#fff;padding:18px 20px;text-align:left;width:100%;display:block;color:inherit}.request:hover{background:#f7f9ff}.request[aria-pressed=true]{background:#eef2ff;box-shadow:inset 3px 0 var(--blue)}.request__top{display:flex;justify-content:space-between;gap:12px;align-items:center}.request__name{font-weight:600;overflow-wrap:anywhere}.request__meta{font-size:12px;color:var(--muted);margin:7px 0}.request__text{font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}.badge{border-radius:30px;padding:3px 8px;background:#eaf0ff;color:#254ba6;font-size:11px;white-space:nowrap}.badge--in_progress{background:#fff2cb;color:#795714}.badge--closed{background:#eef0ec;color:#58604f}.empty{padding:40px 24px;color:var(--muted);text-align:center}.pager{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 18px}.pager .button{padding:8px 12px}.detail{padding:24px}.detail__top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.detail__top h2{overflow-wrap:anywhere;margin-bottom:6px}.detail__meta{font-size:13px;color:var(--muted);margin-bottom:24px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px 24px;margin:0 0 24px}.fields dt{font-size:12px;color:var(--muted);margin-bottom:4px}.fields dd{margin:0;overflow-wrap:anywhere}.message{background:#f7f7f2;padding:16px;border-radius:10px;margin:8px 0 24px;white-space:pre-wrap;overflow-wrap:anywhere}.detail hr{border:0;border-top:1px solid var(--line);margin:24px 0}.detail form label{margin-top:16px}.detail form .button{margin-top:16px}.metadata{margin-top:24px;font-size:12px;color:var(--muted);overflow-wrap:anywhere}.metadata p{margin-bottom:5px}.privacy{font-size:12px;color:var(--muted);margin:22px 0}.loading{opacity:.6;pointer-events:none}
+@media(max-width:900px){.toolbar{grid-template-columns:1fr 1fr}.workspace{grid-template-columns:1fr}.list{max-height:430px}}
+@media(max-width:540px){.header{padding:18px 20px}.header__right{gap:12px}.wrap{padding:24px 16px}.intro{display:block}.intro .button{margin-top:16px}.toolbar{grid-template-columns:1fr}.login{margin:7vh 16px;padding:24px}.fields{grid-template-columns:1fr}.detail{padding:20px}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<header class="header"><a class="brand" href="/">Teacher<span>Desk</span></a><div class="header__right"><a href="/" target="_blank" rel="noopener">Открыть сайт</a><button class="button" id="logout" hidden>Выйти</button></div></header>
+<main>
+<form class="login" id="login">
+  <h1>Обращения с сайта</h1>
+  <p class="muted">Войдите, чтобы отвечать на вопросы и обрабатывать запросы на консультацию.</p>
+  <label for="token">Ключ доступа</label><input id="token" type="password" autocomplete="current-password" required spellcheck="false">
+  <button class="button button--blue" type="submit" id="login-button">Войти</button>
+  <p class="notice" id="login-error" role="alert"></p>
+  <p class="hint">Ключ ADMIN_TOKEN задается при настройке сервера. После обновления страницы потребуется войти снова.</p>
+</form>
+<div class="wrap" id="dashboard" hidden>
+  <div class="intro"><div><h1>Обращения</h1><p class="muted">Вопросы и консультации, отправленные через сайт.</p></div><button class="button" id="export">Скачать CSV</button></div>
+  <form class="toolbar" id="filters">
+    <div><label for="search">Поиск</label><input id="search" type="search" maxlength="200" placeholder="Имя, контакт или вопрос"></div>
+    <div><label for="kind">Тип обращения</label><select id="kind"><option value="">Все обращения</option><option value="question">Вопрос</option><option value="consultation">Консультация</option></select></div>
+    <div><label for="status">Статус</label><select id="status"><option value="">Все статусы</option><option value="new">Новые</option><option value="in_progress">В работе</option><option value="closed">Закрытые</option></select></div>
+    <button class="button button--blue" type="submit">Показать</button>
+  </form>
+  <p class="notice" id="feedback" role="status" aria-live="polite"></p>
+  <div class="workspace">
+    <section class="panel" aria-label="Список обращений"><div class="panel__head"><h2 id="total">Обращения</h2><button class="button" id="refresh">Обновить</button></div><div class="list" id="list"></div><div class="pager"><button class="button" id="prev">Назад</button><span class="muted small" id="page"></span><button class="button" id="next">Далее</button></div></section>
+    <section class="panel" aria-label="Карточка обращения" id="detail"><p class="empty">Выберите обращение в списке.</p></section>
+  </div>
+  <p class="privacy">Здесь хранятся контакты посетителей. Передавайте ключ доступа только тем, кто работает с обращениями. Время показано в часовом поясе вашего устройства.</p>
+</div>
+</main>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var token = '', items = [], total = 0, offset = 0, limit = 20, selected = null, requestNumber = 0;
+  var statuses = {new:'Новое',in_progress:'В работе',closed:'Закрытое'};
+  var kinds = {question:'Вопрос',consultation:'Консультация'};
+  var contacts = {any:'Любым способом',email:'По email',phone:'По телефону'};
+  function node(tag, text, cls) { var el = document.createElement(tag); if (text != null) el.textContent = text; if (cls) el.className = cls; return el; }
+  function date(value) { if (!value) return ''; var d = new Date(value); return isNaN(d.getTime()) ? value : d.toLocaleString('ru-RU',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}); }
+  function feedback(message, good) { $('feedback').textContent = message || ''; $('feedback').classList.toggle('notice--success', !!good); }
+  function signout() {
+    token = ''; items = []; selected = null; total = offset = 0; requestNumber++;
+    $('dashboard').hidden = true; $('logout').hidden = true; $('login').hidden = false;
+    $('token').value = ''; $('login-error').textContent = ''; $('list').replaceChildren(); $('detail').replaceChildren(); $('token').focus();
+  }
+  async function api(path, options, binary) {
+    var controller = new AbortController(), timer = setTimeout(function () { controller.abort(); }, 15000);
+    try {
+      var response = await fetch(path, Object.assign({}, options || {}, {credentials:'omit',cache:'no-store',signal:controller.signal,headers:Object.assign({Authorization:'Bearer ' + token,Accept:binary?'text/csv':'application/json'},options && options.headers || {})}));
+      if (response.status === 401) { signout(); throw new Error('Ключ доступа не подошел. Проверьте его и войдите снова.'); }
+      if (binary && response.ok) return response.blob();
+      var data; try { data = await response.json(); } catch (_) { throw new Error('Сервер вернул неожиданный ответ. Повторите попытку.'); }
+      if (!response.ok || !data.ok) throw new Error(data.message || 'Не удалось выполнить запрос. Повторите попытку.');
+      return data;
+    } catch (error) {
+      if (error.name === 'AbortError') throw new Error('Сервер отвечает слишком долго. Повторите попытку.');
+      if (error instanceof TypeError) throw new Error('Нет связи с сервером. Проверьте соединение.');
+      throw error;
+    } finally { clearTimeout(timer); }
+  }
+  function query(paging) {
+    var params = new URLSearchParams();
+    if ($('search').value.trim()) params.set('q', $('search').value.trim());
+    if ($('kind').value) params.set('kind', $('kind').value);
+    if ($('status').value) params.set('status', $('status').value);
+    if (paging) { params.set('limit', limit); params.set('offset', offset); }
+    return '?' + params.toString();
+  }
+  function badge(item) { return node('span', statuses[item.status] || item.status, 'badge badge--' + item.status); }
+  function renderList() {
+    $('total').textContent = 'Найдено: ' + total;
+    $('page').textContent = total ? (offset + 1) + '-' + Math.min(offset + limit,total) + ' из ' + total : '0';
+    $('prev').disabled = offset === 0; $('next').disabled = offset + limit >= total;
+    $('list').replaceChildren();
+    if (!items.length) $('list').append(node('p', 'Обращений пока нет. Если включены фильтры, попробуйте изменить их.', 'empty'));
+    items.forEach(function (item) {
+      var b = node('button', null, 'request'); b.type = 'button'; b.setAttribute('aria-pressed', String(selected === item.id));
+      var top = node('span',null,'request__top'); top.append(node('span',item.name,'request__name'),badge(item));
+      b.append(top,node('div',(kinds[item.kind] || item.kind) + ' · ' + date(item.created_at),'request__meta'),node('span',item.question || 'Запрос на консультацию','request__text'));
+      b.addEventListener('click',function () { selected = item.id; renderList(); renderDetail(item); });
+      $('list').append(b);
+    });
+  }
+  function renderDetail(item) {
+    $('detail').replaceChildren();
+    if (!item) { $('detail').append(node('p','Выберите обращение в списке.','empty')); return; }
+    var body = node('div',null,'detail'), top = node('div',null,'detail__top'), heading = node('div');
+    heading.append(node('h2',item.name),node('p',kinds[item.kind] || item.kind,'muted small')); top.append(heading,badge(item));
+    body.append(top,node('p',date(item.created_at),'detail__meta'));
+    var fields = node('dl',null,'fields');
+    [['Телефон',item.phone || 'Не указан'],['Email',item.email || 'Не указан'],['Как связаться',contacts[item.preferred_contact] || 'Любым способом'],['Рассылка',item.news ? 'Согласие получено' : 'Без подписки']].forEach(function (pair) { var field = node('div'); field.append(node('dt',pair[0]),node('dd',pair[1])); fields.append(field); });
+    body.append(fields,node('h3',item.kind === 'consultation' ? 'Комментарий посетителя' : 'Вопрос'),node('p',item.question || 'Без комментария','message'),node('hr'));
+    var form = node('form'), statusLabel = node('label','Статус'), status = node('select'); status.id = 'edit-status'; statusLabel.htmlFor = status.id;
+    Object.keys(statuses).forEach(function (key) { var option = node('option',statuses[key]); option.value = key; status.append(option); }); status.value = item.status;
+    var noteLabel = node('label','Заметка для команды'), note = node('textarea'); note.id = 'edit-note'; noteLabel.htmlFor = note.id; note.rows = 4; note.maxLength = 4000; note.value = item.note || ''; note.placeholder = 'Например: договорились созвониться в четверг';
+    var save = node('button','Сохранить','button button--blue'); save.type = 'submit'; var result = node('p','','notice'); result.setAttribute('role','status');
+    form.append(statusLabel,status,noteLabel,note,save,result);
+    form.addEventListener('submit',async function (event) {
+      event.preventDefault(); if (save.disabled) return; save.disabled = true; result.textContent = '';
+      try {
+        await api('/api/admin/requests/' + encodeURIComponent(item.id),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:status.value,note:note.value})});
+        feedback('Изменения сохранены.',true); await load(false);
+      } catch (error) { result.textContent = error.message; if (!token) $('login-error').textContent = error.message; }
+      finally { save.disabled = false; }
+    });
+    var meta = node('div',null,'metadata');
+    meta.append(node('p','Страница: ' + (item.source_path || '/')),node('p','Место кнопки: ' + (item.source_tag || 'Не указано')),node('p','Согласие на обработку: ' + date(item.consent_at)),node('p','Версия согласия: ' + (item.consent_version || '')),node('p','Номер: ' + item.id));
+    body.append(form,meta); $('detail').append(body);
+  }
+  async function load(reset) {
+    if (reset) offset = 0;
+    var number = ++requestNumber; $('list').setAttribute('aria-busy','true'); $('refresh').disabled = true;
+    try {
+      var data = await api('/api/admin/requests' + query(true));
+      if (number !== requestNumber || !token) return;
+      items = data.items; total = data.total;
+      if (!items.length && offset > 0 && total > 0) { offset = Math.floor((total-1)/limit)*limit; return await load(false); }
+      if (!items.some(function (item) { return item.id === selected; })) selected = null;
+      renderList(); renderDetail(items.find(function (item) { return item.id === selected; }));
+    } finally { if (number === requestNumber) { $('list').removeAttribute('aria-busy'); $('refresh').disabled = false; } }
+  }
+  async function reload(reset) { feedback(''); try { await load(reset); } catch(error) { if (token) feedback(error.message); else $('login-error').textContent = error.message; } }
+  $('login').addEventListener('submit',async function (event) {
+    event.preventDefault(); $('login-button').disabled = true; $('login-error').textContent = ''; token = $('token').value.trim();
+    try {
+      await load(true); if (!token) return;
+      $('token').value = ''; $('login').hidden = true; $('dashboard').hidden = false; $('logout').hidden = false; feedback(''); $('search').focus();
+    } catch (error) { token = ''; $('login-error').textContent = error.message; }
+    finally { $('login-button').disabled = false; }
+  });
+  $('logout').addEventListener('click',signout);
+  $('filters').addEventListener('submit',function (event) { event.preventDefault(); reload(true); });
+  $('refresh').addEventListener('click',function () { reload(false); });
+  $('prev').addEventListener('click',function () { offset = Math.max(0,offset-limit); reload(false); });
+  $('next').addEventListener('click',function () { offset += limit; reload(false); });
+  $('export').addEventListener('click',async function () {
+    var button = $('export'); button.disabled = true; feedback('');
+    try {
+      var blob = await api('/api/admin/requests/export.csv' + query(false),{},true), url = URL.createObjectURL(blob), a = node('a');
+      a.href = url; a.download = 'teacherdesk-requests-' + new Date().toISOString().slice(0,10) + '.csv'; document.body.append(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(url); },1000);
+    } catch (error) { if (token) feedback(error.message); else $('login-error').textContent = error.message; }
+    finally { button.disabled = false; }
+  });
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /_pages/
+
+User-agent: Yandex
+Allow: /
+Disallow: /_pages/
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&gclid&from
+
+Sitemap: https://teacherdesk.ru/sitemap.xml

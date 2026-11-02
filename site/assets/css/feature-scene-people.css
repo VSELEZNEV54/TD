@@ -1,0 +1,90 @@
+/* Кадры используют карточку ученика, кабинет, проверку и прогресс с главной. */
+.fx-people-register{display:grid;grid-template-columns:116px minmax(0,1fr);gap:14px;align-items:stretch;min-width:0}
+.fx-people-list{min-width:0;padding:8px 0}
+.fx-people-list>ul{display:grid;gap:6px;margin-top:12px}
+.fx-people-list li{display:flex;align-items:center;gap:8px;padding:9px 6px;border-radius:var(--r-s);min-width:0}
+.fx-people-list li.is-on{background:var(--blue-50)}
+.fx-people-list li>span:last-child{display:grid;gap:4px;min-width:0;font-size:12px;line-height:1.25}
+.fx-people-list small{font-size:10px;color:var(--muted)}
+.fx-people-record.scard{padding:16px;box-shadow:0 0 0 1px var(--line),var(--sh-1);min-width:0}
+.fx-people-record .scard__head{grid-template-columns:auto minmax(0,1fr);gap:9px}
+.fx-people-record .scard__who{white-space:normal}
+.fx-people-record .scard__who>*{overflow:visible;text-overflow:clip}
+.fx-people-record .scard__who b{font-size:14px}
+.fx-people-tabs.pd-scard__tabs{gap:16px;margin-top:14px}
+.fx-people-tabs .is-on{box-shadow:0 2px 0 var(--blue)}
+.fx-people-record__body{min-height:230px}
+.fx-people-info.pd-scard__info{grid-template-columns:minmax(0,1fr);gap:7px;margin-top:12px}
+.fx-people-info.pd-scard__info>div{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px 12px;padding:8px 10px}
+.fx-people-info.pd-scard__info dd{white-space:normal;overflow:visible}
+.fx-people-note.pd-scard__note{align-items:flex-start;box-shadow:none;background:var(--yellow-50);font-weight:400;line-height:1.4;rotate:0deg;width:100%}
+.fx-people-note>.ic{flex:none;width:16px;height:16px;margin-top:2px}
+.fx-people-history.pd-scard__hist li{grid-template-columns:36px minmax(0,1fr) auto;gap:7px;font-size:12px}
+.fx-people-history .chip{padding-inline:6px;font-size:10px}
+.fx-people-progress.pd-rep__bars{gap:9px;margin-top:14px}
+.fx-people-progress.pd-rep__bars li{grid-template-columns:minmax(0,1fr) 34px;gap:6px 10px;font-size:12px}
+.fx-people-progress.pd-rep__bars li>span:first-child{grid-column:1/-1}
+.fx-people-progress .pd-bar{height:6px}
+.fx-people-progress .pd-bar i{transform:scaleX(var(--v));transform-origin:left}
+.fx-people-cabinet{min-width:0}
+.fx-people-greeting{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.fx-people-next.pd-cab__next{margin-top:10px;padding:14px}
+.fx-people-next.pd-cab__next b{font-size:16px}
+.fx-people-work.pd-cab__hw li>span:first-child>span{display:grid;gap:4px;min-width:0}
+.fx-people-work small{font-size:11px;color:var(--muted)}
+.fx-people-work .chip{flex:none}
+.fx-people-caption{margin-top:14px}
+.fx-people-homework{min-width:0;min-height:310px}
+.fx-people-assignment,.fx-people-submissions{padding:16px;border-radius:var(--r-m);background:var(--bg-2);min-width:0}
+.fx-people-assignment>.pd-cab__lbl{color:var(--muted);margin-bottom:5px}
+.fx-people-paper{display:grid;gap:12px;margin-top:14px;padding:16px;border-radius:var(--r-s);background:#fff;box-shadow:0 0 0 1px var(--line)}
+.fx-people-question{font-size:12px;color:var(--muted)}
+.fx-people-paper>b{font:italic 21px var(--serif);color:var(--blue-dd)}
+.fx-people-paper__line{height:1px;background:var(--line);margin-top:4px}
+.fx-people-assignment__foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:16px}
+.fx-people-assignment__foot .fai__btn{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.fx-people-submissions>ul{display:grid;margin-top:12px}
+.fx-people-submissions li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:14px 0;border-bottom:1px solid var(--line)}
+.fx-people-person{display:grid;gap:4px;font-size:13px;line-height:1.25;min-width:0}
+.fx-people-person small{font-size:11px;color:var(--muted)}
+.fx-people-review.fhw{padding:16px;box-shadow:0 0 0 1px var(--line),var(--sh-1)}
+.fx-people-review .fhw__cells{gap:7px}
+.fx-people-review .fhw__cells li{height:36px}
+.fx-step.is-on .fx-people-enter{animation:fx-people-arrive .7s var(--ease) both}
+.fx-step.is-on .fx-people-progress .pd-bar i{animation:fx-people-grow .9s var(--ease) both}
+@keyframes fx-people-arrive{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes fx-people-grow{from{transform:scaleX(0)}to{transform:scaleX(var(--v))}}
+@media(max-width:720px){
+  .fx-people-register{grid-template-columns:minmax(0,1fr);gap:10px}
+  .fx-people-list{padding:0}
+  .fx-people-list>ul{margin-top:6px}
+  .fx-people-list li:not(.is-on){display:none}
+  .fx-people-list li{padding:8px 10px}
+  .fx-people-list li>span:last-child{grid-template-columns:minmax(0,1fr);gap:2px}
+  .fx-people-record.scard{padding:12px}
+  .fx-people-record__body{min-height:0}
+  .fx-people-tabs.pd-scard__tabs{justify-content:space-between;gap:7px;font-size:12px}
+  .fx-people-record .scard__head{align-items:start}
+  .fx-people-history.pd-scard__hist li{grid-template-columns:36px minmax(0,1fr)}
+  .fx-people-history .chip{grid-column:2;justify-self:start}
+  .fx-people-cabinet .pd-cab__hi{font-size:18px}
+  .fx-people-next.pd-cab__next{grid-template-columns:minmax(0,1fr);padding:12px}
+  .fx-people-next .pd-cab__go{grid-column:1;grid-row:auto;justify-content:center;width:100%;margin-top:10px}
+  .fx-people-next.pd-cab__next b{font-size:15px}
+  .fx-people-work.pd-cab__hw li{flex-direction:column;align-items:flex-start;gap:8px}
+  .fx-people-work.pd-cab__hw li>span:first-child{align-items:flex-start}
+  .fx-people-cabinet .pd-cab__deck,.fx-people-record .pd-cab__deck,.fx-people-homework .pd-cab__deck{padding:10px;gap:8px;font-size:12px}
+  .fx-people-homework{min-height:0}
+  .fx-people-assignment,.fx-people-submissions,.fx-people-review.fhw{padding:12px}
+  .fx-people-assignment__foot{display:grid;grid-template-columns:minmax(0,1fr)}
+  .fx-people-assignment__foot .chip{justify-self:start}
+  .fx-people-assignment__foot .fai__btn{width:100%}
+  .fx-people-paper{padding:12px}
+  .fx-people-paper>b{font-size:19px}
+  .fx-people-submissions li{grid-template-columns:auto minmax(0,1fr);gap:7px 9px;padding:12px 0}
+  .fx-people-submissions li>.chip{grid-column:2;justify-self:start}
+  .fx-people-review .fhw__cells{gap:5px}
+  .fx-people-review .fhw__cells li{height:32px}
+  .fx-people-review .fhw__f{flex-wrap:wrap;gap:8px}
+}
+@media(prefers-reduced-motion:reduce){.fx-step.is-on .fx-people-enter,.fx-step.is-on .fx-people-progress .pd-bar i{animation:none!important}}
