@@ -204,7 +204,7 @@ def footer(reg, visible):
       <ul class="ftr__docs">{docs}<li><button class="ftr__cset" type="button" data-cbar-open>Настройки аналитики</button></li></ul>
       <p>ИП Булитко А.В. · ИНН 745604136907 · ОГРНИП 324508100646384 · г. Москва · <a href="mailto:info@teacherdesk.ru">info@teacherdesk.ru</a></p>
       <p>{typo("Персональные данные обрабатываются по 152-ФЗ и хранятся на серверах в России. Регистрация лиц до 18 лет только с согласия родителя или законного представителя.")}</p>
-      <p>© 2026&nbsp;TeacherDesk · Разработано в&nbsp;России · 16+</p>
+      <div class="ftr__end"><p>© 2026&nbsp;TeacherDesk · Разработано в&nbsp;России · 16+</p><a class="ftr__credit" href="https://t.me/moon_dsgn_sales" target="_blank" rel="noopener">Создание и&nbsp;продвижение сайта</a></div>
     </div>
   </div>
 </footer>'''

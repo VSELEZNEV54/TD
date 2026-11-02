@@ -289,6 +289,9 @@ a.pill:hover::after{opacity:1;transform:translate(var(--hard),var(--hard))}
 .ftr__docs a{display:inline-block;padding:4px 0}
 .ftr__legal p{max-width:70em}
 .ftr__legal p a{padding-block:.9em;text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:.2em}
+.ftr__end{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 24px}
+.ftr__credit{text-decoration:underline;text-decoration-color:var(--line-2);text-underline-offset:.2em;transition:color var(--t-fast) var(--ease)}
+.ftr__credit:hover{color:var(--blue-d)}
 
 /* заглушка служебных страниц (404) */
 .stub{min-height:100vh;display:grid;place-content:center;gap:12px;padding:24px;text-align:center}
@@ -316,6 +319,7 @@ a.pill:hover::after{opacity:1;transform:translate(var(--hard),var(--hard))}
   .ftr__col ul{padding-bottom:10px}
   .ftr__cols a{display:flex;align-items:center;min-height:44px;padding:0}
   .ftr__docs{display:grid;gap:0;margin-bottom:10px}
+  .ftr__credit{display:inline-flex;align-items:center;min-height:44px}
   .ftr__docs a{display:flex;align-items:center;min-height:44px;padding:0}
 }
 
