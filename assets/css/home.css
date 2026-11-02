@@ -662,31 +662,10 @@ html:not(.js) .rev__nav{display:none}
 /* ---------- 8. тарифы ---------- */
 .head--price{display:grid;grid-template-columns:minmax(0,6.4fr) minmax(0,5.6fr);gap:32px 64px;align-items:end;margin-bottom:clamp(44px,5vw,72px)}
 .head--price .h2{max-width:13em}
-.seats{padding:20px 24px 18px;border-radius:var(--r-m);background:#fff;box-shadow:0 0 0 1px var(--line),var(--sh-2)}
-html:not(.js) .seats{display:none}
-.seats__q{display:flex;align-items:baseline;justify-content:space-between;gap:16px;font-size:15px;color:var(--muted)}
-.seats__out{display:inline-flex;align-items:baseline;gap:8px;font-size:15px;font-weight:500;color:var(--ink);white-space:nowrap}
-.seats__out b{font:400 36px/1 var(--mono);letter-spacing:-.06em;font-variant-numeric:tabular-nums}
-.seats__track{position:relative;height:44px;margin-top:6px}
-.seats__zones{position:absolute;left:0;right:0;top:19px;display:grid;grid-template-columns:16fr 56fr 28fr;gap:3px;height:6px}
-.seats__zones i{border-radius:var(--r-pill);background:var(--bg-3);transition:background-color var(--t-state) var(--ease)}
-.seats__zones i.is-on{background:var(--blue)}
-.seats input{position:absolute;inset:0;z-index:2;width:100%;height:100%;margin:0;opacity:0;cursor:grab;-webkit-appearance:none;appearance:none}
-.seats input::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:44px}
-.seats input::-moz-range-thumb{width:26px;height:44px;border:0}
-.seats__pos{position:absolute;inset:0 13px;pointer-events:none}
-.seats__thumb{position:absolute;left:calc(var(--p,26) * 1%);top:22px;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--blue);box-shadow:0 0 0 4px #fff,0 0 0 5px var(--line-2),0 8px 16px -4px rgba(68,91,246,.7);transition:transform var(--t-fast) var(--pop)}
-.seats__thumb::after{content:"";position:absolute;inset:9px;border-radius:50%;background:#fff}
-.seats input:hover~.seats__pos .seats__thumb,.seats input:active~.seats__pos .seats__thumb{transform:scale(1.15)}
-.seats input:focus-visible~.seats__pos .seats__thumb{outline:2px solid var(--blue);outline-offset:6px}
-.seats__lbl{display:grid;grid-template-columns:16fr 56fr 28fr;gap:3px;font-size:12px;line-height:1.3;color:var(--muted)}
-.seats__lbl span{transition:color var(--t-state) var(--ease)}
-.seats__lbl span:last-child{text-align:right}
-.seats__lbl .is-on{color:var(--blue-d);font-weight:500}
 
-.plans{position:relative;--fit:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-radius:var(--r-l);background:#fff;box-shadow:0 0 0 1px var(--line),var(--sh-2)}
-.plans__hl{position:absolute;left:0;top:-18px;bottom:-18px;width:calc(100% / 3);border-radius:var(--r-l);background:linear-gradient(180deg,#F3F5FF 0,#fff 46%);box-shadow:0 0 0 1.5px var(--blue),var(--sh-3);transform:translateX(calc(var(--fit) * 100%));transition:transform .7s var(--ease);pointer-events:none}
-/* круглая наклейка едет вместе с рамкой и заново шлепается на подходящий план */
+.plans{position:relative;--fit:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-radius:var(--r-l);background:#fff;box-shadow:0 0 0 1px var(--line),var(--sh-2)}
+.plans__hl{position:absolute;left:0;top:-18px;bottom:-18px;width:50%;border-radius:var(--r-l);background:linear-gradient(180deg,#F3F5FF 0,#fff 46%);box-shadow:0 0 0 1.5px var(--blue),var(--sh-3);transform:translateX(calc(var(--fit) * 100%));transition:transform .7s var(--ease);pointer-events:none}
+/* круглая наклейка на тарифе Pro */
 .plans__badge{position:absolute;top:-26px;right:-16px;z-index:2;display:grid;place-items:center;width:88px;height:88px;border-radius:50%;background:var(--yellow);color:var(--ink);font:600 13px/1.1 var(--sans);text-align:center;letter-spacing:-.01em;box-shadow:inset 0 0 0 1.5px var(--ink),3px 3px 0 var(--ink);rotate:12deg}
 .plans__badge.is-pop{animation:badgepop .6s var(--pop)}
 @keyframes badgepop{from{opacity:0;transform:scale(.4) rotate(-30deg)}to{opacity:1;transform:none}}
@@ -1201,9 +1180,6 @@ html:has(.ask[open]){overflow:hidden}
   .rev__all .btn{width:100%}
 
   /* тарифы: подходящий план раскрыт, остальные компактными строками */
-  .seats{padding:16px 16px 14px}
-  .seats__out b{font-size:30px}
-  .seats__lbl{font-size:11px}
   .plans{grid-template-columns:1fr;gap:10px;background:none;box-shadow:none}
   .plans__hl{display:none}
   .plan{padding:20px;border-radius:var(--r-m);background:#fff;box-shadow:0 0 0 1px var(--line),var(--sh-1)}

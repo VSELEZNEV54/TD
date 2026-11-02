@@ -4,8 +4,7 @@
 .pricing-start__head{margin-bottom:24px}
 .pricing-start__head .phero__h{max-width:none}
 .pricing-start__intro{max-width:none;margin-top:12px}
-.pricing-controls{display:grid;grid-template-columns:minmax(0,4.5fr) minmax(0,7.5fr);gap:32px;align-items:center;margin-bottom:64px}
-.pricing-seats{min-width:0}
+.pricing-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;align-items:center;margin-bottom:64px}
 .pricing-period{min-width:0;display:grid;align-content:start;gap:10px}
 .pricing-period__options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .pricing-period__options .btn{min-width:0;width:100%}
@@ -15,18 +14,16 @@
 .pricing-start__foot{margin-top:38px}
 .pricing-page .pricing-comparison{padding-top:calc(var(--sec) * .5)}
 .pricing-comparison .shead{margin-bottom:22px}
+.pricing-compare .ctab__row{grid-template-columns:minmax(0,4fr) repeat(2,minmax(0,3fr))}
 .pricing-compare .ctab__row>span{min-width:0;overflow-wrap:anywhere;flex-wrap:wrap;gap:4px 6px}
 .pricing-compare .ctab__row>span small{display:block;width:100%}
 .pricing-compare__value{display:inline-flex;align-items:center;gap:6px}
 .pricing-compare__value>.ic{flex:none}
 @media(max-width:1040px){
-  .pricing-controls{grid-template-columns:minmax(0,1fr)}
 }
 @media(max-width:720px){
   .pricing-start{padding-top:92px}
   .pricing-controls{gap:24px;margin-bottom:28px}
-  .pricing-seats .seats__q{flex-wrap:wrap;gap:8px}
-  .pricing-seats .seats__out{margin-left:auto}
   .pricing-period__options{grid-template-columns:minmax(0,1fr)}
   .pricing-page .btn{width:100%;min-width:0;max-width:100%}
   .pricing-page .cta__act{display:grid;grid-template-columns:minmax(0,1fr);width:100%}
@@ -35,7 +32,7 @@
   .pricing-start__foot{margin-top:24px}
   /* Телефон: название строки сверху, три тарифа в ряд под ним, шапка с тарифами остается */
   .pricing-compare{overflow:clip}
-  .pricing-compare .ctab__row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pricing-compare .ctab__row{grid-template-columns:repeat(2,minmax(0,1fr))}
   .pricing-compare .ctab__row>span{padding:4px 8px 14px;font-size:13.5px}
   .pricing-compare .ctab__row>span[role=rowheader]{grid-column:1/-1;justify-content:flex-start;padding:14px 16px 6px;font-weight:500;background:none}
   .pricing-compare .ctab__row--h{position:sticky;top:64px;z-index:2}

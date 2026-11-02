@@ -40,7 +40,7 @@
       { t: 840, txt: 'урок начался' },
       { t: 842, txt: 'оплата получена' },
       { t: 1010, txt: 'долг закрыт' },
-      { t: 1230, txt: 'отчет родителям ушел' }
+      { t: 1230, txt: 'напоминания на завтра готовы' }
     ];
     /* пороги смены чипа в строке урока и номер чипа «идет сейчас» */
     var ROWS = [
@@ -807,60 +807,6 @@
   })();
 
   /* ---------- тарифы: ползунок «сколько учеников» ---------- */
-  var seats = $('[data-seats]');
-  var plans = $('[data-plans]');
-  if (seats && plans) (function () {
-    var input = $('input', seats);
-    var outN = $('[data-seats-n]', seats);
-    var outW = $('[data-seats-w]', seats);
-    var zones = $$('.seats__zones i', seats);
-    var lbls = $$('.seats__lbl span', seats);
-    var cards = $$('[data-plan]', plans);
-    var badge = $('[data-badge]', plans);
-    var names = ['пробный период', 'Pro', 'Premium'];
-    var last = -1;
-
-    /* шкала: левые 72% ползунка дают 1-50 учеников (Pro), правые 28% дают 51-100 (Premium) */
-    function students(p) {
-      if (p <= 72) return Math.max(1, Math.round(1 + p / 72 * 49));
-      return Math.round(51 + (p - 72) / 28 * 49);
-    }
-    /* зона и подпись знают свой тариф по data-fit, без него по порядку */
-    function fitOf(el, i) { return el.hasAttribute('data-fit') ? +el.getAttribute('data-fit') : i; }
-    function word(n) {
-      var a = n % 10, b = n % 100;
-      if (a === 1 && b !== 11) return 'ученик';
-      if (a >= 2 && a <= 4 && (b < 12 || b > 14)) return 'ученика';
-      return 'учеников';
-    }
-    function update() {
-      var p = parseFloat(input.value);
-      var n = students(p);
-      var fit = n <= 50 ? 1 : 2;
-      var txt = p >= 100 ? '100+' : String(n);
-      seats.style.setProperty('--p', p);
-      outN.textContent = txt;
-      outW.textContent = p >= 100 ? 'учеников' : word(n);
-      input.setAttribute('aria-valuetext', txt + TD.NB + outW.textContent + ', подойдет ' + names[fit]);
-      if (fit === last) return;
-      /* наклейка «подойдет вам» заново шлепается, когда рамка переезжает */
-      if (last !== -1) setTimeout(function () { TD.replay(badge, 'is-pop'); }, 260);
-      last = fit;
-      plans.style.setProperty('--fit', fit);
-      zones.forEach(function (z, i) { z.classList.toggle('is-on', fitOf(z, i) === fit); });
-      lbls.forEach(function (l, i) { l.classList.toggle('is-on', fitOf(l, i) === fit); });
-      cards.forEach(function (c, i) {
-        var on = i === fit;
-        var btn = $('.btn', c);
-        c.classList.toggle('is-fit', on);
-        btn.classList.toggle('btn--primary', on);
-        btn.classList.toggle('btn--ghost', !on);
-      });
-    }
-    input.addEventListener('input', update);
-    update();
-  })();
-
   /* ---------- шаблон таблицы: сумма считается по формуле ---------- */
   var sheet = $('[data-sheet]');
   if (sheet && !reduce) {

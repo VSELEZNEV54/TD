@@ -188,7 +188,7 @@
   var showBar = function (focus) {
     if (!cbar) {
       var doc = $('.ftr__docs a[href*="cookies"]');
-      var href = doc ? doc.getAttribute('href') : 'https://teacherdesk.ru/cookies';
+      var href = doc ? doc.getAttribute('href') : 'https://app.teacherdesk.ru/cookies';
       cbar = d.createElement('section');
       cbar.className = 'cbar';
       cbar.setAttribute('aria-label', 'Настройки аналитики');
