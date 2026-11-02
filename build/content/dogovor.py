@@ -145,7 +145,7 @@ PAGE = {
         ('Можно ли изменить текст после скачивания?', 'Да, файл docx редактируется в Word и Google Документах. Если меняете условия о предоплате и возврате или добавляете абонемент, покажите текст юристу.'),
         ('Куда отправляются мои данные?', 'Никуда. Договор собирается в вашем браузере, на сервер ничего не уходит.'),
     ],
-    'tags': ['uchet-oplat', 'uchet-uchenikov', 'otchety-roditelyam', 'tablica-ucheta', 'kalkulyator', 'shablon-raspisaniya', 'crm', 'programma', 'besplatnaya', 'pricing'],
+    'tags': ['uchet-oplat', 'uchet-uchenikov', 'tablica-ucheta', 'kalkulyator', 'shablon-raspisaniya', 'crm', 'programma', 'besplatnaya', 'pricing'],
     'related': ['kalkulyator'],
     'cta': {
         'title': 'Договор подписан. Дальше уроки и оплаты в одном кабинете',

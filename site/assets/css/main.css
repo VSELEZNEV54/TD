@@ -61,7 +61,7 @@ time{font-family:var(--mono);font-variant-numeric:tabular-nums}
 .phone-frame{--phone-width:208px;--phone-bezel:5px;--phone-radius:30px;position:relative;box-sizing:border-box;width:min(var(--phone-width),100%);height:auto;min-height:0;aspect-ratio:1 / 2.1;flex:none;border:var(--phone-bezel) solid var(--ink);border-radius:var(--phone-radius);background:#fff;overflow:hidden}
 .phone-frame::before{content:"";position:absolute;z-index:5;left:50%;top:2%;translate:-50% 0;width:28%;height:3.2%;border-radius:var(--r-pill);background:var(--ink);pointer-events:none}
 .phone-frame::after{content:"";position:absolute;z-index:5;left:50%;bottom:2%;translate:-50% 0;width:31%;height:1%;min-height:2px;max-height:4px;border-radius:var(--r-pill);background:var(--ink);pointer-events:none}
-.phone-frame :is(.sc-mini-phone__notch,.fx-mini__notch,.pd-phone2__isl,.mf-phone__top>i){display:none}
+.phone-frame :is(.pd-phone2__isl,.mf-phone__top>i){display:none}
 ::selection{background:var(--yellow);color:var(--ink)}
 :focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:var(--r-xs)}
 .skip{position:fixed;left:16px;top:-80px;z-index:100;padding:10px 16px;border-radius:var(--r-s);background:var(--ink);color:#fff}
@@ -255,7 +255,6 @@ a.pill:hover::after{opacity:1;transform:translate(var(--hard),var(--hard))}
 .mm__all{justify-self:end}
 
 /* тарифы: шкала из двух зон (Pro до 50 учеников, Premium дальше), общая для главной и внутренних страниц */
-.seats__zones.seats__zones--2,.seats__lbl.seats__lbl--2{grid-template-columns:72fr 28fr}
 
 /* на самых узких экранах вместо надписи знак T, чтобы шапка помещалась в 320 px */
 .hdr__sign{display:none}

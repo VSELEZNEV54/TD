@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """Блоки раздела «Продукт» (CRM, программа, приложение и другие посадочные под запрос).
 
-Порядок страницы задает templates.product(). Блоки повторяют главную: первый экран со сценой дня,
+Порядок страницы задает templates.product(). Блоки повторяют главную: первый экран с показом кабинета,
 «День репетитора» с липким оглавлением, ролик «было - собираем - стало», «О сервисе».
-Сцену первого экрана и «О сервисе» берем прямо из site/index.html, чтобы правки главной доходили сюда.
+Показ кабинета на первом экране берем прямо из site/index.html (.tour). «О сервисе» берем прямо из site/index.html, чтобы правки главной доходили сюда.
 Ролик собирается из контента страницы и играет на коде главной (home.js, [data-film]).
 """
 import re
@@ -13,6 +13,7 @@ import demos
 from blocks import REG, ok, typo, ic, btn, kicker, crumbs, trust_list, sec_head, section
 
 SITE = Path(__file__).resolve().parent.parent / 'site'
+BUILD = Path(__file__).resolve().parent
 _HOME = {}
 
 
@@ -38,20 +39,77 @@ def _abs(html):
     return re.sub(r'(src|href)="assets/', r'\1="/assets/', html)
 
 
-# ---------- 1. первый экран: текст страницы и сцена дня с главной ----------
+# ---------- 1. первый экран: текст страницы и показ кабинета с главной ----------
 GEO = ['geo--sq', 'geo--q geo--y', 'geo--q', 'geo--sq geo--ink']
 
 
-def hero(p, trail, h, facts):
-    h_ = _home()
-    a = h_.find('<div class="scene" data-scene>')
-    scene = _abs(_balanced(h_, a, 'div')) if a > -1 else ''
+# Разделы показа: подпись и значок кнопки под окном. Первый раздел в маршруте открывается сразу.
+TOUR_NAV = {
+    'home': ('Главная', 'home'), 'schedule': ('Расписание', 'calendar'), 'students': ('Ученики', 'users'),
+    'tasks': ('Задания', 'task'), 'chats': ('Чаты', 'chat'), 'money': ('Финансы', 'wallet'),
+    'lesson': ('Живой урок', 'video'), 'ai': ('Ассистент', 'ai'),
+    'me': ('Главная', 'home'), 'myhw': ('Задания', 'task'), 'mycards': ('Мои ошибки', 'cards'),
+}
+# Какой раздел кабинета открывается на странице и что идет следом.
+PAGE_TOUR = {
+    'raspisanie': ('schedule', 'students', 'money'), 'shablon-raspisaniya': ('schedule', 'students', 'money'),
+    'uchet-oplat': ('money', 'schedule', 'students'), 'tablica-ucheta': ('money', 'students', 'schedule'),
+    'uchet-uchenikov': ('students', 'tasks', 'money'), 'zhurnal-zanyatiy': ('students', 'schedule', 'tasks'),
+    'kabinet-uchenika': ('me', 'myhw', 'mycards'), 'domashnie-zadaniya': ('tasks', 'students', 'ai'),
+    'onlayn-doska': ('lesson', 'schedule', 'tasks'), 'ii-assistent': ('ai', 'tasks', 'schedule'),
+}
+TOUR_EXTRA = {'lesson': 'tour-lesson.html', 'ai': 'tour-ai.html', 'me': 'tour-student.html'}
+STUDENT_NAV = [('me', 'Главная', 'home'), ('myschedule', 'Расписание', 'calendar'), ('myhw', 'Задания', 'task'),
+               ('mymat', 'Материалы', 'doc'), ('mycards', 'Мои ошибки', 'cards')]
+
+
+def _svg(name):
+    return f'<svg class="ic"><use href="#i-{name}"/></svg>'
+
+
+def tour(route=None):
+    """Показ кабинета с главной. С маршрутом остаются только его разделы, остальная разметка на страницу не идет."""
+    home = _home()
+    html = _abs(_balanced(home, home.index('<div class="tour" data-tour>'), 'div'))
+    if not route:
+        return html
+    html = html.replace('<div class="tour" data-tour>', f'<div class="tour" data-tour data-tour-route="{",".join(route)}">', 1)
+    extra = ''.join((BUILD / 'partials' / TOUR_EXTRA[r]).read_text(encoding='utf-8') for r in route if r in TOUR_EXTRA)
+    for m in list(re.finditer(r'<section class="ts[^"]*" data-s="(\w+)"', html))[::-1]:
+        block = _balanced(html, m.start(), 'section')
+        html = html.replace(block, '' if m.group(1) not in route else block.replace('class="ts is-on"', 'class="ts"', 1), 1)
+    html = re.sub(r'<!-- (Главная|Расписание|Ученики|Задания|Чаты|Финансы) -->\s*', '', html)
+    key = '<div class="tapp__main">'
+    html = html.replace(key, key + '\n' + extra, 1)
+    html = html.replace(f'class="ts" data-s="{route[0]}"', f'class="ts is-on" data-s="{route[0]}"', 1)
+    # подписи окна и кнопки под ним
+    names = ', '.join(TOUR_NAV[r][0] for r in route)
+    html = re.sub(r'(<figure class="tour__fig" role="img" aria-label=")[^"]*"', lambda m: f'{m.group(1)}Кабинет TeacherDesk, курсор проходит по разделам: {names}."', html, count=1)
+    chips = ''.join(f'<button class="tctl__it{" is-on" if i == 0 else ""}" type="button" data-tour-go="{r}" aria-pressed="{"true" if i == 0 else "false"}" aria-label="{TOUR_NAV[r][0]}">{_svg(TOUR_NAV[r][1])}<span>{TOUR_NAV[r][0]}</span></button>' for i, r in enumerate(route))
+    html = re.sub(r'<button class="tctl__it.*</button>', chips, html, count=1, flags=re.S)
+    # меню кабинета
+    if 'me' in route:
+        items = ''.join(f'<span class="tapp__it{" is-on" if n == route[0] else ""}" data-nav="{n}">{_svg(i)}<span>{t}</span></span>' for n, t, i in STUDENT_NAV)
+        html = re.sub(r'(<nav class="tapp__nav">).*?(</nav>)', lambda m: m.group(1) + items + m.group(2), html, count=1, flags=re.S)
+        html = re.sub(r'<span class="tapp__me">.*?</span></span>', '<span class="tapp__me"><i class="av">МК</i><span>Марина К.<small>ученица</small></span></span>', html, count=1, flags=re.S)
+    else:
+        html = html.replace('<span class="tapp__it is-on" data-nav="home">', '<span class="tapp__it" data-nav="home">', 1)
+        html = html.replace(f'class="tapp__it" data-nav="{route[0]}"', f'class="tapp__it is-on" data-nav="{route[0]}"', 1)
+        if 'lesson' in route:
+            item = f'<span class="tapp__it{" is-on" if route[0] == "lesson" else ""}" data-nav="lesson">{_svg("video")}<span>Урок</span></span>'
+            html = html.replace('<span class="tapp__it" data-nav="ai">', item + '<span class="tapp__it" data-nav="ai">', 1)
+    return html
+
+
+def hero(p, trail, h, facts, route=None):
+    scene = tour(route)
     acts = btn('Начать бесплатно', REG, 'primary', 'lg')
     if h.get('more'):
         acts += f'<a class="btn btn--ghost btn--lg hero__more" href="{h["more"][1]}"><span>{typo(h["more"][0])}</span></a>'
     fs = ''.join(f'''<div class="fact"><dt><i class="geo {GEO[i % 4]}" aria-hidden="true"></i><span class="fact__n"{f' data-count="{n}"' if n.isdigit() else ''}>{typo(n)}</span><span class="fact__u">{typo(u)}</span></dt><dd>{typo(d)}</dd></div>'''
-                 for i, (n, u, d) in enumerate(facts))
-    return f'''<section class="hero hero--page" data-hero>
+                 for i, (n, u, d) in enumerate(facts)) if not isinstance(facts, str) else ''
+    strip = facts if isinstance(facts, str) else f'<dl class="facts" aria-label="Коротко о&nbsp;главном">{fs}</dl>'
+    return f'''<section class="hero hero--page hero--center" data-hero>
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="wrap hero__in">
     <div class="hero__text">
@@ -69,7 +127,7 @@ def hero(p, trail, h, facts):
   </div>
 
   <div class="wrap">
-    <dl class="facts" aria-label="Коротко о&nbsp;главном">{fs}</dl>
+    {strip}
   </div>
 </section>'''
 
@@ -223,7 +281,7 @@ def about():
 # ---------- 11. другие разделы сайта ----------
 SECTIONS = ['features', 'instrumenty', 'baza-znanij', 'blog']
 SECTION_DESC = {
-    'features': 'Девять функций для уроков, оплат, заданий и общения с родителями',
+    'features': 'Восемь функций для уроков, оплат, заданий и подготовки',
     'instrumenty': 'Калькулятор дохода и генератор договора без регистрации',
     'baza-znanij': 'Пошаговые инструкции: от первого ученика до тарифа',
     'blog': 'Полезное: поиск учеников, налоги, онлайн-уроки и ИИ',

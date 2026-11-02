@@ -36,7 +36,7 @@ RELEASE = '--release' in sys.argv
 ONLY = next((a.split('=', 1)[1].split(',') for a in sys.argv if a.startswith('--only=')), None)
 ASSETS = ['assets/css/main.css', 'assets/css/home.css', 'assets/css/pages.css',
           'assets/js/main.js', 'assets/js/home.js', 'assets/js/pages.js',
-          'assets/css/schedule.css', 'assets/js/schedule.js',
+          'assets/css/schedule.css', 'assets/js/schedule.js', 'assets/css/tour.css', 'assets/js/tour.js',
           'assets/css/features.css', 'assets/js/features.js', 'assets/css/tools.css',
           'assets/css/feature-scene-board.css', 'assets/css/feature-scene-people.css',
           'assets/css/feature-scene-work.css',
@@ -306,7 +306,8 @@ def preview_index(ctx, built):
 
 
 def main():
-    pages = json.loads((BUILD / 'pages.json').read_text(encoding='utf-8'))
+    # hidden: страница готова, но функции пока нет. В сборку не идет, текст остается в build/content.
+    pages = [p for p in json.loads((BUILD / 'pages.json').read_text(encoding='utf-8')) if p['status'] != 'hidden']
     ids = [p['id'] for p in pages]
     urls = [p['url'] for p in pages]
     if len(set(ids)) != len(ids) or len(set(urls)) != len(urls):
@@ -357,6 +358,9 @@ def main():
             js.append('assets/js/pricing.js')
         elif p['type'] == 'article':
             css.append('assets/css/article.css')
+        if p['type'] in ('product', 'feature', 'table'):
+            css.append('assets/css/tour.css')
+            js.append('assets/js/tour.js')
         if p['id'] == 'instrumenty':
             css.append('assets/css/tools-hub.css')
         if p['type'] == 'feature':

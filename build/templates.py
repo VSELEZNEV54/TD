@@ -32,8 +32,7 @@ def _offer(name, price, desc):
 
 OFFERS = [
     _offer("Пробный период 14 дней", "0", "Полный доступ на 14 дней без карты"),
-    _offer("Pro", "990", "До 50 активных учеников, 100 запросов к ИИ в день, живые уроки с онлайн-доской"),
-    _offer("Premium", "1990", "Без лимита учеников, ИИ-ассистент без дневного лимита, все возможности Pro"),
+    _offer("Pro", "990", "Без фиксированного лимита учеников, 100 запросов к ИИ в день, живые уроки с онлайн-доской"),
 ]
 
 
@@ -86,13 +85,12 @@ DEMO_STICKERS = {
     'hw': [('check', 'Работа сдана', 'Марина К. · вариант 2'), ('cards', 'Ошибка ушла в карточки', 'задача 6')],
     'board': [('video', 'Видео и доска', 'в одном окне, без Zoom'), ('check', 'Лист сохранен', 'к нему легко вернуться')],
     'ai': [('lock', 'Сервер в России', 'данные учеников не уходят наружу'), ('ai', 'План за минуту', '4 этапа со временем')],
-    'report': [('link', 'Ссылка родителю', 'отчет открывается без входа'), ('report', 'Отчет за месяц', 'уроки, задания, прогресс')],
-    'journal': [('note', 'Темы и задания', 'рядом с каждым уроком'), ('report', 'Итог месяца', 'уроки и пропуски')],
+    'journal': [('note', 'Темы и задания', 'рядом с каждым уроком'), ('report', 'Итог месяца', 'проведенные уроки')],
     'desk': [('calendar', '4 урока сегодня', 'ОГЭ идет сейчас'), ('wallet', 'Должны 6 800 руб.', '2 ученика')],
     'trial': [('check', 'Без карты', 'полный доступ на 14 дней'), ('lock', 'Данные остаются', 'после пробного периода')],
     'tl': [('bell', 'Напоминание ушло', 'Марина К. · 14:30'), ('calendar', 'Урок идет сейчас', 'ОГЭ · Соня В.')],
 }
-LANDING_FACTS = [('14 дней', 'полного доступа без карты'), ('2 минуты', 'от регистрации до первого урока'), ('9 функций', 'в одном кабинете'), ('РФ', 'данные хранятся на серверах в России')]
+LANDING_FACTS = [('14 дней', 'полного доступа без карты'), ('2 минуты', 'от регистрации до первого урока'), ('8 функций', 'в одном кабинете'), ('РФ', 'данные хранятся на серверах в России')]
 
 
 def hero_vis(h):
@@ -105,7 +103,7 @@ def hero_vis(h):
 # Порядок соседей по типу страницы; в контенте можно задать свой список ключом tags.
 LANDINGS = ['crm', 'programma', 'prilozhenie', 'besplatnaya', 'onlayn']
 FEATURES = ['raspisanie', 'uchet-oplat', 'uchet-uchenikov', 'kabinet-uchenika', 'domashnie-zadaniya', 'onlayn-doska',
-            'ii-assistent', 'otchety-roditelyam', 'zhurnal-zanyatiy']
+            'ii-assistent', 'zhurnal-zanyatiy']
 TOOLS = ['kalkulyator', 'anketa', 'dogovor']
 TAGS = {
     'home': LANDINGS + ['onlayn-doska', 'raspisanie', 'uchet-oplat', 'ii-assistent', 'tablica-ucheta', 'pricing'],
@@ -146,22 +144,18 @@ def pricing_block(h2='Две недели бесплатно, дальше от 
     lnk = f'<p class="after" data-reveal><a class="btn btn--ghost btn--sm" href="/pricing/"><span>Сравнить тарифы подробно</span></a></p>' if link else ''
     plans = [
         ('0', 'Пробный период', '<b>0</b><span>руб. на&nbsp;14&nbsp;дней</span>',
-         ['Полный доступ ко&nbsp;всем функциям', 'До&nbsp;50&nbsp;учеников и&nbsp;100&nbsp;запросов к&nbsp;ИИ в&nbsp;день', 'Без карты'],
+         ['Полный доступ ко&nbsp;всем функциям', 'Без лимита учеников', '100&nbsp;запросов к&nbsp;ИИ в&nbsp;день', 'Без карты'],
          'ghost', 'Начать бесплатно'),
         ('1', 'Pro', '<b>990</b><span>руб. в&nbsp;месяц</span>',
-         ['До&nbsp;50&nbsp;активных учеников', 'Живые уроки с&nbsp;онлайн-доской', 'Тесты и&nbsp;тренажеры с&nbsp;автопроверкой', '100&nbsp;запросов к&nbsp;ИИ в&nbsp;день'],
+         ['Без лимита учеников', 'Живые уроки с&nbsp;онлайн-доской', 'Тесты и&nbsp;тренажеры с&nbsp;автопроверкой', '100&nbsp;запросов к&nbsp;ИИ в&nbsp;день'],
          'primary', 'Попробовать Pro'),
-        ('2', 'Premium', '<b>1&nbsp;990</b><span>руб. в&nbsp;месяц</span>',
-         ['Без лимита учеников', 'ИИ-ассистент без дневного лимита', 'Все возможности Pro'],
-         'ghost', 'Выбрать Premium'),
     ]
     arts = []
     for k, name, price, ticks, kind, label in plans:
         fit = ' is-fit' if k == '1' else ''
-        tag = '' if k == '0' else ' <span class="plan__tag">подойдет вам</span>'
         tl = ''.join(f'<li>{ic("check")}{t}</li>' for t in ticks)
         arts.append(f'''<article class="plan{fit}" data-plan="{k}">
-        <h3 class="plan__n">{name}{tag}</h3>
+        <h3 class="plan__n">{name}</h3>
         <p class="plan__p">{price}</p>
         <ul class="ticks">{tl}</ul>
         <a class="btn btn--{kind}" href="{REG}"><span>{label}</span></a>
@@ -173,18 +167,10 @@ def pricing_block(h2='Две недели бесплатно, дальше от 
         {kicker(kick, "sq")}
         <h2 class="h2" id="{hid}" data-reveal>{typo(h2)}</h2>
       </div>
-      <div class="seats" data-seats data-reveal>
-        <p class="seats__q"><label for="seats-range">Сколько у&nbsp;вас учеников</label><output class="seats__out" for="seats-range"><b data-seats-n>12</b><span data-seats-w>учеников</span></output></p>
-        <div class="seats__track">
-          <span class="seats__zones seats__zones--2" aria-hidden="true"><i class="is-on" data-fit="1"></i><i data-fit="2"></i></span>
-          <input id="seats-range" type="range" min="0" max="100" step="1" value="16" aria-valuetext="12 учеников, подойдет Pro">
-          <div class="seats__pos" aria-hidden="true"><span class="seats__thumb"></span></div>
-        </div>
-        <p class="seats__lbl seats__lbl--2" aria-hidden="true"><span class="is-on" data-fit="1">до&nbsp;50, Pro</span><span data-fit="2">больше 50, Premium</span></p>
-      </div>
+      <p class="lead" data-reveal>Один тариф со&nbsp;всеми функциями и&nbsp;без фиксированного лимита учеников. При оплате сразу за&nbsp;год скидка 20%.</p>
     </header>
-    <div class="plans" data-plans data-reveal>
-      <span class="plans__hl" aria-hidden="true"><span class="plans__badge" data-badge>подойдет<br>вам</span></span>
+    <div class="plans" data-reveal>
+      <span class="plans__hl" aria-hidden="true"><span class="plans__badge">скидка<br>до&nbsp;20%</span></span>
       {''.join(arts)}
     </div>
     {lnk}
@@ -228,7 +214,7 @@ def product(p, c, x):
            band(c['band']),
            P.compare(c['compare']),
            P.about(),
-           feature_cards(x.reg, feats, x.visible, fa.get('h2', 'Девять функций TeacherDesk в&nbsp;одном кабинете'), fa.get('kicker', 'Все функции'),
+           feature_cards(x.reg, feats, x.visible, fa.get('h2', 'Восемь функций TeacherDesk в&nbsp;одном кабинете'), fa.get('kicker', 'Все функции'),
                          fa.get('lead', ''), 'h-all', ('Все возможности', '/features/')).replace('class="sec sec--allf"', 'class="sec sec--tint sec--allf"', 1),
            pricing_block(c.get('pricing_h2', 'Две недели бесплатно, дальше от <em class="em">990 руб.</em>'), tint=False),
            stories_block(tint=True),
@@ -244,16 +230,9 @@ def product(p, c, x):
 def feature(p, c, x):
     h = c['hero']
     feature_ids = [i for i in x.section_ids('features') if x.reg[i]['type'] == 'feature' and x.visible(i)]
-    feature_index = feature_ids.index(p['id']) + 1 if p['id'] in feature_ids else 1
-    feature_total = len(feature_ids)
-    acts = [btn('Начать бесплатно', REG, 'primary', 'lg')]
-    if h.get('second') and ok(h['second'][1]):
-        acts.append(btn(h['second'][0], h['second'][1], 'ghost', 'lg'))
-    hero = phero(p, x.trail(p), h['kicker'], h['lead'], hero_vis(h), acts,
-                 after=S.facts(c['facts']) if c.get('facts') else '', variant='feature')
-    counter = schedule.counter(feature_index, feature_total, p['icon'])
-    hero = hero.replace('<div class="phero__txt">', '<div class="phero__txt">' + counter, 1)
-    out = [hero]
+    more = h['second'] if h.get('second') and ok(h['second'][1]) else None
+    out = [P.hero(p, x.trail(p), {'kicker': h['kicker'], 'lead': h['lead'], 'more': more},
+                  S.facts(c['facts']) if c.get('facts') else '', P.PAGE_TOUR.get(p['id']))]
     if p['id'] == 'raspisanie':
         out.extend([schedule.story(c), schedule.situations(c), schedule.capabilities(c), schedule.objections(c)])
     else:
@@ -276,7 +255,8 @@ def feature(p, c, x):
 # ---------- инструмент ----------
 def tool(p, c, x):
     h = c['hero']
-    widget = f'<div class="toolbox" id="tool" data-tool="{p["id"]}">{typo(c["tool"])}</div>'
+    nudge = f'<div class="toolnext"><p>{typo("Ведите учеников, оплаты и расписание в TeacherDesk - 14 дней бесплатно")}</p>{btn("Начать бесплатно", REG, "primary")}</div>'
+    widget = f'<div class="toolbox" id="tool" data-tool="{p["id"]}">{typo(c["tool"])}{nudge}</div>'
     variant = 'wide' if c.get('wide') else 'tool'
     acts = [btn('Начать бесплатно', REG, 'primary', 'lg')]
     if h.get('cta'):
@@ -457,7 +437,7 @@ def about(p, c, x):
     out.append(section(f'''<div class="contacts">
       <div>{kicker("Контакты", "q")}<h2 class="h2 h2--sm" id="h-cont" data-reveal>{typo(c["contacts_h2"])}</h2></div>
       <ul class="contacts__list">{cont}</ul>
-      <p class="contacts__req" data-reveal>{typo(c["requisites"])} <a class="tlink" href="/requisites/">Все реквизиты</a></p>
+      <p class="contacts__req" data-reveal>{typo(c["requisites"])} <a class="tlink" href="https://app.teacherdesk.ru/requisites">Все реквизиты</a></p>
     </div>''', '', 'h-cont'))
     out.append(cta())
     out.append(seo_of({'seo': c.get('seo')}, p, x) if c.get('seo') else '')
@@ -512,7 +492,7 @@ def notfound(p, c, x):
 
 def ai_access(p, c, x):
     out = [phero(p, x.trail(p), 'ИИ-помощник в платформе', c['lead'], demos.get(c.get('demo', 'ai')),
-                 [btn('Начать бесплатно', REG, 'primary', 'lg'), btn('Все возможности ИИ', '/features/ii-assistent/', 'ghost', 'lg')],
+                 [btn('Попробовать в кабинете', REG, 'primary', 'lg'), btn('Все возможности ИИ', '/features/ii-assistent/', 'ghost', 'lg')],
                  ['14 дней полного доступа', 'В личном кабинете', 'Без карты'])]
     out.append(steps(c['howto'], 'h-howto', tint=True))
     out.append(other_tools(p, x))

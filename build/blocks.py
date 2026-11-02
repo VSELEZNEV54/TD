@@ -79,7 +79,7 @@ def slug(s):
 SOLUTIONS = ['crm', 'programma', 'prilozhenie', 'besplatnaya', 'onlayn', 'tablica-ucheta', 'shablon-raspisaniya']
 
 
-FEATURES = ['raspisanie', 'uchet-oplat', 'uchet-uchenikov', 'kabinet-uchenika', 'domashnie-zadaniya', 'onlayn-doska', 'ii-assistent', 'otchety-roditelyam', 'zhurnal-zanyatiy']
+FEATURES = ['raspisanie', 'uchet-oplat', 'uchet-uchenikov', 'kabinet-uchenika', 'domashnie-zadaniya', 'onlayn-doska', 'ii-assistent', 'zhurnal-zanyatiy']
 
 
 def header(page, reg, visible):
@@ -162,13 +162,15 @@ def header(page, reg, visible):
 
 # Порядок разделов повторяет основное меню.
 FOOTER_COLS = [
-    ('Возможности', ['raspisanie', 'uchet-oplat', 'uchet-uchenikov', 'kabinet-uchenika', 'domashnie-zadaniya', 'onlayn-doska', 'ii-assistent', 'otchety-roditelyam', 'zhurnal-zanyatiy']),
+    ('Возможности', ['raspisanie', 'uchet-oplat', 'uchet-uchenikov', 'kabinet-uchenika', 'domashnie-zadaniya', 'onlayn-doska', 'ii-assistent', 'zhurnal-zanyatiy']),
     ('Инструменты', ['kalkulyator', 'anketa', 'tablica-ucheta', 'shablon-raspisaniya', 'dogovor', ('instrumenty', 'Все инструменты')]),
     ('Решения', SOLUTIONS + ['pricing', 'otzyvy']),
     ('База знаний', ['pervye-shagi', 'import-iz-excel', 'ustanovka-na-telefon', 'napominaniya-ob-oplate', ('baza-znanij', 'Все инструкции')]),
     ('Полезное', ['blog', 'gde-iskat-uchenikov', 'samozanyatost', 'luchshie-crm', 'about', 'kontakty']),
 ]
 LEGAL = ['privacy', 'terms', 'offer', 'consent', 'marketing', 'cookies', 'requisites']
+# Документы не копируем: ссылки ведут в кабинет. Согласия на рассылку там пока нет, поэтому оно остается на сайте.
+LEGAL_APP = {i: f'https://app.teacherdesk.ru/{i}' for i in ('privacy', 'terms', 'offer', 'consent', 'cookies', 'requisites')}
 
 
 def footer(reg, visible):
@@ -185,7 +187,7 @@ def footer(reg, visible):
           <summary class="ftr__h">{title}{ic("plus")}</summary>
           <ul>{''.join(items)}</ul>
         </details>''')
-    docs = ''.join(f'<li><a href="{reg[i]["url"]}">{typo(reg[i]["nav"])}</a></li>' for i in LEGAL if visible(i))
+    docs = ''.join(f'<li><a href="{LEGAL_APP.get(i, reg[i]["url"])}">{typo(reg[i]["nav"])}</a></li>' for i in LEGAL if i in LEGAL_APP or visible(i))
     return f'''<footer class="ftr">
   <div class="wrap">
     <div class="ftr__top">
@@ -201,7 +203,7 @@ def footer(reg, visible):
     <div class="ftr__legal">
       <ul class="ftr__docs">{docs}<li><button class="ftr__cset" type="button" data-cbar-open>Настройки аналитики</button></li></ul>
       <p>ИП Булитко А.В. · ИНН 745604136907 · ОГРНИП 324508100646384 · г. Москва · <a href="mailto:info@teacherdesk.ru">info@teacherdesk.ru</a></p>
-      <p>{typo("Персональные данные обрабатываются по 152-ФЗ и хранятся на серверах в России. Регистрация лиц до 14 лет только с согласия родителя или законного представителя.")}</p>
+      <p>{typo("Персональные данные обрабатываются по 152-ФЗ и хранятся на серверах в России. Регистрация лиц до 18 лет только с согласия родителя или законного представителя.")}</p>
       <p>© 2026&nbsp;TeacherDesk · Разработано в&nbsp;России · 16+</p>
     </div>
   </div>

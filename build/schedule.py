@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 """Сценарий расписания и общие компактные блоки страниц возможностей."""
 from blocks import ic, typo, sec_head, plain
+import minis
 
 
 def heading(kick, title, *args):
     """Один заголовок блока, как в «Других возможностях», без смены гарнитуры внутри."""
     return sec_head(kick, plain(title), *args)
-
-
-def counter(index, total, icon='calendar'):
-    return f'<div class="sc-index"><span class="sc-index__icon">{ic(icon)}</span><span>Возможность <b>{index}</b><span class="sc-index__of"> из {total}</span></span></div>'
 
 
 def story(c):
@@ -51,7 +48,7 @@ def story(c):
           <div class="film__app">
             <div class="win">
               <div class="win__bar"><span class="win__crumb"><img src="/assets/img/sign.svg" width="18" height="18" alt="">TeacherDesk / <b>расписание</b></span><span class="pill-now">{ic('calendar', 'ic ic--12')}Неделя</span></div>
-              <div class="fapp" role="img" aria-label="Расписание TeacherDesk: выбираем ученика, дату и повтор, сохраняем урок, переносим на пятницу. Ученику приходит напоминание за час.">
+              <div class="cabwin">{minis.rail("raspisanie")}<div class="fapp" role="img" aria-label="Расписание TeacherDesk: выбираем ученика, дату и повтор, сохраняем урок, переносим на пятницу. Ученику приходит напоминание за час.">
                 <div class="fapp__day" aria-hidden="true">
                   <p class="fapp__h">Расписание недели<span>28.09 - 02.10</span></p>
                   <div class="sc-calendar">
@@ -72,7 +69,7 @@ def story(c):
                   <p class="fapp__kpi" data-film-field><small>Повтор</small><b>Каждую неделю</b></p>
                   <span class="sc-film__save">Сохранить {ic('check', 'ic ic--12')}</span>
                 </div>
-              </div>
+              </div></div>
               <p class="sc-film__notice" aria-hidden="true">{ic('bell')}<span><b>Урок через час</b>Марина видит время и ссылку в своем кабинете</span></p>
             </div>
           </div>
@@ -98,17 +95,7 @@ def situations(c, texts=None, icons=None, lead=None):
 
 
 def capabilities(c):
-    week = ''.join('<i></i>' for _ in range(15))
-    month = ''.join('<i></i>' for _ in range(35))
-    visuals = [
-        f'<div class="sc-mini-week"><p><span>Неделя</span><span>Месяц</span></p><div class="sc-mini-week__body"><div class="sc-mini-week__week">{week}</div><div class="sc-mini-week__month">{month}</div></div></div>',
-        '<div class="sc-mini-form"><span><i>Ученик</i><b>Марина К.</b></span><span><i>Повтор</i><b>Каждую неделю</b></span><p>Сохранить <b>✓</b></p></div>',
-        '<div class="sc-mini-repeat"><span>Каждую неделю</span><div><i>ПН</i><i>ВТ</i><i>СР</i><i>ЧТ</i><i>ПТ</i></div><b>Один раз - на все недели</b></div>',
-        '<div class="sc-mini-move"><span>СР · 15:30</span><span>ПТ · 15:30</span><b>Физика · Артем</b><i>Ученик видит перенос ✓</i></div>',
-        f'<div class="sc-mini-reminder"><span>14:30</span><div>{ic("bell")}<p><b>Урок через час</b><small>Алгебра · 15:30</small></p></div></div>',
-        f'<div class="sc-mini-link"><small>Алгебра · Марина</small><span>{ic("link")}Ссылка в карточке урока</span><b>{ic("video")}Войти в урок</b></div>',
-        f'<div class="sc-mini-phone phone-frame"><span class="sc-mini-phone__notch"></span><small>Сегодня</small><b>4 урока</b><i>09:00 · Алгебра</i><i>11:00 · Английский</i><i>15:30 · Физика</i><span class="sc-mini-phone__nav">{ic("home")}{ic("calendar")}{ic("clock")}</span></div>',
-    ]
+    visuals = minis.schedule()
     titles = ['Календарь занятий','Создание урока','Повторяющиеся уроки','Перенос занятий','Напоминания ученикам','Ссылка на урок','Расписание на телефоне']
     descs = ['Неделя и месяц, свободные окна','Ученик, дата, время и повтор','Занятия на все следующие недели','Новое время в кабинете ученика','Почта и push за час до занятия','Вход в занятие из кабинета ученика','Уроки и переносы в мобильном браузере']
     tiles = ''.join(f'<li><div class="pfc sc-cap sc-cap--{i}" data-live><div class="sc-cap__visual" aria-hidden="true">{visuals[i]}</div><div class="sc-cap__copy"><h3 class="pfc__t">{typo(titles[i])}</h3><p class="pfc__d">{typo(descs[i])}</p></div></div></li>' for i in range(7))

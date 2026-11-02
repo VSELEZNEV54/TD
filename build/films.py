@@ -338,7 +338,7 @@ def zhurnal():
     return {
         'title': 'Журнал · сентябрь',
         'h2': 'Журнал ведется по&nbsp;урокам, а&nbsp;не&nbsp;по <em class="em">вечерам</em>',
-        'lead': 'Что прошли, что задали и кто пропустил: как журнал заполняется вместе с расписанием.',
+        'lead': 'Что прошли и что задали: как журнал заполняется вместе с расписанием.',
         'chapters': [
             {'t': 'Урок отмечен', 'cap': 'Проведенный урок встает в журнал с темой.', 'scene': f'''<div class="mf mf--one">
   <div class="mf-card mf-card--wide"><p class="mf-jh"><span>Дата</span><span>Ученик</span><span>Тема</span><span>Статус</span></p>
@@ -348,15 +348,15 @@ def zhurnal():
   <div class="mf-card mf-card--wide"><p class="mf-jh"><span>Дата</span><span>Ученик</span><span>Тема</span><span>Задано</span></p>
     <ul class="mf-jr"><li><time>30.09</time><b>Марина К.</b><span>Неравенства</span><em{A(400, "type")}>Вариант 3</em></li><li><time>30.09</time><b>Соня В.</b><span>ОГЭ, задание 20</span><em{A(1000, "type")}>5 задач</em></li><li><time>29.09</time><b>Илья П.</b><span>Present Perfect</span><em{A(1600, "type")}>Упр. 4-6</em></li></ul></div>
 </div>'''},
-            {'t': 'Пропуск виден', 'cap': 'Пропуски отмечены, их легко обсудить с родителем.', 'scene': f'''<div class="mf mf--one">
+            {'t': 'Перенос виден', 'cap': 'Перенесенный урок виден рядом с остальными.', 'scene': f'''<div class="mf mf--one">
   <div class="mf-card mf-card--wide"><p class="mf-jh"><span>Дата</span><span>Ученик</span><span>Тема</span><span>Статус</span></p>
-    <ul class="mf-jr"><li><time>28.09</time><b>Артем Д.</b><span>Импульс</span>{chip("debt", "пропуск", 600)}</li><li><time>25.09</time><b>Артем Д.</b><span>Законы Ньютона</span>{chip("paid", "был")}</li><li><time>23.09</time><b>Марина К.</b><span>Неравенства</span>{chip("soon", "перенос")}</li></ul></div>
-  {toast(1600, "note", "Артем: 1 пропуск в&nbsp;сентябре", "видно в&nbsp;отчете родителю", "br", y=True)}
+    <ul class="mf-jr"><li><time>28.09</time><b>Артем Д.</b><span>Импульс</span>{chip("soon", "перенос", 600)}</li><li><time>25.09</time><b>Артем Д.</b><span>Законы Ньютона</span>{chip("paid", "был")}</li><li><time>23.09</time><b>Марина К.</b><span>Неравенства</span>{chip("soon", "перенос")}</li></ul></div>
+  {toast(1600, "note", "Артем: урок перенесен", "новое время видно в&nbsp;кабинете", "br", y=True)}
 </div>'''},
-            {'t': 'Итог месяца', 'cap': 'Сколько уроков проведено и сколько пропущено.', 'scene': f'''<div class="mf mf--one">
+            {'t': 'Итог месяца', 'cap': 'Сколько уроков проведено за месяц.', 'scene': f'''<div class="mf mf--one">
   <div class="mf-card mf-card--wide"><p class="mf-h"><b>Сентябрь</b><span>итог</span></p>
-    <div class="mf-kpis mf-kpis--3">{kpi("Уроков", "31", "", 300, 0)}{kpi("Пропусков", "2", "", 300, 0, "mf-kpi--y")}{kpi("Учеников", "12", "", 300, 0)}</div>
-    <p class="mf-line"{A(1400)}>{ic("report", "ic ic--12")}Статистика уходит в&nbsp;отчеты родителям</p></div>
+    <div class="mf-kpis mf-kpis--3">{kpi("Уроков", "31", "", 300, 0)}{kpi("Доход", "52 400", "руб.", 300, 0, "mf-kpi--y")}{kpi("Учеников", "12", "", 300, 0)}</div>
+    <p class="mf-line"{A(1400)}>{ic("report", "ic ic--12")}Проведенные уроки уходят в&nbsp;учет оплат</p></div>
 </div>'''},
         ],
     }

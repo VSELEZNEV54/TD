@@ -79,7 +79,7 @@ def release_cleanup(html, reg, visible):
 
 
 def main():
-    pages = json.loads((BUILD / 'pages.json').read_text(encoding='utf-8'))
+    pages = [p for p in json.loads((BUILD / 'pages.json').read_text(encoding='utf-8')) if p['status'] != 'hidden']
     reg = {p['id']: p for p in pages}
     release = '--release' in sys.argv
     visible = (lambda pid: pid in reg and (reg[pid]['status'] == 'published' or not release))
@@ -92,7 +92,7 @@ def main():
     end = html.index('</footer>', html.index('<footer class="ftr">')) + len('</footer>')
     html = html[:html.index('<footer class="ftr">')] + blocks.footer(reg, visible) + html[end:]
     html = swap(html, '<!-- 7. Отзывы', '<!-- 8.', stories.block(comment=True) + '\n\n', 'истории')
-    html = swap(html, '<!-- 8. Тарифы', '<!-- 9.', '<!-- 8. Тарифы: пробный период, Pro и Premium, ползунок «сколько учеников» -->\n' +
+    html = swap(html, '<!-- 8. Тарифы', '<!-- 9.', '<!-- 8. Тарифы: пробный период и Pro -->\n' +
                 templates.pricing_block() + '\n\n', 'тарифы')
     tools = previews.cards(reg, templates.TOOLS, visible, 'ftools ftools--free')
     tools = '''<!-- 9. Бесплатные инструменты -->
@@ -163,7 +163,7 @@ def main():
         html = release_cleanup(html, reg, visible)
 
     # версии общих файлов, чтобы браузер не взял старые стили из кэша
-    for a in ('assets/css/main.css', 'assets/css/home.css', 'assets/js/main.js', 'assets/js/home.js'):
+    for a in ('assets/css/main.css', 'assets/css/home.css', 'assets/css/tour.css', 'assets/js/main.js', 'assets/js/home.js', 'assets/js/tour.js'):
         v = hashlib.md5((SITE / a).read_bytes()).hexdigest()[:8]
         html = re.sub(r'(["\'])' + re.escape(a) + r'(\?v=[0-9a-f]+)?\1', lambda m: m.group(1) + a + '?v=' + v + m.group(1), html)
 

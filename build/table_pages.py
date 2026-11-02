@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Посадочные таблицы учета и расписания: интерфейс платформы и сравнение способов работы."""
-from blocks import REG, btn, phero, sec_head, section, typo, steps, faq, cta
+from blocks import btn, sec_head, section, typo, steps, faq, cta
 import demos
 import product
 import sections
@@ -21,11 +21,8 @@ def interface(d):
 
 def render(p, c, x):
     h = c['hero']
-    actions = [btn('Попробовать бесплатно', REG, 'primary', 'lg'),
-               btn('Посмотреть интерфейс', '#h-table-interface', 'ghost', 'lg')]
-    out = [phero(p, x.trail(p), h['kicker'], h['lead'], demos.get(h['demo']), actions,
-                 ['14 дней полного доступа', 'Без карты', 'Работает на телефоне'],
-                 variant='feature', after=sections.facts(c['facts']))]
+    out = [product.hero(p, x.trail(p), {'kicker': h['kicker'], 'lead': h['lead'], 'more': ('Посмотреть интерфейс', '#h-table-interface')},
+                        sections.facts(c['facts']), product.PAGE_TOUR.get(p['id']))]
     out.append(interface(c['interface']))
     out.append(product.compare(c['compare']))
     out.append(steps(c['howto'], 'h-table-start'))

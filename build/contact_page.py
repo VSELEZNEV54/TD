@@ -26,7 +26,7 @@ def render(p, c, x):
     company = f'''<div class="contact-company">
       <dl class="contact-company__facts">{company_rows}</dl>
       <div class="contact-company__more"><p>{typo(c['company_note'])}</p>
-      <div class="contact-company__actions">{btn('Все реквизиты', '/requisites/', 'ghost')}{btn('Документы сервиса', '/terms/', 'ghost') if ok('/terms/') else ''}</div></div>
+      <div class="contact-company__actions">{btn('Все реквизиты', 'https://app.teacherdesk.ru/requisites', 'ghost')}{btn('Документы сервиса', 'https://app.teacherdesk.ru/terms', 'ghost')}</div></div>
     </div>'''
     out.append(section(sec_head('О сервисе', c['company_h2'], c['company_lead'], 'h-contact-company') + company,
                        'sec--tint', 'h-contact-company'))

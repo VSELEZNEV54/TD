@@ -3,40 +3,14 @@
 from html import escape
 from blocks import ic, typo, plain
 from feature_content import FEATURES
+import minis
 import schedule
-
-
-def visual(kind, lines):
-    title, *items = lines
-    title = typo(escape(title))
-    items = [typo(escape(it)) for it in items]
-    if kind == 'metric':
-        body = f'<small>{title}</small><b class="fx-mini__value">{items[0]}</b><span>{items[1]}</span>'
-    elif kind == 'bars':
-        body = f'<span>{title}<b>{items[0]}</b></span><i class="fx-mini__bar" style="--v:.9"></i><span>{items[1]}<b>{items[2]}</b></span><i class="fx-mini__bar" style="--v:.5"></i>'
-    elif kind == 'board':
-        body = f'<small>{title}</small><b class="fx-mini__equation">x² - 5x + 6 = 0</b><svg viewBox="0 0 180 46" aria-hidden="true"><path d="M10 35 Q40 8 70 30 T145 10 M85 7 L85 40 M15 36 H165"/></svg><span>{items[0]}</span>'
-    elif kind == 'notice':
-        body = f'<span class="fx-mini__icon">{ic("bell")}</span><b>{title}</b><small>{items[0]}</small>'
-    elif kind == 'link':
-        body = f'<small>{title}</small><span class="fx-mini__link">{ic("link")}Ссылка в кабинете</span><b class="fx-mini__action">{items[0]}</b>'
-    elif kind == 'phone':
-        body = f'<i class="fx-mini__notch"></i><small>{title}</small><b>{items[0]}</b><span class="fx-mini__row">{items[1]}</span><span class="fx-mini__action">{ic("check", "ic ic--12")}В кабинете</span>'
-    elif kind == 'cards':
-        body = f'<small>{title}</small><b class="fx-mini__card">{items[0]}</b><span class="fx-mini__action">{items[1]}</span>'
-    elif kind == 'form':
-        body = f'<small>{title}</small><span class="fx-mini__row">{items[0]}</span><span class="fx-mini__row">{items[1]}</span><b class="fx-mini__action">{ic("check", "ic ic--12")}Сохранено</b>'
-    else:
-        mark = ic('check', 'ic ic--12') if kind == 'checklist' else ic('doc', 'ic ic--12')
-        rows = ''.join(f'<span class="fx-mini__row">{mark}<span>{it}</span></span>' for it in items)
-        body = f'<small>{title}</small>{rows}'
-    return f'<div class="fx-mini fx-mini--{kind}{" phone-frame" if kind == "phone" else ""}">{body}</div>'
 
 
 def capabilities(p, c):
     data = FEATURES[p['id']]
     cards = ''.join(f'''<li><div class="pfc sc-cap sc-cap--{i}" data-live>
-      <div class="sc-cap__visual" aria-hidden="true">{visual(card['kind'], card['lines'])}</div>
+      <div class="sc-cap__visual" aria-hidden="true">{minis.card(card['kind'], card['lines'])}</div>
       <div class="sc-cap__copy"><h3 class="pfc__t">{typo(card['title'])}</h3><p class="pfc__d">{typo(card['desc'])}</p></div>
     </div></li>''' for i, card in enumerate(data['caps']))
     head = schedule.heading('Что умеет', data['cap_h2'], data['cap_lead'], 'h-feature-capabilities', 'sq')
@@ -61,7 +35,7 @@ def app(p, steps):
         </div>''')
     label = escape(plain('. '.join(st['title'] + '. ' + st['note'] for st in steps)))
     return f'''<div class="win"><div class="win__bar"><span class="win__crumb"><img src="/assets/img/sign.svg" width="18" height="18" alt="">TeacherDesk / <b>{typo(p['nav'])}</b></span></div>
-      <div class="fx-app fx-app--{p['id']}" role="img" aria-label="{label}"><div class="fx-app__steps" aria-hidden="true">{''.join(panels)}</div></div></div>'''
+      <div class="cabwin">{minis.rail(p['id'])}<div class="fx-app fx-app--{p['id']}" role="img" aria-label="{label}"><div class="fx-app__steps" aria-hidden="true">{''.join(panels)}</div></div></div></div>'''
 
 
 def story(p, c):

@@ -60,7 +60,7 @@ def report(stage):
 def journal(stage):
     rows = [
         ('30.09', 'Марина К.', 'Квадратные уравнения', 'Вариант 2', 'была', 'paid'),
-        ('28.09', 'Артем Д.', 'Законы Ньютона', 'Задачи 4-6', 'пропуск', 'debt'),
+        ('28.09', 'Артем Д.', 'Законы Ньютона', 'Задачи 4-6', 'перенос', 'soon'),
         ('25.09', 'Илья П.', 'Present Perfect', 'Упр. 4-6', 'перенос', 'soon'),
     ]
     lis = ''.join(f'''<li class="{'fx-work-journal__selected' if (stage == 0 and i == 0) or (stage == 1 and i == 1) else ''}" style="--n:{i}"><time>{date}</time><b>{pupil}</b><span class="fx-work-journal__topic" data-label="Тема">{typo(topic)}</span><span class="pd-jr__hw" data-label="Задано">{typo(hw)}</span>{_chip(status, kind)}</li>''' for i, (date, pupil, topic, hw, status, kind) in enumerate(rows))
@@ -68,8 +68,8 @@ def journal(stage):
       <div class="fx-work-journal__head"><span>{ic('calendar', 'ic ic--16')}Сентябрь</span><span class="chip chip--soon">Все ученики</span></div>
       <p class="pd-jr__head"><span>Дата</span><span>Ученик</span><span>Тема</span><span>Задано</span><span>Статус</span></p>
       <ul class="pd-jr__rows">{lis}</ul>
-      <div class="fx-work-journal__detail">{ic(['pen', 'users', 'report'][stage], 'ic ic--16')}<span><b>{['Тема и задание записаны', 'Посещаемость видна по датам', 'Итог за сентябрь'][stage]}</b><small>{['30 сентября · Марина К. · из расписания', 'Занятие, пропуск и перенос различаются', 'Данные для оплат и отчетов рядом'][stage]}</small></span></div>
-      <p class="log__sum"><span>За сентябрь</span><b>31 урок · 2 пропуска</b></p>
+      <div class="fx-work-journal__detail">{ic(['pen', 'users', 'report'][stage], 'ic ic--16')}<span><b>{['Тема и задание записаны', 'История видна по датам', 'Итог за сентябрь'][stage]}</b><small>{['30 сентября · Марина К. · из расписания', 'Перенос виден рядом с уроком', 'Проведенные уроки в учете оплат'][stage]}</small></span></div>
+      <p class="log__sum"><span>За сентябрь</span><b>31 урок · 12 учеников</b></p>
     </div>'''
 
 
