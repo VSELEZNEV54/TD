@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 """Контент-завод блога TeacherDesk: план, черновики, проверки, картинки.
 
-    python3 blog/zavod.py plan                 даты по графику, проверка плана, blog/plan.md
+    python3 blog/zavod.py plan                 даты по графику, проверка плана, таблица плана
+    python3 blog/zavod.py tablica              обновить таблицу-базу: blog/plan.md и blog/kontent-plan.xlsx
+    python3 blog/zavod.py podskazki [--all]    есть ли главный запрос темы в подсказках Яндекса (поле suggest)
     python3 blog/zavod.py status               где сейчас каждая статья плана
     python3 blog/zavod.py next 5 [--json]      следующие темы, которые надо довести до выхода
     python3 blog/zavod.py new SLUG             создать blog/stati/SLUG.md с шапкой из карточки
@@ -23,12 +25,17 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
+import urllib.parse
+import urllib.request
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 sys.path.insert(0, str(ROOT / 'build'))
+sys.path.insert(0, str(HERE))
 import blog_md  # noqa: E402
+import xlsx  # noqa: E402
 
 PLAN = HERE / 'plan.json'
 STATI = HERE / 'stati'
@@ -54,6 +61,28 @@ STOP = {'для', 'и', 'в', 'на', 'с', 'по', 'как', 'что', 'ли', 
 # ---------- план ----------
 def load_plan():
     return json.loads(PLAN.read_text(encoding='utf-8'))
+
+
+def save_plan(plan):
+    """Записать plan.json в компактном виде: шапка по строке на ключ, карточка в 6 строк. Так diff читается."""
+    j = lambda v: json.dumps(v, ensure_ascii=False)  # noqa: E731
+    line1 = ('month', 'slug', 'rubric', 'icon', 'pk', 'freq', 'suggest')
+    own = set(line1) | {'sk', 'h1', 'angle', 'outline'}
+    tail = ('cta', 'check', 'links', 'season')
+    out = ['{']
+    keys = [k for k in plan if k != 'cards']
+    out += [f' {j(k)}: {j(plan[k])},' for k in keys]
+    out.append(' "cards": [')
+    for i, c in enumerate(plan['cards']):
+        if i and c.get('month') != plan['cards'][i - 1].get('month'):
+            out.append('')  # пустая строка между месяцами плана
+        rest = [k for k in tail if k in c] + [k for k in c if k not in own and k not in tail]
+        lines = ['  {' + ', '.join(f'{j(k)}: {j(c[k])}' for k in line1 if k in c) + ',']
+        lines += [f'   {j(k)}: {j(c[k])},' for k in ('sk', 'h1', 'angle', 'outline') if k in c]
+        lines.append('   ' + ', '.join(f'{j(k)}: {j(c[k])}' for k in rest) + '}' + (',' if i < len(plan['cards']) - 1 else ''))
+        out += lines
+    out += [' ]', '}']
+    PLAN.write_text('\n'.join(out) + '\n', encoding='utf-8')
 
 
 def schedule(plan):
@@ -147,25 +176,8 @@ def cmd_plan(plan):
         for k in ('month', 'slug', 'rubric', 'icon', 'pk', 'h1', 'angle', 'cta'):
             if not c.get(k):
                 errs.append(f'{c.get("slug", "?")}: нет поля {k}')
-    rows = []
-    for i, c in enumerate(plan['cards'], 1):
-        st, head = article_state(c['slug'])
-        rows.append(f'| {i} | {dates[c["slug"]]} | {c["month"]} | {c["h1"]} | {c["rubric"]} | {c["pk"]} | {"" if c.get("freq") is None else c["freq"]} | '
-                    f'{links_for(plan, c)} | {"да" if c.get("check") else ""} | `{c["slug"]}` |')
-    months = {}
-    for c in plan['cards']:
-        months[c['month']] = months.get(c['month'], 0) + 1
-    md = ['# Контент-план блога TeacherDesk', '',
-          'Собирается командой `python3 blog/zavod.py plan` из `blog/plan.json`, руками не править. '
-          'Порядок строк равен порядку выхода. Дата считается по графику из `plan.json`: '
-          f'старт {plan["schedule"]["start"]}, дни недели {", ".join(["пн", "вт", "ср", "чт", "пт", "сб", "вс"][d] for d in plan["schedule"]["weekdays"])}, '
-          f'{plan["schedule"].get("per_day", 1)} в день. Ссылки: 0 = статья без перелинковки, 3 = до трех ссылок. '
-          'Проверка = внешние факты сверяются с официальными источниками.', '',
-          'Статей по месяцам: ' + ', '.join(f'месяц {m}: {n}' for m, n in sorted(months.items())), '',
-          '| № | Дата | Мес. | Тема | Рубрика | Главный запрос | Вордстат | Ссылки | Проверка | Слаг |',
-          '|---|---|---|---|---|---|---|---|---|---|'] + rows
-    (HERE / 'plan.md').write_text('\n'.join(md) + '\n', encoding='utf-8')
-    print(f'Тем в плане: {len(plan["cards"])}, первая выходит {dates[slugs[0]]}, последняя {dates[slugs[-1]]}. blog/plan.md обновлен.')
+    write_table(plan)
+    print(f'Тем в плане: {len(plan["cards"])}, первая выходит {dates[slugs[0]]}, последняя {dates[slugs[-1]]}.')
     if errs:
         print('\nОшибки плана:\n  ' + '\n  '.join(errs))
         sys.exit(1)
@@ -239,7 +251,7 @@ def cmd_card(plan, slug):
     date = schedule(plan)[slug]
     n = links_for(plan, c)
     print(f'Тема №{plan["cards"].index(c) + 1}, выход {date}, месяц {c["month"]}')
-    for k in ('h1', 'rubric', 'pk', 'sk', 'freq', 'angle', 'outline', 'cta', 'check', 'note'):
+    for k in ('h1', 'rubric', 'pk', 'sk', 'freq', 'angle', 'outline', 'cta', 'check', 'season', 'note'):
         if c.get(k) not in (None, '', []):
             v = c[k]
             print(f'{k}: ' + ('; '.join(v) if isinstance(v, list) else str(v)))
@@ -252,7 +264,228 @@ def cmd_card(plan, slug):
         print(f'  {url}  {nav}')
 
 
+# ---------- таблица-база ----------
+MONTHS = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
+DAYS = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
+ORDER = ['вышла', 'готова', 'ждет картинок', 'на доработке', 'пишется', 'отложена', 'в плане']
+FILL = {'вышла': 'done', 'готова': 'ready', 'ждет картинок': 'work', 'на доработке': 'work', 'пишется': 'work',
+        'отложена': 'hold', 'ошибка в файле': 'hold', 'в плане': 'plan'}
+OLD = {'published': 'опубликована', 'example': 'пример, не выпущена', 'hidden': 'скрыта'}
+
+
+def words_of(slug):
+    try:
+        _, c = blog_md.parse(STATI / f'{slug}.md')
+    except Exception:
+        return None
+    text = re.sub(r'<[^>]+>', ' ', ' '.join(s['html'] for s in c['sections']))
+    return len(re.findall(r'[А-Яа-яA-Za-z0-9-]+', text)) or None
+
+
+def card_state(slug, date, today):
+    """Статус темы: в плане, пишется, на доработке, ждет картинок, готова, вышла, отложена."""
+    st, head = article_state(slug)
+    rounds = None
+    vf = PROVERKA / f'{slug}.json'
+    if vf.exists():
+        try:
+            rounds = json.loads(vf.read_text(encoding='utf-8')).get('round')
+        except ValueError:
+            pass
+    if st is None:
+        return 'в плане', None, rounds
+    if st == 'broken':
+        return 'ошибка в файле', None, rounds
+    words = words_of(slug)
+    if st == 'hold':
+        return 'отложена', words, rounds
+    if st == 'approved':
+        if not images_ready(slug):
+            return 'ждет картинок', words, rounds
+        return ('вышла' if date <= today else 'готова'), words, rounds
+    return ('на доработке' if vf.exists() else 'пишется'), words, rounds
+
+
+def table_rows(plan):
+    dates = schedule(plan)
+    today = blog_md.today(sys.argv).isoformat()
+    reg = registry()
+    out = []
+    for i, c in enumerate(plan['cards'], 1):
+        st, head = article_state(c['slug'])
+        d = head.get('date') or dates[c['slug']]
+        state, words, rounds = card_state(c['slug'], d, today)
+        links = []
+        for l in c.get('links', []):
+            links.append(f'/blog/{l}/' if l in dates else reg[l]['url'] if l in reg else l)
+        cta = reg.get(c.get('cta'), {})
+        out.append({'n': i, 'date': datetime.date.fromisoformat(d), 'state': state, 'card': c, 'words': words,
+                    'rounds': rounds, 'links': links, 'cta': f'{cta.get("nav", c.get("cta", ""))} {cta.get("url", "")}'.strip(),
+                    'n_links': links_for(plan, c), 'h1': head.get('h1') or c['h1']})
+    return out, today
+
+
+def old_articles(plan):
+    """Статьи сайта, написанные до завода (build/content): что с ними сейчас."""
+    dates = schedule(plan)
+    replace = set(plan.get('replace', []))
+    out = []
+    for p in json.loads(REG.read_text(encoding='utf-8')):
+        if p['type'] != 'article' or p['id'] in dates and p['id'] not in replace:
+            continue
+        nxt = f'заменяется статьей завода {datetime.date.fromisoformat(dates[p["id"]]).strftime("%d.%m.%Y")}' if p['id'] in replace and p['id'] in dates else ''
+        out.append({'url': p['url'], 'h1': p.get('h1', ''), 'query': p.get('query', ''), 'state': OLD.get(p['status'], p['status']), 'next': nxt})
+    return out
+
+
+def write_table(plan):
+    rows, today = table_rows(plan)
+    old = old_articles(plan)
+    td = datetime.date.fromisoformat(today)
+    month = lambda d: f'{MONTHS[d.month - 1]} {d.year}'  # noqa: E731
+    counts = {s: sum(r['state'] == s for r in rows) for s in ORDER + ['ошибка в файле']}
+    months = []
+    for r in rows:
+        m = month(r['date'])
+        if not months or months[-1][0] != m:
+            months.append([m, 0, 0, 0, 0, 0])
+        mm = months[-1]
+        mm[1] += 1
+        k = {'вышла': 2, 'готова': 3, 'в плане': 5}.get(r['state'], 4)
+        mm[k] += 1
+    rubrics = {}
+    for r in rows:
+        rubrics[r['card']['rubric']] = rubrics.get(r['card']['rubric'], 0) + 1
+    first, last = rows[0]['date'].strftime('%d.%m.%Y'), rows[-1]['date'].strftime('%d.%m.%Y')
+    sched = plan['schedule']
+    days = ', '.join(DAYS[d] for d in sched['weekdays'])
+    yn = lambda v: '' if v is None else ('да' if v else 'нет')  # noqa: E731
+
+    # Markdown: читается в редакторе и на GitHub
+    md = ['# Контент-план блога TeacherDesk', '',
+          f'Таблица-база всех статей блога. Статусы на {td.strftime("%d.%m.%Y")}. '
+          'Собирается командой `python3 blog/zavod.py tablica` и после каждой команды завода, которая меняет статьи, '
+          'из `blog/plan.json` и файлов `blog/stati/`. Руками не править: правится план или статья. '
+          'Та же таблица с фильтрами и полным содержанием тем: `blog/kontent-plan.xlsx`.', '',
+          f'График: с {first}, {days}, {sched.get("per_day", 1)} в день. Тем в плане: {len(rows)}, последняя выходит {last}.', '',
+          'Статусы: **вышла** (дата наступила, статья в сборке сайта), **готова** (одобрена, картинки есть, ждет даты), '
+          '**ждет картинок**, **на доработке** (критик вернул), **пишется**, **в плане**, **отложена** (решает владелец).', '',
+          '| Статус | Статей |', '|---|---|'] + [f'| {s} | {n} |' for s, n in counts.items() if n] + [
+          '', '| Месяц | Всего | Вышло | Готово | В работе | В плане |', '|---|---|---|---|---|---|'] + [
+          f'| {m[0]} | {m[1]} | {m[2]} | {m[3]} | {m[4]} | {m[5]} |' for m in months] + [
+          '', '## План', '',
+          '| № | Дата | Статус | Тема | Рубрика | Главный запрос | Вордстат | Ссылки | Проверка | Адрес |',
+          '|---|---|---|---|---|---|---|---|---|---|']
+    for r in rows:
+        c = r['card']
+        md.append(f'| {r["n"]} | {DAYS[r["date"].weekday()]} {r["date"].strftime("%d.%m.%Y")} | {r["state"]} | {r["h1"]} | {c["rubric"]} | '
+                  f'{c["pk"]} | {"" if c.get("freq") is None else c["freq"]} | {r["n_links"]} | {"да" if c.get("check") else ""} | '
+                  f'`/blog/{c["slug"]}/` |')
+    md += ['', '## Статьи сайта до завода', '', 'Написаны раньше в `build/content/`. Новые статьи с теми же адресами их заменяют.', '',
+           '| Адрес | Тема | Главный запрос | Статус | Что дальше |', '|---|---|---|---|---|']
+    md += [f'| `{o["url"]}` | {o["h1"]} | {o["query"]} | {o["state"]} | {o["next"]} |' for o in old]
+    (HERE / 'plan.md').write_text('\n'.join(md) + '\n', encoding='utf-8')
+
+    # Excel: фильтры, закрепленная шапка, заливка статусов
+    plan_rows, content_rows = [], []
+    for r in rows:
+        c = r['card']
+        fill = FILL.get(r['state'], 'plan')
+        plan_rows.append([r['n'], r['date'], DAYS[r['date'].weekday()], month(r['date']), (r['state'], fill), c['rubric'],
+                          (r['h1'], 'wrap'), (c['pk'], 'wrap'), (c.get('freq'), 'num'), yn(c.get('suggest')),
+                          (r['cta'], 'wrap'), 'нет' if not r['n_links'] else f'до {r["n_links"]}', 'да' if c.get('check') else '',
+                          (c.get('season') or '', 'wrap'), f'/blog/{c["slug"]}/', r['words'], r['rounds']])
+        outline = '\n'.join(f'{k}. {t}' for k, t in enumerate(c.get('outline', []), 1))
+        content_rows.append([r['n'], r['date'], (r['state'], fill), (r['h1'], 'bold'), (c['pk'], 'wrap'),
+                             ('\n'.join(c.get('sk', [])), 'wrap'), (c.get('angle', ''), 'wrap'), (outline, 'wrap'),
+                             ('\n'.join(r['links']), 'wrap'), (c.get('note', ''), 'wrap')])
+    summary = [[(f'Контент-план блога TeacherDesk', 'title')],
+               [f'Статусы на {td.strftime("%d.%m.%Y")}. График: с {first}, {days}, {sched.get("per_day", 1)} в день, последняя тема {last}.'],
+               [],
+               [('Статус', 'head'), ('Статей', 'head')]] + [[(s, FILL.get(s, 'plan')), n] for s, n in counts.items() if n] + [
+               [], [('Месяц', 'head'), ('Всего', 'head'), ('Вышло', 'head'), ('Готово', 'head'), ('В работе', 'head'), ('В плане', 'head')]] + [
+               list(m) for m in months] + [
+               [], [('Рубрика', 'head'), ('Статей', 'head')]] + [[k, v] for k, v in sorted(rubrics.items(), key=lambda x: -x[1])] + [
+               [], [('Как читать', 'bold')],
+               ['Вышла: дата наступила, статья одобрена и с картинками, она в сборке сайта.'],
+               ['Готова: одобрена, картинки есть, выйдет сама в свою дату.'],
+               ['Ждет картинок, на доработке, пишется: статья в работе у завода.'],
+               ['В плане: текста еще нет. Отложена: решает владелец, в шапке статьи status: hold.'],
+               ['Ссылки в тексте: первый месяц без ссылок, дальше до трех ссылок на уже вышедшие страницы.'],
+               ['Вордстат: частота из семантического ядра; пусто, если запроса нет в ядре. Подсказки Яндекса: запрос есть в подсказках поиска.']]
+    xlsx.write_xlsx(HERE / 'kontent-plan.xlsx', [
+        {'name': 'План', 'freeze': True, 'filter': True, 'rows': plan_rows,
+         'columns': [('№', 5), ('Дата', 11), ('День', 5), ('Месяц', 13), ('Статус', 14), ('Рубрика', 19), ('Тема (H1)', 58),
+                     ('Главный запрос', 30), ('Вордстат', 10), ('Подсказки Яндекса', 11), ('Мост в продукт', 30),
+                     ('Ссылки в тексте', 10), ('Проверка фактов', 10), ('Сезон', 34), ('Адрес', 34), ('Слов', 7), ('Кругов критика', 9)]},
+        {'name': 'Содержание', 'freeze': True, 'filter': True, 'rows': content_rows,
+         'columns': [('№', 5), ('Дата', 11), ('Статус', 14), ('Тема (H1)', 40), ('Главный запрос', 26), ('Доп. запросы', 30),
+                     ('О чем статья', 55), ('План разделов', 55), ('Ссылки на', 28), ('Заметка автору', 45)]},
+        {'name': 'Сводка', 'header': False, 'rows': summary, 'columns': [('', 26), ('', 10), ('', 10), ('', 10), ('', 10), ('', 10)]},
+        {'name': 'До завода', 'freeze': True, 'filter': True,
+         'rows': [[o['url'], (o['h1'], 'wrap'), (o['query'], 'wrap'), o['state'], (o['next'], 'wrap')] for o in old],
+         'columns': [('Адрес', 36), ('Тема', 60), ('Главный запрос', 30), ('Статус', 20), ('Что дальше', 36)]},
+    ])
+    print(f'Таблица обновлена: blog/plan.md, blog/kontent-plan.xlsx ({len(rows)} тем, вышло {counts["вышла"]}, готово {counts["готова"]})')
+
+
+def norm(q):
+    return re.sub(r'\s+', ' ', q.lower().replace('ё', 'е')).strip()
+
+
+def suggest_of(part):
+    url = 'https://suggest.yandex.ru/suggest-ff.cgi?' + urllib.parse.urlencode({'part': part, 'uil': 'ru'})
+    req = urllib.request.Request(url, headers={'User-Agent': 'teacherdesk-blog-plan'})
+    with urllib.request.urlopen(req, timeout=15) as r:
+        data = json.loads(r.read().decode('utf-8'))
+    return [norm(x) for x in data[1]] if len(data) > 1 else []
+
+
+def cmd_suggest(plan):
+    """Главный запрос есть в подсказках Яндекса (те же основы слов в любом порядке): люди так ищут.
+    Бесплатная замена частоты для тем вне ядра. Нет в подсказках не значит нет спроса: редкие запросы туда не попадают."""
+    redo = '--all' in sys.argv
+    changed = 0
+    for c in plan['cards']:
+        if 'suggest' in c and not redo:
+            continue
+        pk = norm(c['pk'])
+        words = pk.split()
+        roots = [w[:5] for w in words if w not in STOP and len(w) > 2]
+        same = lambda x: all(any(t.startswith(r) for t in x.split()) for r in roots)  # noqa: E731
+        cut = lambda w: w[:max(4, len(w) - 2)]  # noqa: E731  подсказки дополняют начало последнего слова
+        sig = [w for w in words if w not in STOP and len(w) > 2]
+        parts = [pk, ' '.join(words[:-1] + [cut(words[-1])])]
+        if len(sig) >= 2:
+            parts.append(' '.join([sig[-1]] + sig[:-2] + [cut(sig[-2])]))  # другой порядок: «репетитор налог»
+        parts = list(dict.fromkeys(parts))
+        found = ''
+        try:
+            for part in parts:
+                hits = [x for x in suggest_of(part) if same(x)]
+                time.sleep(1)
+                if hits:
+                    found = hits[0]
+                    break
+        except Exception as e:  # сеть: оставляем поле как было
+            print(f'{c["slug"]}: подсказки не ответили ({e.__class__.__name__})')
+            continue
+        c['suggest'] = bool(found)
+        changed += 1
+        print(f'{"да " if found else "нет"}  {c["pk"]}' + (f'  [{found}]' if found and found != pk else ''))
+    if changed:
+        save_plan(plan)
+    n = sum(1 for c in plan['cards'] if c.get('suggest'))
+    print(f'Проверено: {changed}. В подсказках: {n} из {len(plan["cards"])}')
+
+
+def cmd_table(plan):
+    write_table(plan)
+
+
 # ---------- проверки ----------
+
+
 def stems(q):
     return [w[:max(4, len(w) - 2)] if len(w) > 5 else w for w in re.findall(r'[a-zа-я0-9]+', q.lower()) if w not in STOP]
 
@@ -538,6 +771,7 @@ def main():
         cmd_next(plan, int(a[1]) if len(a) > 1 else 5, '--json' in sys.argv)
     elif cmd == 'new':
         cmd_new(plan, a[1])
+        write_table(plan)
     elif cmd == 'card':
         cmd_card(plan, a[1])
     elif cmd == 'lint':
@@ -550,12 +784,20 @@ def main():
         cmd_text(a[1])
     elif cmd == 'verdict':
         cmd_verdict(plan, a[1])
+        write_table(plan)
     elif cmd == 'prompt':
         cmd_prompt(plan, a[1], a[2])
     elif cmd == 'img':
         cmd_img(a[1], a[2], a[3])
+        write_table(plan)
     elif cmd == 'redate':
         cmd_redate(plan)
+        write_table(plan)
+    elif cmd == 'tablica':
+        cmd_table(plan)
+    elif cmd == 'podskazki':
+        cmd_suggest(plan)
+        write_table(plan)
     else:
         sys.exit(__doc__)
 

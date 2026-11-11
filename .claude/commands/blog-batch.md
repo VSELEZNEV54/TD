@@ -43,11 +43,12 @@ Figma не отвечает или кончились кредиты: не ос�
 
 - `python3 build/build.py`. Ошибки сборки по твоим статьям исправь через писателя; чужие ошибки не трогай, сообщи.
 - `python3 blog/zavod.py status | tail -15`: проверь буфер.
+- `python3 blog/zavod.py tablica`: обнови таблицу-базу, чтобы статусы и даты были на сегодня.
 - Допиши в `blog/zhurnal.md` по строке на статью: дата прогона, слаг, итог (одобрена, отложена, ждет картинок), кругов критика.
 
 ## 5. Коммит
 
-- Добавляй только свои файлы, поименно: `blog/stati/<slug>.md`, `blog/proverka/<slug>.json`, `blog/zhurnal.md`, `site/assets/img/blog/<slug>/`, собранные `site/blog/`, `site/sitemap.xml`, `site/_pages/`. Никогда `git add -A`.
+- Добавляй только свои файлы, поименно: `blog/stati/<slug>.md`, `blog/proverka/<slug>.json`, `blog/zhurnal.md`, `blog/plan.md`, `blog/kontent-plan.xlsx`, `site/assets/img/blog/<slug>/`, собранные `site/blog/`, `site/sitemap.xml`, `site/_pages/`. Никогда `git add -A`.
 - Коммит: `Блог: статьи в буфер (<слаги через запятую>)` и строка соавторства из системных правил, если она задана.
 - `push: true` в конфиге: `git push origin dev`. Иначе не отправляй и напиши, что коммит локальный.
 
