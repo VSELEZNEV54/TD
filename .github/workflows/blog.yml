@@ -1,0 +1,57 @@
+name: Блог - ежедневный выход статей
+
+# Статьи контент-завода выходят по датам из blog/stati/*.md: одобренная статья с тремя
+# картинками становится опубликованной в сборке своего дня. Этот запуск каждое утро
+# собирает сайт из dev на сегодняшнюю дату и обновляет превью в ветке gh-pages.
+# В dev ничего не коммитит: дата выхода уже лежит в статье.
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # 10:00 по Москве
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: teacherdesk-blog-daily
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: dev
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - name: Собрать сайт на сегодня
+        run: |
+          python3 build/build.py | tee "$RUNNER_TEMP/build.log"
+          python3 build/sync_home.py
+      - name: Буфер статей
+        run: |
+          python3 blog/zavod.py status | tail -12
+          if grep -q 'картинок нет' "$RUNNER_TEMP/build.log"; then
+            echo "::warning::Дата выхода наступила, а картинок нет. Статья не вышла."
+          fi
+      - name: Экспорт для Pages
+        run: python3 deploy/pages.py "$RUNNER_TEMP/pages/TD" --base-path "/${GITHUB_REPOSITORY#*/}/"
+      - name: Обновить превью в gh-pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git clone --quiet --depth 1 --branch gh-pages "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$RUNNER_TEMP/gh"
+          rsync -a --delete --exclude .git "$RUNNER_TEMP/pages/TD/" "$RUNNER_TEMP/gh/"
+          cd "$RUNNER_TEMP/gh"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Изменений нет"
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="41898299+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Превью: выход статей блога $(TZ=Europe/Moscow date +%F), dev ${GITHUB_SHA::7}"
+          git push --quiet origin gh-pages

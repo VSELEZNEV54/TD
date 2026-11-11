@@ -9,6 +9,9 @@
     python3 build/build.py --only=crm,programma
                                       собрать и проверить только эти страницы (без карты сайта
                                       и без удаления старых файлов)
+    python3 build/build.py --date=2026-12-01
+                                      собрать сайт таким, каким он будет в этот день: статьи
+                                      контент-завода выходят по датам из blog/stati/*.md
 
 Главную (site/index.html) генератор пока не пишет: ее правят вручную.
 Внутренние страницы подключают main.css, home.css (компоненты главной) и pages.css, скрипты
@@ -29,6 +32,7 @@ SITE = ROOT / 'site'
 sys.path.insert(0, str(BUILD))
 
 import blocks  # noqa: E402
+import blog_md  # noqa: E402
 import templates  # noqa: E402
 from blocks import BASE, typo, plain  # noqa: E402
 
@@ -87,6 +91,8 @@ class Ctx:
 
 
 def load_content(pid):
+    if pid in blog_md.CONTENT:  # статья контент-завода из blog/stati/<id>.md
+        return blog_md.CONTENT[pid]
     f = BUILD / 'content' / f'{pid}.py'
     if not f.exists():
         return None
@@ -98,6 +104,8 @@ def load_content(pid):
 
 def modified(pid):
     """Дата последней правки страницы: по файлу контента, для главной по site/index.html."""
+    if pid in blog_md.MODIFIED:  # у статей завода дата из шапки, она не зависит от копии файлов
+        return blog_md.MODIFIED[pid]
     f = SITE / 'index.html' if pid == 'home' else BUILD / 'content' / f'{pid}.py'
     if not f.exists():
         return datetime.date.today().isoformat()
@@ -308,6 +316,13 @@ def preview_index(ctx, built):
 def main():
     # hidden: страница готова, но функции пока нет. В сборку не идет, текст остается в build/content.
     pages = [p for p in json.loads((BUILD / 'pages.json').read_text(encoding='utf-8')) if p['status'] != 'hidden']
+    # статьи контент-завода: свежие сразу после хаба блога; статья завода заменяет пример с тем же id
+    factory, problems = blog_md.registry(sys.argv)
+    warns.extend('Блог: ' + x for x in problems)
+    own = {e['id'] for e in factory}
+    pages = [p for p in pages if p['id'] not in own]
+    at = next((i + 1 for i, p in enumerate(pages) if p['id'] == 'blog'), len(pages))
+    pages[at:at] = factory
     ids = [p['id'] for p in pages]
     urls = [p['url'] for p in pages]
     if len(set(ids)) != len(ids) or len(set(urls)) != len(urls):

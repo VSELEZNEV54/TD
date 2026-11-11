@@ -56,3 +56,7 @@
   .pg--article .posts3{grid-template-columns:minmax(0,1fr)}
   .pg--article .art + .sec{padding-top:24px}
 }
+/* фото и иллюстрации статей контент-завода */
+.article-media--photo img{display:block;width:100%;height:auto;border-radius:var(--r-l);background:var(--line);object-fit:cover}
+.article-media--cover.article-media--photo img{aspect-ratio:16/9;max-height:min(52vh,560px)}
+.pg--article .art__body>.article-media--photo img{aspect-ratio:3/2}

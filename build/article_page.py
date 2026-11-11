@@ -22,6 +22,17 @@ def home_faq():
     return [(plain(q), a) for q, a in pairs]
 
 
+def photo(img, variant='inline', eager=False):
+    """Фото или иллюстрация статьи контент-завода: большая и уменьшенная копия JPEG."""
+    w, h = (int(x) for x in img['size'].split('x'))
+    load = 'fetchpriority="high"' if eager else 'loading="lazy" decoding="async"'
+    cap = f'<figcaption>{typo(img["caption"])}</figcaption>' if img.get('caption') else ''
+    return (f'<figure class="article-media article-media--{variant} article-media--photo">'
+            f'<img src="{img["src"]}" srcset="{img["small"]} 800w, {img["src"]} {w}w" '
+            f'sizes="(max-width: 760px) 100vw, 900px" width="{w}" height="{h}" alt="{escape(img["alt"], quote=True)}" {load}>'
+            f'{cap}</figure>')
+
+
 def media(p, variant='inline', caption=''):
     from templates import RUBRIC_COVER
     label = escape('Иллюстрация к статье: ' + plain(p['h1']), quote=True)
@@ -37,7 +48,7 @@ def media(p, variant='inline', caption=''):
 # Свой набор можно задать в контенте ключом media: ['debt', 'week'].
 RUBRIC_DEMOS = {'Поиск учеников': ['card', 'week'], 'Налоги': ['debt', 'desk'], 'Организация': ['desk', 'week'],
                 'Начало работы': ['trial', 'week'], 'ИИ на уроках': ['ai', 'ai-tasks'], 'Онлайн-уроки': ['board', 'cabinet'],
-                'Работа с учениками': ['hw', 'card']}
+                'Работа с учениками': ['hw', 'card'], 'Деньги': ['debt', 'card'], 'Методика': ['journal', 'hw']}
 DEMO_CAPTIONS = {
     'card': 'Карточка ученика в TeacherDesk: уроки, задания и оплаты в одном месте',
     'week': 'Расписание недели в TeacherDesk: перенос ученик видит сразу',
@@ -91,14 +102,27 @@ def render(p, c, x):
     toc = ''.join(f'<li><a href="#{escape(sid, quote=True)}">{typo(escape(label))}</a></li>' for sid, label in entries)
     # Обложка как у карточки статьи и два кадра продукта по теме в тексте, после первой и второй трети.
     shots = c.get('media') or RUBRIC_DEMOS.get(p.get('rubric'), ['desk', 'week'])
-    positions = [max(0, len(secs) // 3 - 1), max(1, 2 * len(secs) // 3 - 1)]
+    imgs = c.get('images') or {}
+    has_photos = bool(imgs) and all(v['exists'] for v in imgs.values())
+    if has_photos:
+        # статья завода: фото 1, кадр продукта, фото 2, кадр продукта, ровно по тексту и не после итога
+        seq = [photo(imgs['1']), demo_media(shots[0]), photo(imgs['2']), demo_media(shots[1 % len(shots)])]
+        last = max(0, len(secs) - 2)
+        slots = sorted({min(last, max(0, round((k + 1) * len(secs) / 5) - 1)) for k in range(4)})
+        place = {}
+        for k, item in enumerate(seq):
+            place.setdefault(slots[min(k, len(slots) - 1)], []).append(item)
+    else:
+        positions = [max(0, len(secs) // 3 - 1), max(1, 2 * len(secs) // 3 - 1)]
+        place = {}
+        for k, pos in enumerate(positions):
+            if k < len(shots):
+                place.setdefault(pos, []).append(demo_media(shots[k]))
     body = []
     for i, s in enumerate(secs):
         sid = s.get('id') or 'r' + str(i + 1)
         body.append(f'<h2 id="{sid}">{typo(s["h2"])}</h2>\n{typo(expand(s["html"], x))}')
-        for k, pos in enumerate(positions):
-            if i == pos and k < len(shots):
-                body.append(demo_media(shots[k]))
+        body.extend(place.get(i, []))
     upd = c.get('updated', c['published'])
     dates = f'Опубликовано <time datetime="{c["published"]}">{x.date(c["published"])}</time>'
     if upd != c['published']:
@@ -107,7 +131,9 @@ def render(p, c, x):
     mins = max(3, round(words / 180))
     note = ''
     if p['status'] == 'example':
-        note = f'<p class="exnote">{ic("note")}<span>Это пример страницы: текст демонстрационный, настоящая статья появится позже.</span></p>'
+        msg = p.get('_note') or 'Это пример страницы: текст демонстрационный, настоящая статья появится позже.'
+        note = f'<p class="exnote">{ic("note")}<span>{typo(msg)}</span></p>'
+    cover = photo(imgs['cover'], 'cover', eager=True) if has_photos else media(p, 'cover')
     head = f'''<div class="rprog" data-rprog aria-hidden="true"><i></i></div>
 <article class="art article-page">
   <header class="art__head"><div class="wrap art__hw">
@@ -117,7 +143,7 @@ def render(p, c, x):
     <p class="art__lead">{typo(c['lead'])}</p>
     <p class="art__meta"><span class="av av--me" aria-hidden="true">TD</span><span><b>{typo(c.get('author', 'Редакция TeacherDesk'))}</b><small>{dates}</small></span></p>
     {note}
-    {media(p, 'cover')}
+    {cover}
   </div></header>
   <div class="wrap art__in">
     {sidebar(p, toc)}
@@ -127,12 +153,15 @@ def render(p, c, x):
     out = [head]
     rel = [i for i in c.get('related', []) if i in x.reg and x.reg[i]['type'] == 'article' and i != p['id']]
     if not rel:
-        rel = [i for i in x.section_ids('blog') if i != p['id'] and x.reg[i]['type'] == 'article'][:3]
+        rel = [i for i in x.section_ids('blog') if i != p['id'] and x.reg[i]['type'] == 'article' and x.visible(i)][:3]
+    # статьи первого месяца завода выходят без перелинковки: links: 0 в шапке убирает и «Читайте также»
+    if c.get('factory') and not c.get('links'):
+        rel = []
     if rel:
         out.append(section(sec_head('Читайте также', 'Еще статьи для репетиторов', '', 'h-also', 'q', ('Все статьи', '/blog/')) + post_cards(rel, x), label='h-also'))
     out.append(faq(home_faq(), 'Частые вопросы'))
     cc = c.get('cta', {})
-    out.append(cta(cc.get('title'), cc.get('second')))
+    out.append(cta(cc.get('title'), cc.get('second') if not c.get('factory') or c.get('links') else None))
     ld = {'@type': 'Article', 'headline': plain(p['h1']), 'description': p['description'], 'inLanguage': 'ru-RU',
           'datePublished': c['published'], 'dateModified': c.get('updated', c['published']),
           'author': {'@type': 'Organization', 'name': 'TeacherDesk'}, 'publisher': {'@id': BASE + '/#org'},

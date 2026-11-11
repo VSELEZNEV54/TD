@@ -1,0 +1,9 @@
+{
+ "about": "Настройки контент-завода. push: false значит, что пакетный прогон коммитит локально и не отправляет на GitHub, пока владелец не разрешит.",
+ "figma_file": "QjrwXE4yvWCoDwlwZDYgPE",
+ "image_model": "gemini-3.1-flash-lite-image",
+ "image_model_fallback": "gemini-3.1-flash-image",
+ "batch": 5,
+ "parallel": 3,
+ "push": false
+}
