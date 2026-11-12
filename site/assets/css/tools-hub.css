@@ -1,0 +1,6 @@
+/* Каталог сохраняет карточки и типографику главной. */
+.tools-catalog .ftc__tag{height:auto;min-height:24px;padding-block:4px;line-height:1.3;max-width:calc(100% - 12px);white-space:normal}
+.tools-service__copy{max-width:52em}
+@media(max-width:720px){
+  .tools-catalog{grid-template-columns:minmax(0,1fr)}
+}
