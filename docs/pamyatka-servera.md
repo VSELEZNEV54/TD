@@ -81,6 +81,7 @@ server {
     }
 
     gzip on;
+    gzip_comp_level 6;  # по умолчанию 1: стили и главная выходят на 25-40% тяжелее
     gzip_types text/css application/javascript application/json image/svg+xml text/xml application/xml;
     # brotli on; brotli_types ... (если модуль установлен)
 }

@@ -32,15 +32,22 @@
     var r = el.getBoundingClientRect(), v = view.getBoundingClientRect();
     return { x: r.left - v.left + r.width / 2, y: r.top - v.top + r.height / 2 };
   }
+  /* первый замер делает ResizeObserver сразу после раскладки, и только после него идет показ:
+     при загрузке скрипт не заставляет браузер считать страницу раньше времени */
+  var fitted = false, initDone = false;
   function fit() {
     var w = parseFloat(getComputedStyle(root).getPropertyValue('--w')) || 1200;
     root.style.setProperty('--s', (view.clientWidth / w).toFixed(4));
-    if (lastTarget && lastTarget.offsetParent) { var p = pointOf(lastTarget); place(p.x, p.y); }
+    if (!fitted) {
+      fitted = true;
+      /* курсор выезжает из правого нижнего угла окна */
+      place(view.clientWidth * .78, view.clientHeight * .86);
+      if (initDone) sync();
+    } else if (lastTarget && lastTarget.offsetParent) { var p = pointOf(lastTarget); place(p.x, p.y); }
   }
-  fit();
   root.classList.add('is-ready');
   if (window.ResizeObserver) new ResizeObserver(fit).observe(view);
-  else window.addEventListener('resize', fit);
+  else { fit(); window.addEventListener('resize', fit); }
 
   /* ---------- состояние: все изменения записываются, чтобы вернуть кабинет в начало ---------- */
   var undo = [];
@@ -441,7 +448,7 @@
     ctl.classList.toggle('is-paused', !user);
     root.classList.toggle('is-run', user);
     playBtn.setAttribute('aria-label', user ? 'Остановить показ' : 'Запустить показ');
-    if (isOn() && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
+    if (fitted && isOn() && !raf) { last = performance.now(); raf = requestAnimationFrame(frame); }
   }
   function jump(n) {
     resetAll();
@@ -459,7 +466,6 @@
   }
 
   show(ROUTE[0]);
-  /* курсор выезжает из правого нижнего угла окна */
-  place(view.clientWidth * .78, view.clientHeight * .86);
+  initDone = true;
   sync();
 })();

@@ -59,7 +59,13 @@
 
 /* ---------- кабинет: общая сетка ---------- */
 .tapp{position:absolute;left:0;top:0;display:grid;grid-template-columns:216px minmax(0,1fr);width:calc(var(--w)*1px);height:calc(var(--h)*1px);transform:scale(var(--s));transform-origin:0 0;font-size:14px;line-height:1.35;color:var(--text);background:#fff;pointer-events:none;-webkit-user-select:none;user-select:none}
-.js .tour:not(.is-ready) .tapp{visibility:hidden}
+/* масштаб считает сам CSS (ширина окна / --w), поэтому кабинет виден с первой отрисовки, без ожидания tour.js;
+   старые браузеры ждут скрипт, он ставит --s */
+@supports (scale:tan(atan2(1px,1px))) and (width:1cqw){
+  .tour__view{container-type:inline-size}
+  .tapp{transform:scale(tan(atan2(100cqw,calc(var(--w) * 1px))))}
+}
+@supports not ((scale:tan(atan2(1px,1px))) and (width:1cqw)){.js .tour:not(.is-ready) .tapp{visibility:hidden}}
 .tapp h3,.tapp h4{margin:0;color:var(--ink);font-weight:600;letter-spacing:-.015em}
 .tapp b{color:var(--ink);font-weight:500}
 .tapp time{font-size:12.5px;color:var(--muted)}

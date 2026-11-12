@@ -18,7 +18,6 @@
 main.js, home.js (тарифы, истории, стопка функций, окно вопроса, знак T) и pages.js.
 """
 import datetime
-import hashlib
 import importlib.util
 import json
 import re
@@ -119,11 +118,13 @@ def og_image(p):
 
 
 def versions():
+    """Адрес для страницы: сжатая копия с версией, 'assets/css/main.min.css?v=1a2b3c4d' (build/minify.py)."""
+    import minify
     v = {}
     for a in ASSETS:
         f = SITE / a
         if f.exists():
-            v[a] = hashlib.md5(f.read_bytes()).hexdigest()[:8]
+            v[a] = minify.asset(a, SITE)
     return v
 
 
@@ -153,8 +154,12 @@ def howto_ld(p, html):
 def page_html(p, main, ld_nodes, ctx, ver, assets_css, assets_js):
     noindex = p['status'] != 'published' or p['type'] == 'notfound'
     canon = BASE + p['url']
-    css = ''.join(f'<link rel="stylesheet" href="/{a}?v={ver[a]}">\n' for a in assets_css)
-    js = ''.join(f'<script src="/{a}?v={ver[a]}" defer></script>\n' for a in assets_js)
+    css = ''.join(f'<link rel="stylesheet" href="/{ver[a]}">\n' for a in assets_css)
+    js = ''.join(f'<script src="/{ver[a]}" defer></script>\n' for a in assets_js)
+    # шрифты первого экрана грузим сразу, не дожидаясь CSS; моноширинный нужен окну кабинета (tour.css)
+    fonts = '<link rel="preload" href="/assets/fonts/geist-500.woff2" as="font" type="font/woff2" crossorigin>\n'
+    if 'assets/css/tour.css' in assets_css:
+        fonts += '<link rel="preload" href="/assets/fonts/geist-mono-400.woff2" as="font" type="font/woff2" crossorigin>\n'
     graph = []
     if p['type'] != 'notfound':
         graph.append({"@type": "BreadcrumbList", "itemListElement": [
@@ -210,7 +215,7 @@ def page_html(p, main, ld_nodes, ctx, ver, assets_css, assets_js):
 <link rel="preload" href="/assets/fonts/geist-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/geist-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/playfair-display-italic-500.woff" as="font" type="font/woff" crossorigin>
-{css}<script>document.documentElement.classList.add('js')</script>
+{fonts}{css}<script>document.documentElement.classList.add('js')</script>
 <script type="application/ld+json">{ld}</script>
 </head>
 <body id="top" class="pg pg--{p['type']}">

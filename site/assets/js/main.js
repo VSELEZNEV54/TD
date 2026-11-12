@@ -90,7 +90,8 @@
   if (hdr) {
     var onScroll = function () { hdr.classList.toggle('is-scrolled', w.scrollY > 12); };
     w.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    /* первая проверка после отрисовки: чтение scrollY при загрузке заставляет браузер раскладывать всю страницу внутри скрипта */
+    requestAnimationFrame(function () { setTimeout(onScroll, 0); });
   }
   var menu = $('[data-menu]');
   if (menu) {
@@ -163,12 +164,17 @@
   $$('[data-seo]').forEach(function (s) {
     var b = $('[data-seo-more]', s), body = $('.seo__body', s);
     s.classList.add('is-clamped');
-    if (body.scrollHeight <= body.clientHeight + 24) { s.classList.remove('is-clamped'); b.hidden = true; return; }
     b.addEventListener('click', function () {
       var open = s.classList.toggle('is-open');
       b.setAttribute('aria-expanded', open ? 'true' : 'false');
       $('span', b).textContent = open ? 'Свернуть' : 'Читать полностью';
     });
+    /* короткий текст не сворачиваем; высоту меряем, когда блок подходит к экрану, а не при загрузке */
+    var check = function () { if (body.scrollHeight <= body.clientHeight + 24) { s.classList.remove('is-clamped'); b.hidden = true; } };
+    if ('IntersectionObserver' in w) {
+      var io = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { io.disconnect(); check(); } }, { rootMargin: '600px 0px' });
+      io.observe(s);
+    } else { check(); }
   });
 
   /* ---------- куки: счетчики только после «Разрешить» ----------
@@ -207,8 +213,8 @@
       });
     }
     cbar.hidden = false;
-    void cbar.offsetWidth;
-    cbar.classList.add('is-on');
+    /* класс на следующем кадре, чтобы сработал переход, без принудительного пересчета раскладки */
+    requestAnimationFrame(function () { requestAnimationFrame(function () { cbar.classList.add('is-on'); }); });
     if (focus) $('button', cbar).focus();
   };
   var choice = store();

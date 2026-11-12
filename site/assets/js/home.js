@@ -28,299 +28,6 @@
       }).catch(function () {});
   }
 
-  /* ---------- первый экран: окно и линейка дня ----------
-     Состояние окна это чистая функция от времени t (минуты от полуночи).
-     Шкала играет сама по опорным событиям, но ее можно тащить и листать с клавиатуры. */
-  var scene = $('[data-scene]');
-  if (scene) (function () {
-    var T0 = 480, T1 = 1260, SPAN = T1 - T0;
-    var EV = [
-      { t: 480, txt: 'план на день готов' },
-      { t: 540, txt: 'напоминания об оплате ушли' },
-      { t: 840, txt: 'урок начался' },
-      { t: 842, txt: 'оплата получена' },
-      { t: 1010, txt: 'долг закрыт' },
-      { t: 1230, txt: 'напоминания на завтра готовы' }
-    ];
-    /* пороги смены чипа в строке урока и номер чипа «идет сейчас» */
-    var ROWS = [
-      { at: [540, 840, 900], now: 2 },
-      { at: [842, 930, 990], now: 2 },
-      { at: [540, 1010, 1035, 1095], now: 3 },
-      { at: [1140, 1200], now: 1 }
-    ];
-
-    var ruler = $('[data-ruler]', scene);
-    var track = $('[data-track]', scene);
-    var thumb = $('[data-thumb]', scene);
-    var rtime = $('[data-rtime]', scene);
-    var clock = $('[data-clock]', scene);
-    var got = $('[data-got]', scene);
-    var debt = $('[data-debt]', scene);
-    var hwBar = $('[data-hwbar]', scene);
-    var hwNum = $('[data-hwnum]', scene);
-    var play = $('[data-play]', scene);
-    var rows = $$('[data-row]', scene).map(function (li) { return { li: li, sw: $('.swap', li) }; });
-    var toasts = $$('.toast', scene);
-    var segs = $$('.ruler__ls', scene);
-    var dots = $$('.ruler__ev', scene);
-    var dotT = [480, 540, 842, 1010, 1230];
-    if (!ruler || !thumb) return;
-
-    var time = 842;
-    var cur = {};
-
-    function hhmm(t) {
-      var h = Math.floor(t / 60), m = Math.floor(t % 60);
-      return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
-    }
-
-    function apply(t, instant) {
-      t = Math.max(T0, Math.min(T1, t));
-      time = t;
-      ruler.style.setProperty('--p', ((t - T0) / SPAN * 100).toFixed(3));
-
-      var e = 0;
-      EV.forEach(function (ev, i) { if (t >= ev.t) e = i; });
-
-      var label = hhmm(t);
-      if (label !== cur.label || e !== cur.ev) {
-        cur.label = label;
-        clock.textContent = label;
-        rtime.textContent = label;
-        thumb.setAttribute('aria-valuenow', Math.round(t));
-        thumb.setAttribute('aria-valuetext', label + ', ' + EV[e].txt);
-      }
-
-      rows.forEach(function (row, i) {
-        var idx = 0;
-        ROWS[i].at.forEach(function (x) { if (t >= x) idx++; });
-        if (cur['r' + i] === idx) return;
-        cur['r' + i] = idx;
-        setSwap(row.sw, idx);
-        row.li.classList.toggle('is-now', idx === ROWS[i].now);
-        if (segs[i]) {
-          segs[i].classList.toggle('is-now', idx === ROWS[i].now);
-          segs[i].classList.toggle('is-past', idx > ROWS[i].now);
-        }
-      });
-
-      var g = t >= 1010 ? 4400 : t >= 842 ? 1800 : 0;
-      if (cur.got !== g) {
-        if (instant || cur.got === undefined) { count(got, g, g, 0); } else { count(got, cur.got, g, 800); }
-        cur.got = g;
-      }
-      var db = t >= 1010 ? 4200 : 6800;
-      if (cur.debt !== db) {
-        if (instant || cur.debt === undefined) { count(debt, db, db, 0); } else { count(debt, cur.debt, db, 800); }
-        cur.debt = db;
-      }
-      var hw = t >= 990 ? 8 : 7;
-      if (cur.hw !== hw) {
-        cur.hw = hw;
-        hwNum.textContent = hw;
-        hwBar.style.setProperty('--v', hw / 10);
-      }
-
-      if (cur.ev !== e) {
-        cur.ev = e;
-        toasts.forEach(function (el, i) {
-          el.classList.toggle('is-on', i === e);
-          el.classList.toggle('is-prev', i === e - 1);
-          el.classList.toggle('is-past', i < e - 1);
-        });
-      }
-      dots.forEach(function (el, i) { el.classList.toggle('is-past', t >= dotT[i]); });
-    }
-
-    /* --- автопроигрывание по опорным событиям --- */
-    var playing = false, userPaused = false, hover = false, visible = false, dragging = false;
-    var raf = null, timer = null, idle = null, stop = 0;
-
-    function clearRun() {
-      if (raf) cancelAnimationFrame(raf);
-      raf = null;
-      clearTimeout(timer);
-      timer = null;
-    }
-    function tween(from, to, dur, each, done) {
-      var t0 = null;
-      function step(ts) {
-        if (t0 === null) t0 = ts;
-        var k = Math.min(1, (ts - t0) / dur);
-        var e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-        each(from + (to - from) * e);
-        if (k < 1) { raf = requestAnimationFrame(step); } else { raf = null; if (done) done(); }
-      }
-      raf = requestAnimationFrame(step);
-    }
-    function nextStop(first) {
-      if (stop >= EV.length - 1 && time >= EV[EV.length - 1].t) {
-        /* финал держим, затем мягко гасим содержимое и возвращаемся в утро */
-        timer = setTimeout(rewind, 4200);
-        return;
-      }
-      timer = setTimeout(function () {
-        var to = EV[stop + 1].t;
-        var from = time;
-        stop++;
-        tween(from, to, to - from < 10 ? 500 : 1000, function (t) { apply(t); }, function () { nextStop(); });
-      }, first ? 1500 : 1150);
-    }
-    function rewind() {
-      scene.classList.add('is-rewind');
-      timer = setTimeout(function () {
-        tween(time, T0, 700, function (t) { apply(t, true); }, function () {
-          stop = 0;
-          apply(T0, true);
-          scene.classList.remove('is-rewind');
-          nextStop(true);
-        });
-      }, 320);
-    }
-    function sync() {
-      var should = !reduce && !userPaused && !hover && visible && !dragging && !d.hidden;
-      if (should && !playing) {
-        playing = true;
-        stop = 0;
-        EV.forEach(function (ev, i) { if (time >= ev.t) stop = i; });
-        nextStop(time === T0);
-      } else if (!should && playing) {
-        playing = false;
-        clearRun();
-        scene.classList.remove('is-rewind');
-      }
-    }
-    function setPaused(v) {
-      userPaused = v;
-      if (play) {
-        if (v) { play.setAttribute('data-paused', ''); } else { play.removeAttribute('data-paused'); }
-        play.setAttribute('aria-label', v ? 'Проиграть день' : 'Остановить день');
-      }
-      sync();
-    }
-    /* человек взял шкалу в руки: автопроигрывание уступает и вернется после паузы */
-    function takeControl() {
-      clearTimeout(idle);
-      setPaused(true);
-      if (!reduce) idle = setTimeout(function () { setPaused(false); }, 12000);
-    }
-
-    if (play) {
-      if (reduce) { play.hidden = true; }
-      play.addEventListener('click', function () {
-        clearTimeout(idle);
-        if (userPaused && time >= T1 - 1) apply(T0, true);
-        setPaused(!userPaused);
-      });
-    }
-
-    /* --- перетаскивание --- */
-    function tFromX(x) {
-      var r = track.getBoundingClientRect();
-      return T0 + Math.max(0, Math.min(1, (x - r.left) / r.width)) * SPAN;
-    }
-    function snap(t) {
-      var best = null;
-      EV.forEach(function (ev) {
-        if (Math.abs(ev.t - t) <= 9 && (best === null || Math.abs(ev.t - t) < Math.abs(best - t))) best = ev.t;
-      });
-      return best !== null ? best : Math.round(t / 5) * 5;
-    }
-    var press = null;
-    ruler.addEventListener('pointerdown', function (e) {
-      if (e.button) return;
-      press = { id: e.pointerId, x: e.clientX, active: e.pointerType !== 'touch' };
-      if (press.active) {
-        dragging = true;
-        takeControl();
-        ruler.classList.add('is-drag');
-        try { ruler.setPointerCapture(e.pointerId); } catch (err) {}
-        apply(snap(tFromX(e.clientX)));
-        e.preventDefault();
-        thumb.focus({ preventScroll: true });
-      }
-    });
-    ruler.addEventListener('pointermove', function (e) {
-      if (!press || e.pointerId !== press.id) return;
-      if (!press.active) {
-        if (Math.abs(e.clientX - press.x) < 6) return;
-        press.active = true;
-        dragging = true;
-        takeControl();
-        ruler.classList.add('is-drag');
-        try { ruler.setPointerCapture(e.pointerId); } catch (err) {}
-      }
-      apply(snap(tFromX(e.clientX)));
-    });
-    function release(e, cancelled) {
-      if (!press || e.pointerId !== press.id) return;
-      if (!press.active && !cancelled) { takeControl(); apply(snap(tFromX(e.clientX))); }
-      press = null;
-      dragging = false;
-      ruler.classList.remove('is-drag');
-      sync();
-    }
-    ruler.addEventListener('pointerup', function (e) { release(e, false); });
-    ruler.addEventListener('pointercancel', function (e) { release(e, true); });
-
-    thumb.addEventListener('keydown', function (e) {
-      var t = null, i;
-      var step = e.shiftKey ? 60 : 15;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') t = Math.round(time / 5) * 5 + step;
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') t = Math.round(time / 5) * 5 - step;
-      if (e.key === 'Home') t = T0;
-      if (e.key === 'End') t = T1;
-      if (e.key === 'PageUp') { for (i = 0; i < EV.length; i++) { if (EV[i].t > time) { t = EV[i].t; break; } } if (t === null) t = T1; }
-      if (e.key === 'PageDown') { for (i = EV.length - 1; i >= 0; i--) { if (EV[i].t < time) { t = EV[i].t; break; } } if (t === null) t = T0; }
-      if (t === null) return;
-      e.preventDefault();
-      takeControl();
-      apply(t);
-    });
-
-    if (TD.finePointer) {
-      [$('.scene__fig', scene), $('.deck', scene)].forEach(function (el) {
-        if (!el) return;
-        el.addEventListener('pointerenter', function () { hover = true; sync(); });
-        el.addEventListener('pointerleave', function () { hover = false; sync(); });
-      });
-    }
-    d.addEventListener('visibilitychange', sync);
-
-    if (reduce) {
-      apply(842, true);
-    } else {
-      apply(T0, true);
-      whenVisible(scene, function () { visible = true; sync(); }, function () { visible = false; sync(); }, 0.25);
-    }
-
-    /* параллакс за курсором: слои на разной глубине */
-    var hero = $('[data-hero]');
-    if (hero && TD.finePointer && !reduce) {
-      var tx = 0, ty = 0, cx = 0, cy = 0, praf = null;
-      var loop = function () {
-        cx += (tx - cx) * 0.08;
-        cy += (ty - cy) * 0.08;
-        scene.style.setProperty('--mx', cx.toFixed(4));
-        scene.style.setProperty('--my', cy.toFixed(4));
-        if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) {
-          praf = requestAnimationFrame(loop);
-        } else { praf = null; }
-      };
-      hero.addEventListener('pointermove', function (e) {
-        var r = hero.getBoundingClientRect();
-        tx = ((e.clientX - r.left) / r.width - 0.5) * -1;
-        ty = ((e.clientY - r.top) / r.height - 0.5) * -1;
-        if (!praf) praf = requestAnimationFrame(loop);
-      });
-      hero.addEventListener('pointerleave', function () {
-        tx = 0; ty = 0;
-        if (!praf) praf = requestAnimationFrame(loop);
-      });
-    }
-  })();
-
   /* ---------- факты: счетчик у чисел с data-count ---------- */
   var facts = $$('[data-count]');
   if (facts.length && !reduce) {
@@ -474,14 +181,25 @@
       });
     });
 
+    /* меряем карточки, когда ролик подходит к экрану: при загрузке замер заставил бы браузер раскладывать всю страницу */
+    var measured = false;
+    var remeasure = function () { if (measured) measure(); };
     var rz = null;
-    w.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(measure, 150); });
-    if (d.fonts && d.fonts.ready) d.fonts.ready.then(measure);
+    w.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(remeasure, 150); });
+    if (d.fonts && d.fonts.ready) d.fonts.ready.then(remeasure);
     d.addEventListener('visibilitychange', sync);
 
     film.classList.add('is-ready');
     film.classList.toggle('is-poster', reduce);
-    measure();
+    if ('IntersectionObserver' in w) {
+      var mo = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        mo.disconnect();
+        measured = true;
+        measure();
+      }, { rootMargin: '400px 0px' });
+      mo.observe(film);
+    } else { measured = true; measure(); }
     render();
     if (!reduce) {
       if ('IntersectionObserver' in w) {
@@ -625,10 +343,18 @@
         }
         spyAt = best;
       };
-      var req = function () { if (!ticking) { ticking = true; requestAnimationFrame(mark); } };
+      /* считаем, только пока блок рядом с экраном: иначе каждая прокрутка мерила бы карточки вдали */
+      var spyNear = !('IntersectionObserver' in w);
+      var req = function () { if (spyNear && !ticking) { ticking = true; requestAnimationFrame(mark); } };
       w.addEventListener('scroll', req, { passive: true });
       bento.addEventListener('scroll', req, { passive: true });
       w.addEventListener('resize', req);
+      if (!spyNear) {
+        new IntersectionObserver(function (entries) {
+          spyNear = entries[0].isIntersecting;
+          req();
+        }, { rootMargin: '25% 0px' }).observe(bento);
+      }
       links.forEach(function (a, i) {
         a.addEventListener('click', function (e) {
           if (!phone.matches || !cells[i]) return;
@@ -637,7 +363,7 @@
           bento.scrollTo({ left: cells[i].offsetLeft - bento.offsetLeft - pad, behavior: reduce ? 'auto' : 'smooth' });
         });
       });
-      mark();
+      req();
     }
   })();
 
@@ -664,8 +390,10 @@
       live = i;
       if (i > -1) { cards[i].classList.add('is-live'); if (hooks[i]) hooks[i].start(); }
     }
+    var measured = false;
     function update() {
       ticking = false;
+      if (!measured) { measured = true; measure(); }
       var vh = w.innerHeight;
       var top = cards.map(function (c) { return c.getBoundingClientRect().top; });
       /* насколько каждая карточка уже легла на свое место в стопке: 0 - далеко внизу, 1 - легла */
@@ -698,17 +426,17 @@
       hooks[cards.indexOf(pay.closest('.fcard'))] = seqPay;
     }
 
-    measure();
+    /* замер и расчет только рядом с экраном: при загрузке стопка далеко внизу */
     var rz = null;
-    w.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(function () { measure(); req(); }, 120); });
+    w.addEventListener('resize', function () { clearTimeout(rz); rz = setTimeout(function () { if (measured) measure(); if (near) req(); }, 120); });
     w.addEventListener('scroll', function () { if (near) req(); }, { passive: true });
     d.addEventListener('visibilitychange', function () {
-      if (d.hidden) { setLive(-1); } else { req(); }
+      if (d.hidden) { setLive(-1); } else if (near) { req(); }
     });
     if ('IntersectionObserver' in w) {
       new IntersectionObserver(function (entries) {
         near = entries[0].isIntersecting;
-        req();
+        if (near || live > -1) req();
       }, { rootMargin: '10% 0px' }).observe(fstack);
     } else {
       near = true;
@@ -751,13 +479,10 @@
       steps.forEach(function (st, i) { st.classList.toggle('is-on', sec > 0 && sec >= marks[i]); });
     };
 
-    measure();
     show(0);
-    w.addEventListener('resize', function () { measure(); show(now); });
-    /* на низком экране (телефон боком) 30% темной полосы не помещаются: порог не выше половины окна */
-    var th = Math.min(0.3, w.innerHeight * 0.5 / (start.offsetHeight || 1));
+    w.addEventListener('resize', function () { if (played) { measure(); show(now); } });
 
-    whenVisible(start, function () {
+    var go = function () {
       if (played) return;
       played = true;
       measure();
@@ -772,7 +497,17 @@
         if (p < 1) requestAnimationFrame(tick);
       };
       setTimeout(function () { requestAnimationFrame(tick); }, 400);
-    }, null, th);
+    };
+    /* на низком экране (телефон боком) 30% темной полосы не помещаются: порог не выше половины окна.
+       Высоту блока берем из наблюдателя, а не замером при загрузке */
+    if ('IntersectionObserver' in w) {
+      var so = new IntersectionObserver(function (entries) {
+        var e = entries[0];
+        var th = Math.min(0.3, w.innerHeight * 0.5 / (e.boundingClientRect.height || 1));
+        if (e.isIntersecting && e.intersectionRatio >= th) { so.disconnect(); go(); }
+      }, { threshold: [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3] });
+      so.observe(start);
+    } else { go(); }
   })();
 
   /* ---------- отзывы: лента карточек, стрелки листают по одной ---------- */
@@ -803,7 +538,13 @@
     var req = function () { if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; sync(); }); } };
     stories.addEventListener('scroll', req, { passive: true });
     w.addEventListener('resize', req);
-    sync();
+    /* первый пересчет, когда лента подходит к экрану */
+    if ('IntersectionObserver' in w) {
+      var sto = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { sto.disconnect(); sync(); }
+      }, { rootMargin: '300px 0px' });
+      sto.observe(stories);
+    } else { sync(); }
   })();
 
   /* ---------- тарифы: ползунок «сколько учеников» ---------- */
@@ -827,6 +568,21 @@
   if (tee) {
     if (reduce) { tee.classList.add('is-on'); }
     else { whenVisible(tee, function () { setTimeout(function () { tee.classList.add('is-on'); }, 250); }, null, 0.4); }
+  }
+
+  /* ---------- переход по якорю на главной ----------
+     Тяжелые блоки ниже экрана не рисуются, пока до них не дошла прокрутка (content-visibility в home.css), и до показа
+     их высота примерная. Перед переходом включаем блоки выше цели: плавная прокрутка придет точно в нее. */
+  if (d.body.classList.contains('is-home')) {
+    d.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      var id = a ? a.getAttribute('href').slice(1) : '';
+      var target = id && d.getElementById(id);
+      if (!target) return;
+      $$('main > section').forEach(function (s) {
+        if (s.contains(target) || (s.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING)) s.classList.add('cv-open');
+      });
+    });
   }
 
   /* ---------- окно вопроса и консультации ---------- */

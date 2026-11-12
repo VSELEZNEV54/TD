@@ -8,7 +8,6 @@ SEO-текст с «Часто ищут» перед подвалом и вер�
 
 Главную пока правят вручную, поэтому скрипт меняет только эти куски между метками
 и ничего больше не трогает. Запускать, когда меняется реестр страниц или блок тарифов."""
-import hashlib
 import importlib.util
 import json
 import re
@@ -162,10 +161,13 @@ def main():
     if release:
         html = release_cleanup(html, reg, visible)
 
-    # версии общих файлов, чтобы браузер не взял старые стили из кэша
+    # сжатые копии общих файлов (build/minify.py) и их версии, чтобы браузер не взял старые стили из кэша
+    import minify
     for a in ('assets/css/main.css', 'assets/css/home.css', 'assets/css/tour.css', 'assets/js/main.js', 'assets/js/home.js', 'assets/js/tour.js'):
-        v = hashlib.md5((SITE / a).read_bytes()).hexdigest()[:8]
-        html = re.sub(r'(["\'])' + re.escape(a) + r'(\?v=[0-9a-f]+)?\1', lambda m: m.group(1) + a + '?v=' + v + m.group(1), html)
+        served = minify.asset(a, SITE)
+        stem, ext = a.rsplit('.', 1)
+        html = re.sub(r'(["\'])' + re.escape(stem) + r'(?:\.min)?\.' + ext + r'(\?v=[0-9a-f]+)?\1',
+                      lambda m: m.group(1) + served + m.group(1), html)
 
     f.write_text(html, encoding='utf-8')
     print(f'Главная обновлена: шапка, подвал, тарифы, JSON-LD ({len(qa)} вопросов)')
